@@ -1,0 +1,10 @@
+[
+  {
+    "version":"3.4.0",
+    "url":"https://forge.puppet.com/v3/files/crayfishx-firewalld-<% version %>.tar.gz"
+  },
+  {
+    "version":"4.25.0",
+    "url":"https://forge.puppet.com/v3/files/puppetlabs-stdlib-<% version %>.tar.gz"
+  }
+]

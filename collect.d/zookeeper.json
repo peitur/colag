@@ -1,0 +1,4 @@
+[{
+    "version":"3.4.11",
+    "url":"http://apache.mirrors.spacedump.net/zookeeper/zookeeper-<% version %>/zookeeper-<% version %>.tar.gz"
+}]

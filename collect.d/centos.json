@@ -1,0 +1,13 @@
+[
+  {
+    "version":"1708",
+    "bsize":"8192",
+    "url":"https://ftp.lysator.liu.se/centos/7.4.<%version%>/isos/x86_64/CentOS-7-x86_64-Minimal-<%version%>.iso",
+    "signature":"https://ftp.lysator.liu.se/centos/7.4.<%version%>/isos/x86_64/sha256sum.txt.asc"
+  },
+  {
+    "version":"1708",
+    "bsize":"8192",
+    "url":"https://ftp.lysator.liu.se/centos/7.4.<%version%>/isos/x86_64/CentOS-7-x86_64-NetInstall-<%version%>.iso"
+  }
+]

@@ -1,0 +1,5 @@
+[{
+    "version":"3.11.2",
+    "url":"http://apache.mirrors.spacedump.net/cassandra/<% version %>/apache-cassandra-<% version %>-bin.tar.gz",
+    "signature":"http://www.apache.org/dist/cassandra/<% version %>/apache-cassandra-<% version %>-bin.tar.gz.asc"
+}]

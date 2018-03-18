@@ -1,0 +1,12 @@
+[
+  {
+    "version":"1.13.9",
+    "url":"https://nginx.org/download/nginx-<% version %>.tar.gz",
+    "signature":"https://nginx.org/download/nginx-<% version %>.tar.gz.asc"
+  },
+  {
+    "version":"1.12.2",
+    "url":"https://nginx.org/download/nginx-<% version %>.tar.gz",
+    "signature":"https://nginx.org/download/nginx-<% version %>.tar.gz.asc"
+  }
+]

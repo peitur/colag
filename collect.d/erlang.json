@@ -1,0 +1,5 @@
+[{
+    "version":"20.3",
+    "bsize":"8192",
+    "url":"http://erlang.org/download/otp_src_<% version %>.tar.gz"
+}]
