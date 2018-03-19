@@ -160,6 +160,9 @@ if __name__ == "__main__":
             if opt['load'] and opt['load'] != x_dir:
                 continue
 
+            if 'skip' in xo and xo['skip']:
+                continue
+
             if not Path( "%s/%s" % ( config['target'], x_dir )).exists():
                 Path( "%s/%s" % ( config['target'], x_dir )).mkdir()
 
@@ -189,12 +192,13 @@ if __name__ == "__main__":
             chkfile = "%s.%s.json" % (x_path, chksum)
 
             fst = os.stat( x_path )
-            hdata['1.filename'] = x_path
-            hdata['2.atime'] = datetime.datetime.fromtimestamp( fst.st_atime ).isoformat()
-            hdata['3.ctime'] = datetime.datetime.fromtimestamp( fst.st_ctime ).isoformat()
-            hdata['4.mtime'] = datetime.datetime.fromtimestamp( fst.st_mtime ).isoformat()
-            hdata['5.size'] = fst.st_size
-            hdata['6.checksum'] = "%s:%s" % ( chksum, file_hash( x_path, chksum ) )
+            hdata['01.filename'] = x_path
+            hdata['02.source'] = x_url
+            hdata['03.atime'] = datetime.datetime.fromtimestamp( fst.st_atime ).isoformat()
+            hdata['04.ctime'] = datetime.datetime.fromtimestamp( fst.st_ctime ).isoformat()
+            hdata['05.mtime'] = datetime.datetime.fromtimestamp( fst.st_mtime ).isoformat()
+            hdata['06.size'] = fst.st_size
+            hdata['07.checksum'] = "%s:%s" % ( chksum, file_hash( x_path, chksum ) )
 
             if 'signature' in xo:
                 x_sign = _apply_version( xo['signature'], xo['version'] )
@@ -206,7 +210,8 @@ if __name__ == "__main__":
                     print( "# EXCEPTION: Failed to download %s to %s" % ( x_sign, x_lsign ) )
                     pprint( e )
 
-                hdata['7.signature'] = x_lsign
-                hdata['8.signature_checksum'] = "%s:%s" % ( chksum, file_hash( x_lsign, chksum ) )
+                hdata['10.signature'] = x_lsign
+                hdata['11.signature_checksum'] = "%s:%s" % ( chksum, file_hash( x_lsign, chksum ) )
 
-            write_file( chkfile, [ hdata ] )
+            if not Path( chkfile ).exists():
+                write_file( chkfile, [ hdata ] )
