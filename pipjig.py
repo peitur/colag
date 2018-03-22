@@ -217,12 +217,35 @@ def check_requirements_tgz( pkgfile ):
     return result
 
 
+def check_requirements_bz2( pkgfile ):
+    tmp_dir = Path( "/tmp/py_%s" % ( random_string( 6 ) ) )
+    result = list()
+
+    if not tmp_dir.exists(): tmp_dir.mkdir()
+
+    try:
+        tar = tarfile.open( pkgfile, "r:bz2")
+        p = re.compile( r"[^/]+/requirements\.txt|^.+egg-info/requires\.txt" )
+        for ti in tar.getmembers():
+            if p.match( ti.name ):
+                tar.extract( ti, path=str( tmp_dir ) )
+                result += [ x for x in load_file( "%s/%s" % ( str( tmp_dir ), ti.name ) ) if not re.match( r"\s*[-#].*", x ) ]
+
+    except KeyError as e:
+        return list()
+    finally:
+        rmdir_tree( tmp_dir )
+        tar.close()
+    return result
+
 def check_requirements( pkgfile ):
     ftype = re.split( r"\.", pkgfile )[-1]
-    if ftype == "zip":
+    if ftype in ("zip"):
         return check_requirements_zip( pkgfile )
-    elif ftype == "gz":
+    elif ftype in ("gz", "tgz"):
         return check_requirements_tgz( pkgfile )
+    elif ftype in ("bz2"):
+        return check_requirements_bz2( pkgfile )
 
     return list()
 
@@ -276,10 +299,11 @@ def collect_pkg_full( module, **opt ):
                 hd['10.release'] = u
 
                 if not Path( chkfile ).exists():
+                    print( "# [ %s ] [ checksum ] %s -> %s  " % ( module, fullfilename, chkfile ) )
                     write_file( chkfile, [ hd ] )
 
 
-            reqlist_raw = [ re.split( r"[<>=!\[\]~%&!]", x )[0] for x in check_requirements( fullfilename ) ]
+            reqlist_raw = [ re.split( r"[<>=\[\]~%&!]", x )[0] for x in check_requirements( fullfilename ) ]
             reqlist = list()
 
             for rli in reqlist_raw:

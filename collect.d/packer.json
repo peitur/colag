@@ -1,0 +1,11 @@
+[
+  {
+    "version":"1.2.1",
+    "url":"https://releases.hashicorp.com/packer/<%version%>/packer_<%version%>_darwin_amd64.zip",
+    "checksum":"https://releases.hashicorp.com/packer/<%version%>/packer_<%version%>_SHA256SUMS"
+  },
+  {
+    "version":"1.2.1",
+    "url":"https://releases.hashicorp.com/packer/<%version%>/packer_<%version%>_linux_amd64.zip"
+  }
+]

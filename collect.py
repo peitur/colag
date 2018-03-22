@@ -4,6 +4,7 @@ import sys,re,os,re, datetime
 import requests
 import json
 import hashlib
+import getopt
 
 from pprint import pprint
 from pathlib import Path
