@@ -272,6 +272,8 @@ def collect_pkg_full( module, **opt ):
 
 
     q = get_request( module, "https://pypi.python.org/pypi/%s/json" % ( module ) )
+    if not q:
+        return None
 
     info = q['info']
     releases = q['releases']
@@ -284,7 +286,8 @@ def collect_pkg_full( module, **opt ):
             fullfilename = "%s/%s" %( opt['target'] , filename )
 
             if not Path( fullfilename ).exists():
-                download_file( module, u['url'], fullfilename )
+                if not download_file( module, u['url'], fullfilename ):
+                    return None
 
                 hd = dict()
                 chkfile = "%s.%s.json" % ( fullfilename, opt['checksum'] )
