@@ -79,7 +79,7 @@ def download_file( proj, url_filename, local_filename, **opt ):
                 if chunk: # filter out keep-alive new chunks
                     x_size += len( chunk )
                     f.write(chunk)
-                    print("# [ %s ] [ %s / %s ] --> %s -> %s" % ( proj, x_size, r_size, url_filename, local_filename ), end="\r" )
+                    print("# [ %s ] [ %s / %s ] --> %s" % ( proj, x_size, r_size, local_filename ), end="\r" )
         print("")
     else:
         print("# [ %s ] [ skip ] --> %s -> %s " % ( proj, url_filename, local_filename ) )
@@ -280,48 +280,47 @@ def collect_pkg_full( module, **opt ):
     urls = q['urls']
 
     for u in releases[ info['version'] ]:
-        if 'packagetype' in u and u['packagetype'] == "sdist":
-            print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, info['version'], u['url'] ) )
-            filename = re.split( r"\/", u['url'])[-1]
-            fullfilename = "%s/%s" %( opt['target'] , filename )
+        print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, info['version'], u['url'] ) )
+        filename = re.split( r"\/", u['url'])[-1]
+        fullfilename = "%s/%s" %( opt['target'] , filename )
 
-            if not Path( fullfilename ).exists():
-                if not download_file( module, u['url'], fullfilename ):
-                    return None
+        if not Path( fullfilename ).exists():
+            if not download_file( module, u['url'], fullfilename ):
+                return None
 
-                hd = dict()
-                chkfile = "%s.%s.json" % ( fullfilename, opt['checksum'] )
-                fst = Path( fullfilename ).stat()
-                hd['01.filename'] = filename
-                hd['02.source'] = u['url']
-                hd['03.size'] = int( fst.st_size )
-                hd['04.ctime'] = datetime.datetime.fromtimestamp( fst.st_ctime ).isoformat()
-                hd['05.mtime'] = datetime.datetime.fromtimestamp( fst.st_mtime ).isoformat()
-                hd['06.atime'] = datetime.datetime.fromtimestamp( fst.st_atime ).isoformat()
-                hd['07.checksum'] = "%s:%s" % ( opt['checksum'], file_hash( fullfilename, opt['checksum'] ) )
-                hd['10.release'] = u
+            hd = dict()
+            chkfile = "%s.%s.json" % ( fullfilename, opt['checksum'] )
+            fst = Path( fullfilename ).stat()
+            hd['01.filename'] = filename
+            hd['02.source'] = u['url']
+            hd['03.size'] = int( fst.st_size )
+            hd['04.ctime'] = datetime.datetime.fromtimestamp( fst.st_ctime ).isoformat()
+            hd['05.mtime'] = datetime.datetime.fromtimestamp( fst.st_mtime ).isoformat()
+            hd['06.atime'] = datetime.datetime.fromtimestamp( fst.st_atime ).isoformat()
+            hd['07.checksum'] = "%s:%s" % ( opt['checksum'], file_hash( fullfilename, opt['checksum'] ) )
+            hd['10.release'] = u
 
-                if not Path( chkfile ).exists():
-                    print( "# [ %s ] [ checksum ] %s -> %s  " % ( module, fullfilename, chkfile ) )
-                    write_file( chkfile, [ hd ] )
+            if not Path( chkfile ).exists():
+                print( "# [ %s ] [ checksum ] %s -> %s  " % ( module, fullfilename, chkfile ) )
+                write_file( chkfile, [ hd ] )
 
 
-            reqlist_raw = [ re.split( r"[<>=\[\]~%&!]", x )[0] for x in check_requirements( fullfilename ) ]
-            reqlist = list()
+        reqlist_raw = [ re.split( r"[<>=\[\]~%&!]", x )[0] for x in check_requirements( fullfilename ) ]
+        reqlist = list()
 
-            for rli in reqlist_raw:
-                reqlist += semi_crunch( rli )
+        for rli in reqlist_raw:
+            reqlist += semi_crunch( rli )
 
-            if len( reqlist ) > 0:
-                for req in reqlist:
+        if len( reqlist ) > 0:
+            for req in reqlist:
 
-                    if len( req ) == 0: continue
-                    if req == module: continue
-                    if re.match( r"[\[\]]+", req ): continue
+                if len( req ) == 0: continue
+                if req == module: continue
+                if re.match( r"[\[\]]+", req ): continue
 
 #                    print("## [%s] %s => %s" % ( len(module_seen), module, req ) )
 
-                    collect_pkg_full( req, **opt )
+                collect_pkg_full( req, **opt )
 
     return None
 
