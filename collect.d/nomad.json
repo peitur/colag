@@ -1,0 +1,12 @@
+[
+  {
+    "version":"0.7.1",
+    "url":"https://releases.hashicorp.com/nomad/<%version%>/nomad_<%version%>_darwin_amd64.zip",
+    "checksum":"https://releases.hashicorp.com/nomad/<%version%>/nomad_<%version%>_SHA256SUMS"
+  },
+  {
+    "version":"0.7.1",
+    "url":"https://releases.hashicorp.com/nomad/<%version%>/nomad_<%version%>_linux_amd64.zip",
+    "checksum":"https://releases.hashicorp.com/nomad/<%version%>/nomad_<%version%>_SHA256SUMS"
+  }  
+]
