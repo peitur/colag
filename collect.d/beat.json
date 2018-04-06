@@ -2,31 +2,31 @@
 	{
 	 	"version":"6.2.3",
 		"checksum":"sha512",
-	 	"url":"https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-<%version%>-x86_64.rpm"
+	 	"url":"https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-<%version%>-x86_64.rpm",
 		"signature":"https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-<%version%>-x86_64.rpm.sha512"
 	},
 	{
 		"version":"6.2.3",
 		"checksum":"sha512",
-		"url":"https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-<%version%>-x86_64.rpm"
+		"url":"https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-<%version%>-x86_64.rpm",
 		"signature":"https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-<%version%>-x86_64.rpm.sha512"
 	},
-        {
-                "version":"6.2.3",
-                "checksum":"sha512",
-                "url":"https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-<%version%>-x86_64.rpm"
-                "signature":"https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-<%version%>-x86_64.rpm.sha512"
-        },
-        {
-                "version":"6.2.3",
-                "checksum":"sha512",
-                "url":"https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-<%version%>-x86_64.rpm"
-                "signature":"https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-<%version%>-x86_64.rpm.sha512"
-        },
-        {
-                "version":"6.2.3",
-                "checksum":"sha512",
-                "url":"https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-<%version%>-x86_64.rpm"
-                "signature":"https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-<%version%>-x86_64.rpm.sha512"
-        }
+  {
+    "version":"6.2.3",
+    "checksum":"sha512",
+    "url":"https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-<%version%>-x86_64.rpm",
+    "signature":"https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-<%version%>-x86_64.rpm.sha512"
+  },
+  {
+    "version":"6.2.3",
+    "checksum":"sha512",
+    "url":"https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-<%version%>-x86_64.rpm",
+    "signature":"https://artifacts.elastic.co/downloads/beats/heartbeat/heartbeat-<%version%>-x86_64.rpm.sha512"
+  },
+  {
+    "version":"6.2.3",
+    "checksum":"sha512",
+    "url":"https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-<%version%>-x86_64.rpm",
+    "signature":"https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-<%version%>-x86_64.rpm.sha512"
+  }
 ]

@@ -2,11 +2,11 @@
   {
     "version":"0.11.5",
     "url":"https://releases.hashicorp.com/terraform/<%version%>/terraform_<%version%>_darwin_amd64.zip",
-    "checksum":"https://releases.hashicorp.com/terraform/<%version%>/terraform_<%version%>_SHA256SUMS"
+    "signature":"https://releases.hashicorp.com/terraform/<%version%>/terraform_<%version%>_SHA256SUMS"
   },
   {
     "version":"0.11.5",
     "url":"https://releases.hashicorp.com/terraform/<%version%>/terraform_<%version%>_linux_amd64.zip",
-    "checksum":"https://releases.hashicorp.com/terraform/<%version%>/terraform_<%version%>_SHA256SUMS"
+    "signature":"https://releases.hashicorp.com/terraform/<%version%>/terraform_<%version%>_SHA256SUMS"
   }
 ]
