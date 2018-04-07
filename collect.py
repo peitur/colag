@@ -186,7 +186,7 @@ if __name__ == "__main__":
                 print( "# EXCEPTION: Failed to download %s to %s" % ( x_url, x_path ) )
                 pprint( e )
 
-            if not Path( x_path).exists():
+            if not Path( x_path ).exists():
                 print( "# ERROR: Failed to download %s to %s" % ( x_url, x_path ) )
                 continue
 
