@@ -1,0 +1,15 @@
+paramiko
+kiwi
+docker-py
+Flask
+ansible
+requests
+bandersnatch
+pip
+wheel
+setuptools
+awscli
+pyvmomi
+boto3
+vbox-sdk
+cassandra-driver
