@@ -70,10 +70,10 @@ def download_file( proj, url_filename, local_filename, **opt ):
                 if chunk: # filter out keep-alive new chunks
                     x_size += len( chunk )
                     f.write(chunk)
-                    print("# [ %s ] [ %s / %s ] --> %s -> %s" % ( proj, x_size, r_size, url_filename, local_filename ), end="\r" )
+                    print("# [ %s ] [ %s / %s ] --> %s" % ( proj, x_size, r_size, local_filename ), end="\r" )
         print("")
     else:
-        print("# [ %s ] [ skip ] --> %s -> %s " % ( proj, url_filename, local_filename ) )
+        print("# [ %s ] [ skip ] --> %s " % ( proj, local_filename ) )
 
     r.close()
 
