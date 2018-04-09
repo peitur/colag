@@ -1,3 +1,4 @@
+virtualenv
 paramiko
 kiwi
 docker-py
