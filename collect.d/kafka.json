@@ -1,11 +1,11 @@
 [
   {
-    "version":"1.0.1",
+    "version":"1.1.0",
     "url":"http://apache.mirrors.spacedump.net/kafka/<% version %>/kafka_2.11-<% version %>.tgz",
     "signature":"http://www.apache.org/dist/kafka/<% version %>/kafka_2.11-<% version %>.tgz.asc"
   },
   {
-    "version":"1.0.1",
+    "version":"1.1.0",
     "url":"http://apache.mirrors.spacedump.net/kafka/<% version %>/kafka_2.12-<% version %>.tgz",
     "signature":"http://www.apache.org/dist/kafka/<% version %>/kafka_2.12-<% version %>.tgz.asc"
   }

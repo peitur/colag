@@ -1,4 +1,14 @@
-[{
-  "version":"5.0.1",
-  "url":"https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-<% version %>-1.x86_64.rpm"
-}]
+[
+  {
+    "version":"5.0.4",
+    "url":"https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-<% version %>-1.x86_64.rpm"
+  },
+  {
+    "version":"5.0.4",
+    "url":"https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-<%version%>.linux-x64.tar.gz"
+  },
+  {
+    "version":"5.0.4",
+    "url":"https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_<%version%>_amd64.deb"
+  }
+]

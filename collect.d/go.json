@@ -1,5 +1,5 @@
 [{
-  "version":"1.10",
+  "version":"1.10.1",
   "bsize":"8192",
   "url":"https://dl.google.com/go/go<% version %>.linux-amd64.tar.gz"
 }]
