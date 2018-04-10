@@ -42,11 +42,13 @@ def file_hash( filename, chksum="sha256" ):
 def download_file( proj, url_filename, local_filename, **opt ):
     x_size = 0
     l_size = 0
-    r_size = 0
+    r_size = -1
     bsize=1024
     overwrite = False
     timeout = 10
+    debug = False
 
+    if 'debug' in opt: debug = opt['debug']
     if 'bsize' in opt: bsize = opt['bsize']
     if 'timeout' in opt: timeout = opt['timeout']
 
@@ -59,6 +61,9 @@ def download_file( proj, url_filename, local_filename, **opt ):
     r = requests.get( url_filename, timeout=timeout, stream=True)
     if 'content-length' in r.headers:
         r_size = r.headers['content-length']
+
+    if debug:
+        pprint( r.headers )
 
     if r.status_code != 200:
         print("# ERROR: Could not find %s,  %s : " % ( url_filename, r.status_code ) )
@@ -183,11 +188,11 @@ if __name__ == "__main__":
             try:
                 download_file( x_dir, x_url, x_path, bsize=bsize )
             except Exception as e:
-                print( "# EXCEPTION: Failed to download %s to %s" % ( x_url, x_path ) )
+                print( "# EXCEPTION: Failed to download %s to %s: " % ( x_url, x_path, e ) )
                 pprint( e )
 
             if not Path( x_path ).exists():
-                print( "# ERROR: Failed to download %s to %s" % ( x_url, x_path ) )
+                print( "# ERROR: Failed to download %s to %s, already exists" % ( x_url, x_path ) )
                 continue
 
             chkfile = "%s.%s.json" % (x_path, chksum)
