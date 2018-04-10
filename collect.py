@@ -42,7 +42,7 @@ def file_hash( filename, chksum="sha256" ):
 def download_file( proj, url_filename, local_filename, **opt ):
     x_size = 0
     l_size = 0
-    r_size = -1
+    r_size = 0
     bsize=1024
     overwrite = False
     timeout = 10
@@ -69,7 +69,7 @@ def download_file( proj, url_filename, local_filename, **opt ):
         print("# ERROR: Could not find %s,  %s : " % ( url_filename, r.status_code ) )
         return None
 
-    if int( l_size ) != int( r_size ) or overwrite:
+    if not Path( local_filename ).exists() or overwrite:
         with open( local_filename, 'wb') as f:
             for chunk in r.iter_content( chunk_size=bsize ):
                 if chunk: # filter out keep-alive new chunks
