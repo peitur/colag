@@ -9,6 +9,6 @@
   { "version":"7.1.1", "url":"https://forge.puppet.com/v3/files/puppetlabs-ntp-<%version%>.tar.gz" },
   { "version":"1.3.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-accounts-<%version%>.tar.gz" },
   { "version":"0.11.0", "url":"https://forge.puppet.com/v3/files/puppet-nginx-<%version%>.tar.gz" },
-  { "version":"5.1.0", "url":"https://forge.puppet.com/v3/files/puppet-kafka-<%version%>.tar.gz" }
-
+  { "version":"5.1.0", "url":"https://forge.puppet.com/v3/files/puppet-kafka-<%version%>.tar.gz" },
+  { "version":"3.57.0", "url":"https://forge.puppet.com/v3/files/ghoneycutt-ssh-<%version%>.tar.gz" }
 ]

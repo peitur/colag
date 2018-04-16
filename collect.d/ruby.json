@@ -1,0 +1,10 @@
+[
+	{ "version":"2.5.1",  "url":"https://cache.ruby-lang.org/pub/ruby/2.5/ruby-<%version%>.tar.bz2" },
+	{ "version":"2.4.4",  "url":"https://cache.ruby-lang.org/pub/ruby/2.4/ruby-<%version%>.tar.bz2" },
+	{ "version":"2.3.7",  "url":"https://cache.ruby-lang.org/pub/ruby/2.3/ruby-<%version%>.tar.bz2" },
+	{ "version":"2.2.10", "url":"https://cache.ruby-lang.org/pub/ruby/2.2/ruby-<%version%>.tar.bz2" },
+	{ "version":"2.1.10", "url":"https://cache.ruby-lang.org/pub/ruby/2.1/ruby-<%version%>.tar.bz2" },
+	{ "version":"2.7.6",  "url":"https://rubygems.org/rubygems/rubygems-<%version%>.tgz" },
+	{ "version":"0.1.7",  "url":"https://pyyaml.org/download/libyaml/yaml-<%version%>.tar.gz" },
+	{ "version":"stable", "url":"https://github.com/rvm/rvm/tarball/<%version%>", "filename":"rvm-latest.tar.gz" }
+]
