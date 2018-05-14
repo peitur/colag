@@ -1,0 +1,27 @@
+[
+  {
+    "version":"4.11.0-45",
+    "bsize":"8192",
+    "url":"http://vault.centos.org/7.4.1708/updates/Source/SPackages/kernel-alt-<%version%>.el7.src.rpm"
+  },
+  {
+    "version":"3.10.0-693.21.1",
+    "bsize":"8192",
+    "url":"http://vault.centos.org/7.4.1708/updates/Source/SPackages/kernel-<%version%>.el7.src.rpm"
+  },
+  {
+    "version":"3.10.0-862.2.3",
+    "bsize":"8192",
+    "url":"http://vault.centos.org/7.5.1804/updates/Source/SPackages/kernel-<%version%>.el7.src.rpm"
+  },
+  {
+    "version":"4.16.8",
+    "bsize":"8192",
+    "url":"https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-<%version%>.tar.xz"
+  },
+  {
+    "version":"4.14.40",
+    "bsize":"8192",
+    "url":"https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-<%version%>.tar.xz"
+  }
+]

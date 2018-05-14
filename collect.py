@@ -183,7 +183,7 @@ if __name__ == "__main__":
             x_path = "%s/%s/%s" % ( config['target'], x_dir, re.split( r"\/", x_url )[-1] )
 
             if 'filename' in xo:
-                x_path = "%s/%s/%s" % ( config['target'], x_dir, xo['filename'] )
+                x_path = "%s/%s/%s" % ( config['target'], x_dir, _apply_version( xo['filename'], xo['version'] ) )
 
             try:
                 download_file( x_dir, x_url, x_path, bsize=bsize )
