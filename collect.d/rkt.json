@@ -1,0 +1,15 @@
+[
+  {
+    "version":"1.30.0",
+    "url":"https://github.com/rkt/rkt/releases/download/v<%version%>/rkt-<%version%>-1.x86_64.rpm",
+    "signature":"https://github.com/rkt/rkt/releases/download/v<%version%>/rkt-<%version%>-1.x86_64.rpm.asc"
+  },{
+    "version":"1.30.0",
+    "url":"https://github.com/rkt/rkt/releases/download/v<%version%>/rkt_<%version%>-1_amd64.deb",
+    "signature":"https://github.com/rkt/rkt/releases/download/v<%version%>/rkt_<%version%>-1_amd64.deb.asc"
+  },{
+    "version":"1.30.0",
+    "url":"https://github.com/rkt/rkt/releases/download/v<%version%>/rkt-v<%version%>.tar.gz",
+    "signature":"https://github.com/rkt/rkt/releases/download/v<%version%>/rkt-v<%version%>.tar.gz.asc"
+  }
+]

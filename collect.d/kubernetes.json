@@ -1,0 +1,14 @@
+[
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-client-darwin-amd64.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-client-linux-amd64.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-client-linux-arm.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-client-linux-arm64.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-client-windows-amd64.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-server-linux-amd64.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-server-linux-arm.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-server-linux-arm64.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-node-linux-amd64.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-node-linux-arm.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-node-linux-arm64.tar.gz"},
+  {"version":"1.10.3", "url":"https://dl.k8s.io/v<%version%>/kubernetes-node-windows-amd64.tar.gz"}
+]

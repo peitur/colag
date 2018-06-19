@@ -1,0 +1,3 @@
+[
+	{"version":"4.0.4", "url":"https://www.openinfosecfoundation.org/download/suricata-<%version%>.tar.gz", "signature":"https://www.openinfosecfoundation.org/download/suricata-<%version%>.tar.gz.sig" }
+]

@@ -1,0 +1,3 @@
+[
+	{ "version":"3.0.0", "url":"https://github.com/SpiderLabs/ModSecurity/releases/download/v<%version%>/modsecurity-v<%version%>.tar.gz", "signature":"https://github.com/SpiderLabs/ModSecurity/releases/download/v<%version%>/modsecurity-v<%version%>.tar.gz.sha256" }
+]

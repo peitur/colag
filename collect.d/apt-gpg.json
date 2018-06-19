@@ -1,0 +1,4 @@
+[
+  {"version":"", "url":"https://packages.cloud.google.com/apt/doc/apt-key.gpg", "filename":"kubernetes-apt-key.gpg"},
+  {"versin":"", "url":"https://download.docker.com/linux/ubuntu/gpg", "filename":"docker-apt-key.gpg" }
+]

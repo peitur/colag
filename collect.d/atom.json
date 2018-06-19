@@ -1,7 +1,7 @@
 [
   {
-    "version":"1.26.1",
+    "version":"1.27.1",
     "url":"https://github.com/atom/atom/releases/download/v<%version%>/atom.x86_64.rpm",
-    "filename":"atom-1.26.1.x86_64.rpm"
+    "filename":"atom-1.27.1.x86_64.rpm"
   }
 ]

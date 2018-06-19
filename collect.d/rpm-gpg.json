@@ -20,5 +20,7 @@
   { "url":"http://packages.fluentbit.io/fluentbit.key", "filename":"RPM-GPG-KEY-fluentbit" },
   { "url":"https://packages.chef.io/chef.asc", "filename":"RPM-GPG-KEY-chef" },
   { "url":"https://copr-be.cloud.fedoraproject.org/results/@cloud-init/cloud-init/pubkey.gpg", "filename":"RPM-GPG-KEY-cloud-init" },
-  { "url":"https://www.apache.org/dist/cassandra/KEYS", "filename":"RPM-GPG-KEY-cassandra" }
+  { "url":"https://www.apache.org/dist/cassandra/KEYS", "filename":"RPM-GPG-KEY-cassandra" },
+  { "url":"https://packages.cloud.google.com/yum/doc/yum-key.gpg", "filename":"RPM-GPG-KEY-Kubernetes-YUM.gpg"},
+  { "url":"https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg", "filename":"RPM-GPG-KEY-Kubernetes-PKG.gpg"}
 ]

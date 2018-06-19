@@ -15,12 +15,17 @@
     "url":"http://vault.centos.org/7.5.1804/updates/Source/SPackages/kernel-<%version%>.el7.src.rpm"
   },
   {
-    "version":"4.16.8",
+    "version":"4.17.2",
     "bsize":"8192",
     "url":"https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-<%version%>.tar.xz"
   },
   {
-    "version":"4.14.40",
+    "version":"4.16.13",
+    "bsize":"8192",
+    "url":"https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-<%version%>.tar.xz"
+  },
+  {
+    "version":"4.14.45",
     "bsize":"8192",
     "url":"https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-<%version%>.tar.xz"
   }

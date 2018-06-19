@@ -1,11 +1,11 @@
 [
   {
-    "version":"0.9.6",
+    "version":"0.10.2",
     "url":"https://releases.hashicorp.com/vault/<%version%>/vault_<%version%>_darwin_amd64.zip",
     "signature":"https://releases.hashicorp.com/vault/<%version%>/vault_<%version%>_SHA256SUMS"
   },
   {
-    "version":"0.9.6",
+    "version":"0.10.2",
     "url":"https://releases.hashicorp.com/vault/<%version%>/vault_<%version%>_linux_amd64.zip",
     "signature":"https://releases.hashicorp.com/vault/<%version%>/vault_<%version%>_SHA256SUMS"
   }
