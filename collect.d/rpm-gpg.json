@@ -18,9 +18,11 @@
   { "url":"https://packages.gitlab.com/gpg.key", "filename":"RPM-GPG-KEY-gitlab" },
   { "url":"https://packages.erlang-solutions.com/rpm/erlang_solutions.asc", "filename":"RPM-GPG-KEY-erlang-solutions" },
   { "url":"http://packages.fluentbit.io/fluentbit.key", "filename":"RPM-GPG-KEY-fluentbit" },
+  { "url":"https://packages.treasuredata.com/GPG-KEY-td-agent", "filename":"RPM-GPG-KEY-fluentd"},
   { "url":"https://packages.chef.io/chef.asc", "filename":"RPM-GPG-KEY-chef" },
   { "url":"https://copr-be.cloud.fedoraproject.org/results/@cloud-init/cloud-init/pubkey.gpg", "filename":"RPM-GPG-KEY-cloud-init" },
   { "url":"https://www.apache.org/dist/cassandra/KEYS", "filename":"RPM-GPG-KEY-cassandra" },
   { "url":"https://packages.cloud.google.com/yum/doc/yum-key.gpg", "filename":"RPM-GPG-KEY-Kubernetes-YUM.gpg"},
-  { "url":"https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg", "filename":"RPM-GPG-KEY-Kubernetes-PKG.gpg"}
+  { "url":"https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg", "filename":"RPM-GPG-KEY-Kubernetes-PKG.gpg"},
+  { "url":"https://repo.dovecot.org/DOVECOT-REPO-GPG", "filename":"RPM-GPG-KEY-Dovecot" }
 ]

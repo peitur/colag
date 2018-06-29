@@ -1,10 +1,10 @@
 [
 	{
-		"version":"2.2.1",
+		"version":"2.3.1",
 		"url":"https://github.com/prometheus/prometheus/releases/download/v<%version%>/prometheus-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.14.0",
+		"version":"0.15.0",
 		"url":"https://github.com/prometheus/alertmanager/releases/download/v<%version%>/alertmanager-<%version%>.linux-amd64.tar.gz"
 	},
 	{
@@ -32,11 +32,11 @@
 		"url":"https://github.com/prometheus/mysqld_exporter/releases/download/v<%version%>/mysqld_exporter-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.15.2",
+		"version":"0.16.0",
 		"url":"https://github.com/prometheus/node_exporter/releases/download/v<%version%>/node_exporter-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.4.0",
+		"version":"0.5.2",
 		"url":"https://github.com/prometheus/pushgateway/releases/download/v<%version%>/pushgateway-<%version%>.linux-amd64.tar.gz"
 	},
 	{
