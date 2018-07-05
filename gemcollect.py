@@ -177,19 +177,19 @@ def collect_pkg_versions( module, req, version = None, **opt ):
         version = get_latest( module )
 
     q = get_request( module, get_gem_versions( module ) )
-    versions = [ { "name": module, "version": x['number'], "sha": x['sha'] } for x in q ]
+    versions = [ { "name": module, "version": x['number'], "sha": x['sha'], "gversion": x['rubygems_version'], "rversion": x['ruby_version'] } for x in q ]
 
-    return requirement_filter( versions, req, version, **opt )
+    return get_filter_version( versions, req, version, **opt )
 
-def requirement_filter( vlist, req, version, **opt ):
+def requirement_filter( vlist, req, version, field="version", **opt ):
     if req in (">="):
-        return [ x for x in vlist if x['version'] >= version and not re.search(r"[a-zA-Z]+", x['version'] ) ]
+        return [ x for x in vlist if x[ field ] >= version and not re.search(r"[a-zA-Z]+", x[ field ] ) ]
     elif req in ("=","=="):
-        return [ x for x in vlist if x['version'] == version and not re.search(r"[a-zA-Z]+", x['version'] ) ]
+        return [ x for x in vlist if x[ field ] == version and not re.search(r"[a-zA-Z]+", x[ field ] ) ]
     elif req in ("~>"):
-        return [ x for x in vlist if x['version'] >= version and not re.search(r"[a-zA-Z]+", x['version'] ) ]
+        return [ x for x in vlist if x[ field ] >= version and not re.search(r"[a-zA-Z]+", x[ field ] ) ]
     elif req in ("<="):
-        return [ x for x in vlist if x['version'] <= version and not re.search(r"[a-zA-Z]+", x['version'] ) ]
+        return [ x for x in vlist if x[ field ] <= version and not re.search(r"[a-zA-Z]+", x[ field ] ) ]
     else:
         raise AttributeError( "Unsupported requirement option %s" % (req) )
 
@@ -198,6 +198,15 @@ def get_latest( module ):
     module = module.lstrip().rstrip()
     l = get_request( module, get_gem_latest( module ) )
     return l['version']
+
+def get_filter_version( vlist, req, version, **opt ):
+    return requirement_filter( vlist, req, version, "version", **opt )
+
+def get_filter_rversion( vlist, req, version, **opt ):
+    return requirement_filter( vlist, req, version, "rversion", **opt )
+
+def get_filter_gversion( vlist, req, version, **opt ):
+    return requirement_filter( vlist, req, version, "gversion", **opt )
 
 
 def collect_pkg_full( module, req, version, **opt ):
@@ -259,6 +268,15 @@ def collect_pkg_full( module, req, version, **opt ):
     return None
 
 
+def print_help( scripts ):
+    print("> -c|--config <config>")
+    print("> -f|--file <gemfile>")
+    print("> -g|--gversion <version>")
+    print("> -r|--rversion <version>")
+    print("> -h|--help")
+
+
+
 if __name__ == "__main__":
     opt = dict()
 
@@ -266,11 +284,31 @@ if __name__ == "__main__":
     opt['filename'] = "Gemsfile.txt"
     opt['target'] = "gems"
     opt['config'] = None
-    opt['egg-include'] = True
-    opt['checksum'] = "sha256"
+    opt['gemsversion'] = None
+    opt['rubyversion'] = None
 
-    if len( sys.argv ) > 0:
-        opt['filename'] = sys.argv.pop(0)
+
+    try:
+        opts, args = getopt.getopt(sys.argv, "hc:f:r:g:", ["help", "config=", "file=", "rversion=","gversion=" ])
+    except getopt.GetoptError as err:
+        # print help information and exit:
+        print(err) # will print something like "option -a not recognized"
+        usage()
+        sys.exit(2)
+
+    for o, a in opts:
+        if o in ( "-h", "--help" ):
+            print_help( opt['script'] )
+            sys.exit(0)
+        elif o in ("-c", "--config"):
+            opt['config'] = a
+        elif o in ("-f", "--file"):
+            opt['filename'] = a
+        elif o in ("-r", "--rversion"):
+            opt['rubyversion'] = a
+        elif o in ("-g", "--gversion"):
+            opt['gemsversion'] = a
+
 
     if Path( "gemcollect.json" ).exists():
         cfg = load_file( "gemcollect.json" )[0]
@@ -285,8 +323,6 @@ if __name__ == "__main__":
 
     for line in modules:
         if re.match(r"\s*#.*", line): continue
-
-        #collect_pkg_full( module, **opt )
         res = re.split( r"\s", line )
         module = res[0]
         req = "="
