@@ -1,0 +1,3 @@
+[
+  {"version":"5.48", "url":"https://www.stunnel.org/downloads/stunnel-<% version %>.tar.gz", "checksum":"sha256", "signature":"https://www.stunnel.org/downloads/stunnel-<% version %>.tar.gz.sha256"}
+]

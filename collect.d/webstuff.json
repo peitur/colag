@@ -1,0 +1,4 @@
+[
+  {"version":"4.9.7", "url":"https://wordpress.org/latest.tar.gz", "filename":"wordpress-<% version %>.tar.gz"},
+  {"version":"8.5.5", "url":"https://ftp.drupal.org/files/projects/drupal-<% version %>.tar.gz"}
+]
