@@ -1,0 +1,4 @@
+[
+  {"version":"1.0.0", "url":"https://github.com/klaussilveira/gitlist/releases/download/<% version %>/gitlist-<% version %>.tar.gz"},
+  {"version":"1.0.1", "url":"https://github.com/klaussilveira/gitlist/releases/download/<% version %>/gitlist-<% version %>.tar.gz"}
+]

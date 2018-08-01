@@ -16,6 +16,7 @@ def get_gem_url( module = "" ): return "https://rubygems.org/api/v1/gems/%s.json
 def get_gem_latest( module = "" ):return "https://rubygems.org/api/v1/versions/%s/latest.json" % ( module )
 def get_gem_versions( module = "" ): return "https://rubygems.org/api/v1/versions/%s.json" % ( module )
 def get_gem_download_url( module, version ): return "https://rubygems.org/gems/%s-%s.gem" % ( module, version )
+def get_gem_dependencies( module ): return "https://rubygems.org/api/v1/dependencies.json?gems=%s" % (module )
 
 def random_string( length ):
     return ''.join(random.SystemRandom().choice( string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range( length ))
@@ -170,28 +171,51 @@ def rmdir_tree( path ):
 def mk_temp_dir( root="/tmp" ):
     return "%s/py_%s" % ( root, random_string( 6 ) )
 
+def all_versions( module, **opt ):
+    module = module.lstrip().rstrip()
+
+    q = get_request( module, get_gem_versions( module ) )
+
+    return [ { "name": module, "version": x['number'], "sha": x['sha'], "gversion": x['rubygems_version'], "rversion": x['ruby_version'] } for x in q ]
+
+
 def collect_pkg_versions( module, req, version = None, **opt ):
     module = module.lstrip().rstrip()
 
     if not version:
         version = get_latest( module )
 
-    q = get_request( module, get_gem_versions( module ) )
-    versions = [ { "name": module, "version": x['number'], "sha": x['sha'], "gversion": x['rubygems_version'], "rversion": x['ruby_version'] } for x in q ]
+    versions = all_versions( module )
 
-    return get_filter_version( versions, req, version, **opt )
+    return requirement_filter_version( versions, req, version, **opt )
+
 
 def requirement_filter( vlist, req, version, field="version", **opt ):
     if req in (">="):
-        return [ x for x in vlist if x[ field ] >= version and not re.search(r"[a-zA-Z]+", x[ field ] ) ]
+        return [ x for x in vlist if x[ field ] and re.split( "\s+", x[ field ] )[-1] >= version and not re.search(r"[a-zA-Z]+", re.split( "\s+", x[ field ] )[-1] ) ]
     elif req in ("=","=="):
-        return [ x for x in vlist if x[ field ] == version and not re.search(r"[a-zA-Z]+", x[ field ] ) ]
+        return [ x for x in vlist if x[ field ] and re.split( "\s+", x[ field ] )[-1] == version and not re.search(r"[a-zA-Z]+", re.split( "\s+", x[ field ] )[-1] ) ]
     elif req in ("~>"):
-        return [ x for x in vlist if x[ field ] >= version and not re.search(r"[a-zA-Z]+", x[ field ] ) ]
+        return [ x for x in vlist if x[ field ] and re.split( "\s+", x[ field ] )[-1] >= version and not re.search(r"[a-zA-Z]+", re.split( "\s+", x[ field ] )[-1] ) ]
     elif req in ("<="):
-        return [ x for x in vlist if x[ field ] <= version and not re.search(r"[a-zA-Z]+", x[ field ] ) ]
+        return [ x for x in vlist if x[ field ] and re.split( "\s+", x[ field ] )[-1] <= version and not re.search(r"[a-zA-Z]+", re.split( "\s+", x[ field ] )[-1] ) ]
+    elif req in ("<"):
+        return [ x for x in vlist if x[ field ] and re.split( "\s+", x[ field ] )[-1] < version and not re.search(r"[a-zA-Z]+", re.split( "\s+", x[ field ] )[-1] ) ]
+    elif req in (">"):
+        return [ x for x in vlist if x[ field ] and re.split( "\s+", x[ field ] )[-1] > version and not re.search(r"[a-zA-Z]+", re.split( "\s+", x[ field ] )[-1] ) ]
+    elif req in ("!="):
+        return [ x for x in vlist if x[ field ] and re.split( "\s+", x[ field ] )[-1] != version and not re.search(r"[a-zA-Z]+", re.split( "\s+", x[ field ] )[-1] ) ]
     else:
         raise AttributeError( "Unsupported requirement option %s" % (req) )
+
+def get_version_dependencies( module, version = None, **opt ):
+    module = module.lstrip().rstrip()
+    if not version:
+        version = get_latest( module )
+
+    q = get_request( module, get_gem_dependencies( module ) )
+    return [ { "name": module, "version": x['number'], "dependencies": x['dependencies'] } for x in q if x['number'] == version ]
+
 
 
 def get_latest( module ):
@@ -199,20 +223,105 @@ def get_latest( module ):
     l = get_request( module, get_gem_latest( module ) )
     return l['version']
 
-def get_filter_version( vlist, req, version, **opt ):
+def requirement_filter_version( vlist, req, version, **opt ):
     return requirement_filter( vlist, req, version, "version", **opt )
 
-def get_filter_rversion( vlist, req, version, **opt ):
+def requirement_filter_rversion( vlist, req, version, **opt ):
     return requirement_filter( vlist, req, version, "rversion", **opt )
 
-def get_filter_gversion( vlist, req, version, **opt ):
+def requirement_filter_gversion( vlist, req, version, **opt ):
     return requirement_filter( vlist, req, version, "gversion", **opt )
+
+
+def rversion_latest( module, req, rversion, **opt ):
+    module = module.lstrip().rstrip()
+    versions = all_versions( module )
+    if rversion:
+        return requirement_filter_rversion( versions, req, rversion, **opt ).pop(0)
+    return versions.pop(0)
+
+def gversion_latest( module, req, gversion, **opt ):
+    module = module.lstrip().rstrip()
+    versions = all_versions( module )
+    if gversion:
+        return requirement_filter_gversion( versions, req, gversion, **opt ).pop(0)
+    return versions.pop(0)
+
+
+
+
+def collect_latest_for( module, **opt ):
+    gversion = None
+    rversion = None
+    module = module.lstrip().rstrip()
+    deps = list()
+
+    if 'rubyversion' in opt:
+        rversion = opt['rubyversion']
+    if 'gemsversion' in opt:
+        gversion = opt['gemsversion']
+
+    print( "module:%s gversion:%s rversion:%s" % (module, gversion, rversion ) )
+
+    versions = all_versions( module )
+
+    # Filter out all versions that match version requirements for any package. They still need to follow the basic deps
+    if gversion: versions = list( requirement_filter_gversion( versions, "<=", gversion, **opt ) )
+    if rversion: versions = list( requirement_filter_rversion( versions, "<=", rversion, **opt ) )
+
+    ## if req is in opt, for each req, apply filter and then select the one with highest version (0)
+    # for ...
+    if 'dependencies' in opt and len( opt['dependencies'] ) > 0:
+        print("###########################")
+        deps = opt['dependencies']
+        del  opt['dependencies']
+        print("###########################")
+
+
+    ## If atleast one Version is found ...
+
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    pprint( versions[0] )
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
+
+    if len( versions ) > 0:
+        vinfo = versions[0]
+        version = vinfo['version']
+        if get_gem_download_url( vinfo['name'], vinfo['version'] ) in module_seen:
+            return None
+        else:
+            module_seen.append( get_gem_download_url( vinfo['name'], version ) )
+
+        ## Get the highest versions dependencies
+        gdm = get_version_dependencies( vinfo['name'], vinfo['version'])
+        if len( gdm ) > 0:
+            vinfo['dependencies'] = gdm[0]['dependencies']
+            opt['dependencies'] = vinfo['dependencies']
+        print("=================================")
+        pprint( vinfo )
+
+        dwurl = get_gem_download_url( vinfo['name'], vinfo['version'] )
+        pprint( dwurl )
+        # for each dependency, try to download and create checksum file, recursivly
+
+        #
+
+#    if len( versions ) > 0:
+#        return collect_pkg_full( module, "==",  versions[0]['version'], **opt )
+        print("=================================")
+        collect_latest_for( vinfo['name'], **opt )
+
+    return True
+
+
+
 
 
 def collect_pkg_full( module, req, version, **opt ):
     module = module.lstrip().rstrip()
 #    print(">>>> %s %s %s" % ( module, req, version ) )
-    if module in module_seen:
+    if get_gem_download_url( module, version ) in module_seen:
         return None
     else:
         module_seen.append( get_gem_download_url( module, version ) )
@@ -229,7 +338,10 @@ def collect_pkg_full( module, req, version, **opt ):
     dev_dep = deps['development']
     run_dep = deps['runtime']
 
-    print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, q['version'], url ) )
+    if not version:
+        version = q['version']
+
+    print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, version, url ) )
     filename = re.split( r"\/", url)[-1]
     fullfilename = "%s/%s" %( opt['target'] , filename )
 
@@ -240,21 +352,10 @@ def collect_pkg_full( module, req, version, **opt ):
         if not download_file( module, url, fullfilename ):
             return None
 
-        hd = dict()
-        chkfile = "%s.%s.json" % ( fullfilename, opt['checksum'] )
-        fst = Path( fullfilename ).stat()
-        hd['01.filename'] = filename
-        hd['02.source'] = url
-        hd['03.size'] = int( fst.st_size )
-        hd['04.ctime'] = datetime.datetime.fromtimestamp( fst.st_ctime ).isoformat()
-        hd['05.mtime'] = datetime.datetime.fromtimestamp( fst.st_mtime ).isoformat()
-        hd['06.atime'] = datetime.datetime.fromtimestamp( fst.st_atime ).isoformat()
-        hd['07.checksum'] = "%s:%s" % ( opt['checksum'], file_hash( fullfilename, opt['checksum'] ) )
-        hd['10.release'] = q
+        hd = get_checksum_info( opt['target'], filename, url, q, opt['checksum'] )
 
-        if not Path( chkfile ).exists():
-            print( "# [ %s ] [ checksum ] %s -> %s  " % ( module, fullfilename, chkfile ) )
-            write_file( chkfile, [ hd ] )
+        if not write_checksum_info( module, opt['target'], filename, hd, opt['checksum'] ):
+            print("ERROR: Could not write checksum file %s" % ( chkfile ))
 
         reqlist = list( dev_dep + run_dep )
 
@@ -265,8 +366,33 @@ def collect_pkg_full( module, req, version, **opt ):
                 r = re.split( r"\s", req['requirements'] )
                 collect_pkg_full( req['name'], r[0], r[1] , **opt )
 
-    return None
+    return True
 
+def write_checksum_info( module, target, filename, hd, checksum ):
+    fullfilename = "%s/%s" %( target, filename )
+    chkfile = "%s.%s.json" % ( fullfilename, checksum )
+
+    if not Path( chkfile ).exists():
+        print( "# [ %s ] [ checksum ] %s -> %s  " % ( module, fullfilename, chkfile ) )
+        write_file( chkfile, [ hd ] )
+        return True
+    return False
+
+def get_checksum_info( target, filename, url, requet, checksum ):
+    fullfilename = "%s/%s" %( target , filename )
+    chkfile = "%s.%s.json" % ( fullfilename, checksum )
+
+    hd = dict()
+    fst = Path( fullfilename ).stat()
+    hd['01.filename'] = filename
+    hd['02.source'] = url
+    hd['03.size'] = int( fst.st_size )
+    hd['04.ctime'] = datetime.datetime.fromtimestamp( fst.st_ctime ).isoformat()
+    hd['05.mtime'] = datetime.datetime.fromtimestamp( fst.st_mtime ).isoformat()
+    hd['06.atime'] = datetime.datetime.fromtimestamp( fst.st_atime ).isoformat()
+    hd['07.checksum'] = "%s:%s" % ( checksum, file_hash( fullfilename, checksum ) )
+    hd['10.release'] = requet
+    return hd
 
 def print_help( scripts ):
     print("> -c|--config <config>")
@@ -286,10 +412,10 @@ if __name__ == "__main__":
     opt['config'] = None
     opt['gemsversion'] = None
     opt['rubyversion'] = None
-
+    opt['checksum'] = "sha256"
 
     try:
-        opts, args = getopt.getopt(sys.argv, "hc:f:r:g:", ["help", "config=", "file=", "rversion=","gversion=" ])
+        opts, args = getopt.getopt(sys.argv, "hc:f:r:g:s:", ["help", "checksum=", "config=", "file=", "rversion=","gversion=" ])
     except getopt.GetoptError as err:
         # print help information and exit:
         print(err) # will print something like "option -a not recognized"
@@ -302,6 +428,8 @@ if __name__ == "__main__":
             sys.exit(0)
         elif o in ("-c", "--config"):
             opt['config'] = a
+        elif o in ("-s", "--checksum"):
+            opt['checksum'] = a
         elif o in ("-f", "--file"):
             opt['filename'] = a
         elif o in ("-r", "--rversion"):
@@ -313,6 +441,14 @@ if __name__ == "__main__":
     if Path( "gemcollect.json" ).exists():
         cfg = load_file( "gemcollect.json" )[0]
         opt['target'] = cfg['target']
+        if not opt['rubyversion'] and 'rubyversion' in cfg:
+            opt['rubyversion'] = cfg['rubyversion']
+        if not opt['gemsversion'] and 'gemsversion' in cfg:
+            opt['gemsversion'] = cfg['gemsversion']
+        if 'checksum' in cfg:
+            opt['checksum'] = cfg['checksum']
+
+
 
     target = Path( opt['target'] )
     if not target.exists():
@@ -327,8 +463,13 @@ if __name__ == "__main__":
         module = res[0]
         req = "="
         version = None
+
         if len( res ) > 1:
             if res[1]: req = res[1]
             if res[2]: version = res[2]
-        print("# ===============================================================")
-        collect_pkg_full( module, req, version, **opt )
+
+        opt['mversion'] = version
+        if opt['gemsversion'] or opt['rubyversion']:
+            pprint( collect_latest_for( module, **opt ) )
+        else:
+            collect_pkg_full( module, req, version, **opt )

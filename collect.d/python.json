@@ -1,9 +1,9 @@
 [
     { "version":"current", "url":"https://bootstrap.pypa.io/get-pip.py" },
     { "version":"3.7.0",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
-    { "version":"3.6.5",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
+    { "version":"3.6.6",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
     { "version":"3.5.5",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
     { "version":"3.4.8",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
     { "version":"3.3.7",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
-    { "version":"2.7.14", "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" }
+    { "version":"2.7.15", "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" }
 ]
