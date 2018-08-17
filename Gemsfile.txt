@@ -1,3 +1,7 @@
-bundler >= 1.9.6
-rake == 11.0.1
+bundler
+# bundler >= 1.9.6
+# rake == 11.0.1
 rails
+fluent-plugin-kafka
+fluent-plugin-netflow
+fluent-plugin-snmptrap

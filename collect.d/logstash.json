@@ -1,5 +1,5 @@
 [
-  {"version":"6.3.0","url":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.tar.gz", "signature":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.tar.gz.sha512"},
-  {"version":"6.3.0","url":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.rpm", "signature":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.rpm.sha512"},
-  {"version":"6.3.0","url":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.deb", "signature":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.deb.sha512"}
+  {"version":"6.3.2","url":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.tar.gz", "signature":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.tar.gz.sha512"},
+  {"version":"6.3.2","url":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.rpm", "signature":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.rpm.sha512"},
+  {"version":"6.3.2","url":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.deb", "signature":"https://artifacts.elastic.co/downloads/logstash/logstash-<% version %>.deb.sha512"}
 ]

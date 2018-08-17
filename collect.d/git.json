@@ -1,18 +1,18 @@
 [
   {
-    "version":"2.17.1",
+    "version":"2.18.0",
     "bsize":"8192",
     "url":"https://mirrors.edge.kernel.org/pub/software/scm/git/git-<%version%>.tar.xz",
     "signature":"https://mirrors.edge.kernel.org/pub/software/scm/git/git-<%version%>.tar.sign"
   },
   {
-    "version":"2.17.1",
+    "version":"2.18.0",
     "bsize":"8192",
     "url":"https://mirrors.edge.kernel.org/pub/software/scm/git/git-htmldocs-<%version%>.tar.xz",
     "signature":"https://mirrors.edge.kernel.org/pub/software/scm/git/git-htmldocs-<%version%>.tar.sign"
   },
   {
-    "version":"2.17.1",
+    "version":"2.18.0",
     "bsize":"8192",
     "url":"https://mirrors.edge.kernel.org/pub/software/scm/git/git-manpages-<%version%>.tar.xz",
     "signature":"https://mirrors.edge.kernel.org/pub/software/scm/git/git-manpages-<%version%>.tar.sign"

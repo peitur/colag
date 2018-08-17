@@ -1,6 +1,6 @@
 [
-  { "version":"0.8.0", "url":"https://github.com/istio/istio/releases/download/<%version%>/istio-<%version%>-linux.tar.gz" },
-  { "version":"0.8.0", "url":"https://github.com/istio/istio/releases/download/<%version%>/istio-<%version%>-osx.tar.gz" },
-  { "version":"0.8.0", "url":"https://github.com/istio/istio/releases/download/<%version%>/istio-<%version%>-win.zip" },
-  { "version":"0.8.0", "url":"https://github.com/istio/istio/archive/<%version%>.tar.gz" }
+  { "version":"1.0.0", "url":"https://github.com/istio/istio/releases/download/<%version%>/istio-<%version%>-linux.tar.gz" },
+  { "version":"1.0.0", "url":"https://github.com/istio/istio/releases/download/<%version%>/istio-<%version%>-osx.tar.gz" },
+  { "version":"1.0.0", "url":"https://github.com/istio/istio/releases/download/<%version%>/istio-<%version%>-win.zip" },
+  { "version":"1.0.0", "url":"https://github.com/istio/istio/archive/<%version%>.tar.gz" }
 ]
