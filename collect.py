@@ -175,9 +175,14 @@ if __name__ == "__main__":
             bsize = 8192
             chksum = "sha256"
             if 'checksum' in config: chksum = config['checksum']
+            if 'checksum' in xo: chksum = xo['checksum']
+
             if 'bsize' in config: bsize = int( config['bsize'] )
             if 'bsize' in xo: bsize = int( xo['bsize'] )
+
             if 'version' not in xo: xo['version'] = ""
+
+
 
             x_url =  _apply_version( xo['url'], xo['version'] )
             x_path = "%s/%s/%s" % ( config['target'], x_dir, re.split( r"\/", x_url )[-1] )
