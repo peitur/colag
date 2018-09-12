@@ -1,26 +1,26 @@
 [
   {
-    "version":"2.1.2",
+    "version":"2.1.4",
     "url":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_x86_64.dmg",
     "signature":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_SHA256SUMS"
   },
   {
-    "version":"2.1.2",
+    "version":"2.1.4",
     "url":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_x86_64.deb",
     "signature":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_SHA256SUMS"
   },
   {
-    "version":"2.1.2",
+    "version":"2.1.4",
     "url":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_x86_64.rpm",
     "signature":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_SHA256SUMS"
   },
   {
-    "version":"2.1.2",
+    "version":"2.1.4",
     "url":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_x86_64.msi",
     "signature":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_SHA256SUMS"
   },
   {
-    "version":"2.1.2",
+    "version":"2.1.4",
     "url":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_x86_64.tar.xz",
     "signature":"https://releases.hashicorp.com/vagrant/<%version%>/vagrant_<%version%>_SHA256SUMS"
   }

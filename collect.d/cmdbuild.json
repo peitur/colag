@@ -1,0 +1,6 @@
+[
+  { "version":"2.5.1", "url":"https://datapacket.dl.sourceforge.net/project/cmdbuild/<% version %>/cmdbuild-<% version %>.zip" },
+  { "version":"2.5.1", "url":"https://netcologne.dl.sourceforge.net/project/cmdbuild/<% version %>/shark-cmdbuild-<% version %>.zip" },
+  { "version":"1.5", "url":"https://netcologne.dl.sourceforge.net/project/cmdbuild/2.5.1/additional-report-libs-<% version %>.zip" },
+  { "version":"0.7.0", "url":"https://ayera.dl.sourceforge.net/project/cmdbuild/2.3.0/cmdbuild-gui-framework-<% version %>.zip" }
+]
