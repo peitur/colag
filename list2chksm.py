@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import sys,re,os,re, datetime
-import requests
-import json
+import sys
 import hashlib
-import getopt
 
 from pprint import pprint
 from pathlib import Path
