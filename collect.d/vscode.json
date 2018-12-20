@@ -1,6 +1,6 @@
 [
-  { "version":"1.23.1", "url":"https://vscode-update.azurewebsites.net/<%version%>/darwin/stable", "filename":"vscode-<%version%>.dmg" },
-  { "version":"1.23.1", "url":"https://vscode-update.azurewebsites.net/<%version%>/linux-deb-x64/stable", "filename":"vscode-<%version%>.x86_64.deb" },
-  { "version":"1.23.1", "url":"https://vscode-update.azurewebsites.net/<%version%>/linux-rpm-x64/stable", "filename":"vscode-<%version%>.x86_64.rpm" },
-  { "version":"1.23.1", "url":"https://vscode-update.azurewebsites.net/<%version%>/win32-x64/stable", "filename":"vscode-<%version%>.x86_64.msi" }
+  { "version":"1.28.2", "url":"https://vscode-update.azurewebsites.net/<%version%>/darwin/stable", "filename":"vscode-<%version%>.dmg" },
+  { "version":"1.28.2", "url":"https://vscode-update.azurewebsites.net/<%version%>/linux-deb-x64/stable", "filename":"vscode-<%version%>.x86_64.deb" },
+  { "version":"1.28.2", "url":"https://vscode-update.azurewebsites.net/<%version%>/linux-rpm-x64/stable", "filename":"vscode-<%version%>.x86_64.rpm" },
+  { "version":"1.28.2", "url":"https://vscode-update.azurewebsites.net/<%version%>/win32-x64/stable", "filename":"vscode-<%version%>.x86_64.msi" }
 ]

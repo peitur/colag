@@ -24,5 +24,7 @@
   { "url":"https://www.apache.org/dist/cassandra/KEYS", "filename":"RPM-GPG-KEY-cassandra" },
   { "url":"https://packages.cloud.google.com/yum/doc/yum-key.gpg", "filename":"RPM-GPG-KEY-Kubernetes-YUM.gpg"},
   { "url":"https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg", "filename":"RPM-GPG-KEY-Kubernetes-PKG.gpg"},
-  { "url":"https://repo.dovecot.org/DOVECOT-REPO-GPG", "filename":"RPM-GPG-KEY-Dovecot" }
+  { "url":"https://repo.dovecot.org/DOVECOT-REPO-GPG", "filename":"RPM-GPG-KEY-Dovecot" },
+  { "url":"https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey", "filename":"RPM-GPG-Gitlab1"},
+  { "url":"https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey/gitlab-gitlab-ce-3D645A26AB9FBD22.pub.gpg", "filename":"RPM-GPG-Gitlab2"}
 ]

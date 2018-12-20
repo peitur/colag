@@ -1,0 +1,12 @@
+graphite-web
+carbon
+whisper
+cairocffi
+Django
+django-tagging
+pytz
+scandir
+fontconfig
+mod_wsgi
+gunicorn
+uWSGI

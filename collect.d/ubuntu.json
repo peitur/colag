@@ -10,5 +10,12 @@
 		"version":"17.10.1",
 		"bsize":"8192",
 		"url":"http://releases.ubuntu.com/<%version%>/ubuntu-<%version%>-server-amd64.iso"
-        }
+  },
+	{
+		"skip":"True",
+		"version":"18.10",
+		"bsize":"8192",
+		"url":"http://releases.ubuntu.com/<%version%>/ubuntu-<%version%>-server-amd64.iso"
+  }
+
 ]
