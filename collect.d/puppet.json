@@ -1,14 +1,14 @@
 [
   { "version":"3.4.0", "url":"https://forge.puppet.com/v3/files/crayfishx-firewalld-<% version %>.tar.gz" },
-  { "version":"4.25.1", "url":"https://forge.puppet.com/v3/files/puppetlabs-stdlib-<% version %>.tar.gz" },
-  { "version":"3.1.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-apache-<%version%>.tar.gz" },
-  { "version":"5.4.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-postgresql-<%version%>.tar.gz" },
-  { "version":"5.3.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-mysql-<%version%>.tar.gz" },
-  { "version":"1.12.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-firewall-<%version%>.tar.gz" },
-  { "version":"1.1.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-docker-<%version%>.tar.gz" },
-  { "version":"7.1.1", "url":"https://forge.puppet.com/v3/files/puppetlabs-ntp-<%version%>.tar.gz" },
-  { "version":"1.3.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-accounts-<%version%>.tar.gz" },
-  { "version":"0.11.0", "url":"https://forge.puppet.com/v3/files/puppet-nginx-<%version%>.tar.gz" },
-  { "version":"5.1.0", "url":"https://forge.puppet.com/v3/files/puppet-kafka-<%version%>.tar.gz" },
-  { "version":"3.57.0", "url":"https://forge.puppet.com/v3/files/ghoneycutt-ssh-<%version%>.tar.gz" }
+  { "version":"5.1.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-stdlib-<% version %>.tar.gz" },
+  { "version":"3.5.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-apache-<%version%>.tar.gz" },
+  { "version":"5.11.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-postgresql-<%version%>.tar.gz" },
+  { "version":"7.0.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-mysql-<%version%>.tar.gz" },
+  { "version":"1.14.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-firewall-<%version%>.tar.gz" },
+  { "version":"3.1.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-docker-<%version%>.tar.gz" },
+  { "version":"7.3.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-ntp-<%version%>.tar.gz" },
+  { "version":"3.1.0", "url":"https://forge.puppet.com/v3/files/puppetlabs-accounts-<%version%>.tar.gz" },
+  { "version":"0.15.0", "url":"https://forge.puppet.com/v3/files/puppet-nginx-<%version%>.tar.gz" },
+  { "version":"5.3.0", "url":"https://forge.puppet.com/v3/files/puppet-kafka-<%version%>.tar.gz" },
+  { "version":"3.58.0", "url":"https://forge.puppet.com/v3/files/ghoneycutt-ssh-<%version%>.tar.gz" }
 ]

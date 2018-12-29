@@ -1,3 +1,3 @@
 [
-  { "version":"1.12.0", "url":"https://github.com/minishift/minishift-centos-iso/releases/download/v<% version %>/minishift-centos7.iso" }
+  { "version":"1.13.0", "url":"https://github.com/minishift/minishift-centos-iso/releases/download/v<% version %>/minishift-centos7.iso" }
 ]
