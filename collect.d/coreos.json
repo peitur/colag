@@ -4,5 +4,17 @@
     "bsize":"8192",
     "url":"https://stable.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso",
     "filename":"coreos_production_iso_image-v<% version %>.iso"
+  },
+  {
+    "version":"1967.3.0",
+    "bsize":"8192",
+    "url":"https://stable.release.core-os.net/amd64-usr/current/coreos_production_vagrant.box",
+    "filename":"coreos_production_vagrant-v<% version %>.box"
+  },
+  {
+    "version":"1967.3.0",
+    "bsize":"8192",
+    "url":"https://stable.release.core-os.net/amd64-usr/current/coreos_production_virtualbox_image.vmdk.bz2",
+    "filename":"coreos_production_virtualbox_image-v<% version %>.vmdk.bz2"
   }
 ]

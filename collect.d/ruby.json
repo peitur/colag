@@ -1,5 +1,5 @@
 [
-	{ "version":"2.6.0",  "url":"https://cache.ruby-lang.org/pub/ruby/2.6/ruby-<%version%>.tar.bz2" },
+	{ "version":"2.6.1",  "url":"https://cache.ruby-lang.org/pub/ruby/2.6/ruby-<%version%>.tar.bz2" },
 	{ "version":"2.5.3",  "url":"https://cache.ruby-lang.org/pub/ruby/2.5/ruby-<%version%>.tar.bz2" },
 	{ "version":"2.4.5",  "url":"https://cache.ruby-lang.org/pub/ruby/2.4/ruby-<%version%>.tar.bz2" },
 	{ "version":"2.3.7",  "url":"https://cache.ruby-lang.org/pub/ruby/2.3/ruby-<%version%>.tar.bz2" },
