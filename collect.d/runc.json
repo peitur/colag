@@ -1,6 +1,6 @@
 [
   {
-    "version":"1.0.0-rc5",
+    "version":"1.0.0-rc6",
     "url":"https://github.com/opencontainers/runc/releases/download/v<%version%>/runc.amd64",
     "signature":"https://github.com/opencontainers/runc/releases/download/v<%version%>/runc.sha256sum"
   }

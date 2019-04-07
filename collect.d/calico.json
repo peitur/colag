@@ -13,6 +13,16 @@
   {"version":"3.2.4","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-darwin-amd64","filename":"calicoctl-darwin-amd64-<%version%>"},
   {"version":"3.2.4","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-linux-amd64","filename":"calicoctl-linux-amd64-<%version%>"},
   {"version":"3.2.4","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-windows-amd64.exe","filename":"calicoctl-windows-amd64-<%version%>.exe"},
-  {"version":"3.2.4","url":"https://github.com/projectcalico/calicoctl/archive/v<%version%>.tar.gz"}
+  {"version":"3.2.4","url":"https://github.com/projectcalico/calicoctl/archive/v<%version%>.tar.gz"},
+  {"version":"3.4.0","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl","filename":"calicoctl-<%version%>"},
+  {"version":"3.4.0","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-darwin-amd64","filename":"calicoctl-darwin-amd64-<%version%>"},
+  {"version":"3.4.0","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-linux-amd64","filename":"calicoctl-linux-amd64-<%version%>"},
+  {"version":"3.4.0","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-windows-amd64.exe","filename":"calicoctl-windows-amd64-<%version%>.exe"},
+  {"version":"3.4.0","url":"https://github.com/projectcalico/calicoctl/archive/v<%version%>.tar.gz"},
+  {"version":"3.5.3","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl","filename":"calicoctl-<%version%>"},
+  {"version":"3.5.3","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-darwin-amd64","filename":"calicoctl-darwin-amd64-<%version%>"},
+  {"version":"3.5.3","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-linux-amd64","filename":"calicoctl-linux-amd64-<%version%>"},
+  {"version":"3.5.3","url":"https://github.com/projectcalico/calicoctl/releases/download/v<%version%>/calicoctl-windows-amd64.exe","filename":"calicoctl-windows-amd64-<%version%>.exe"},
+  {"version":"3.5.3","url":"https://github.com/projectcalico/calicoctl/archive/v<%version%>.tar.gz"}
 
 ]

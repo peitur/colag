@@ -1,9 +1,9 @@
 [
-	{ "version":"10.13.0", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>.pkg" },
-	{ "version":"10.13.0", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-darwin-x64.tar.gz" },
-	{ "version":"10.13.0", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-linux-x64.tar.xz"},
-	{ "version":"10.13.0", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-linux-armv6l.tar.xz"},
-	{ "version":"10.13.0", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-linux-armv7l.tar.xz" },
-	{ "version":"10.13.0", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-linux-arm64.tar.xz" },
-	{ "version":"10.13.0", "url":"https://nodejs.org/dist/v<%version%>/SHASUMS256.txt.asc" }
+	{ "version":"10.15.3", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>.pkg" },
+	{ "version":"10.15.3", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-darwin-x64.tar.gz" },
+	{ "version":"10.15.3", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-linux-x64.tar.xz"},
+	{ "version":"10.15.3", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-linux-armv6l.tar.xz"},
+	{ "version":"10.15.3", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-linux-armv7l.tar.xz" },
+	{ "version":"10.15.3", "url":"https://nodejs.org/dist/v<%version%>/node-v<%version%>-linux-arm64.tar.xz" },
+	{ "version":"10.15.3", "url":"https://nodejs.org/dist/v<%version%>/SHASUMS256.txt.asc" }
 ]

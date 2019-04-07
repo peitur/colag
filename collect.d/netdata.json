@@ -1,5 +1,5 @@
 [{
-    "version":"1.10.0",
+    "version":"1.12.2",
     "url":"https://github.com/firehol/netdata/releases/download/v<% version %>/netdata-<% version %>.tar.bz2",
     "signature":"https://github.com/firehol/netdata/releases/download/v<% version %>/netdata-<% version %>.tar.bz2.asc"
 }]

@@ -1,14 +1,14 @@
 [
 	{
-		"version":"2.5.0",
+		"version":"2.6.0",
 		"url":"https://github.com/prometheus/prometheus/releases/download/v<%version%>/prometheus-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.15.2",
+		"version":"0.15.3",
 		"url":"https://github.com/prometheus/alertmanager/releases/download/v<%version%>/alertmanager-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.12.0",
+		"version":"0.13.0",
 		"url":"https://github.com/prometheus/blackbox_exporter/releases/download/v<%version%>/blackbox_exporter-<%version%>.linux-amd64.tar.gz"
 	},
 	{
@@ -16,7 +16,7 @@
 		"url":"https://github.com/prometheus/consul_exporter/releases/download/v<%version%>/consul_exporter-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.3.0",
+		"version":"0.4.2",
 		"url":"https://github.com/prometheus/graphite_exporter/releases/download/v<%version%>/graphite_exporter-<%version%>.linux-amd64.tar.gz"
 	},
 	{
@@ -32,15 +32,15 @@
 		"url":"https://github.com/prometheus/mysqld_exporter/releases/download/v<%version%>/mysqld_exporter-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.17.0-rc.0",
+		"version":"0.17.0",
 		"url":"https://github.com/prometheus/node_exporter/releases/download/v<%version%>/node_exporter-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.6.0",
+		"version":"0.7.0",
 		"url":"https://github.com/prometheus/pushgateway/releases/download/v<%version%>/pushgateway-<%version%>.linux-amd64.tar.gz"
 	},
 	{
-		"version":"0.8.0",
+		"version":"0.8.1",
 		"url":"https://github.com/prometheus/statsd_exporter/releases/download/v<%version%>/statsd_exporter-<%version%>.linux-amd64.tar.gz"
 	}
 ]

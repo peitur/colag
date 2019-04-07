@@ -1,37 +1,37 @@
 [
   {
-    "version":"0.30.0",
+    "version":"0.33.1",
     "url":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/docker-machine-driver-hyperkit",
     "filename":"docker-machine-driver-hyperkit-<%version%>"
   },{
-    "version":"0.30.0",
+    "version":"0.33.1",
     "url":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/docker-machine-driver-kvm2",
     "filename":"docker-machine-driver-kvm2-<%version%>"
   },{
-    "version":"0.30.0",
+    "version":"0.33.1",
     "url":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/localkube",
     "filename":"localkube-<%version%>",
     "signature":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/localkube.sha256"
   },{
-    "version":"0.30.0",
+    "version":"0.33.1",
     "url":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/minikube-darwin-amd64",
     "filename":"minikube-darwin-amd64-<%version%>",
     "signature":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/minikube-darwin-amd64.sha256"
   },{
-    "version":"0.30.0",
+    "version":"0.33.1",
     "url":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/minikube-installer.exe",
     "filename":"minikube-installer-<%version%>.exe"
   },{
-    "version":"0.30.0",
+    "version":"0.33.1",
     "url":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/minikube-linux-amd64",
     "filename":"minikube-linux-amd64-<%version%>",
     "signature":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/minikube-linux-amd64.sha256"
   },{
-    "version":"0.30.0",
+    "version":"0.33.1",
     "url":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/minikube-windows-amd64",
     "filename":"minikube-windows-amd64-<%version%>"
   },{
-    "version":"0.30.0",
+    "version":"0.33.1",
     "url":"https://github.com/kubernetes/minikube/releases/download/v<%version%>/minikube_0.27-0.deb",
     "filename":"minikube-<%version%>.deb"
   }
