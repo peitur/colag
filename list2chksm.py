@@ -6,6 +6,8 @@ import traceback
 from pprint import pprint
 from pathlib import Path
 
+SUPPORTED_CHECKSUM=("md5", "sha1", "sha224", "sha256", "sha384","sha512")
+
 ################################################################################
 ## Hashing large files
 ################################################################################
@@ -15,7 +17,7 @@ def data_hash( buffer, **opt ):
     if 'checksum' in opt:
         chksum = opt['checksum']
 
-    if chksum in ("md5", "sha1", "sha224", "sha256", "sha384","sha512"):
+    if chksum in SUPPORTED_CHECKSUM:
         if chksum == "md5":
             hasher = hashlib.md5()
         elif chksum == "sha1":
@@ -96,6 +98,9 @@ if __name__ == "__main__":
 
     if len( sys.argv ) > 0:
         opt['checksum'] = sys.argv.pop(0)
+
+    if opt['checksum'] not in SUPPORTED_CHECKSUM:
+        raise AttributeError("Unsupported checksum %s, must be one of [%s]" % ( opt['checksum'], ",".join(SUPPORTED_CHECKSUM) ) )
 
     for x in load_file( data_hash, **opt ):
         print("%s %s" % ( x[0], x[1] ) )
