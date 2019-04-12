@@ -181,17 +181,19 @@ def mk_temp_dir( root="/tmp" ):
 def collect_pkg_full( module, **opt ):
     module = module.lstrip().rstrip()
 
+    if len( module ) == 0:
+        return None
+
     if module in module_seen:
         return None
     else:
         module_seen.append( module )
 
-    q = get_crates_url( module )
-    if not q:
-        return None
 
-    if 'detail' in q:
-        raise RuntimeError("Reply for %s was: %s" % ( module, q['detail'] ) )
+    q = get_request( module, get_crates_url( module ))
+    if not q:
+        pprint( q )
+        return None
 
     latest = dict()
     links = dict()
@@ -199,15 +201,13 @@ def collect_pkg_full( module, **opt ):
         latest = q['versions'][0]
         links = latest['links']
         version = latest['num']
-        dl_url = lates['dl_path']
-
-
-        print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, version, dl_url ) )
-        filename = "%s-%s.create" % (module, version)
+        url = get_crates_dl_url( module, version )
+        print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, version, url ) )
+        filename = "%s-%s.crate" % (module, version)
         fullfilename = "%s/%s" %( opt['target'] , filename )
 
         if not Path( fullfilename ).exists():
-            url = get_crates_dl_url( module, version )
+
             if not download_file( module, url, fullfilename ):
                 return None
 
@@ -227,9 +227,8 @@ def collect_pkg_full( module, **opt ):
                 print( "# [ %s ] [ checksum ] %s -> %s  " % ( module, fullfilename, chkfile ) )
                 write_file( chkfile, [ hd ] )
 
-
-        reqlist = links['dependencies']
-
+        reqlist_raw = get_request( module, "https://crates.io%s" %( links['dependencies']))
+        reqlist = [ x['crate_id'] for x in reqlist_raw['dependencies'] ]
         if len( reqlist ) > 0:
             for req in reqlist:
 
@@ -247,7 +246,7 @@ if __name__ == "__main__":
     opt = dict()
 
     opt['script'] = sys.argv.pop(0)
-    opt['filename'] = "requirements.txt"
+    opt['filename'] = "trailer.txt"
     opt['target'] = "trailer"
     opt['config'] = None
     opt['checksum'] = "sha256"
@@ -255,8 +254,8 @@ if __name__ == "__main__":
     if len( sys.argv ) > 0:
         opt['filename'] = sys.argv.pop(0)
 
-    if Path( "pipjig.json" ).exists():
-        cfg = load_file( "pipjig.json" )[0]
+    if Path( "trailer.json" ).exists():
+        cfg = load_file( "trailer.json" )[0]
         opt['target'] = cfg['target']
 
     target = Path( opt['target'] )
@@ -273,6 +272,5 @@ if __name__ == "__main__":
 
 
     modules = load_file( opt['filename'] )
-
     for module in modules:
         collect_pkg_full( module, **opt )
