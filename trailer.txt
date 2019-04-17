@@ -3,3 +3,4 @@ serde
 indexmap
 itoa
 ryu
+regex
