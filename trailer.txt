@@ -4,3 +4,6 @@ indexmap
 itoa
 ryu
 regex
+sha2
+json
+yaml
