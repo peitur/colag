@@ -1,4 +1,4 @@
 [{
-    "version":"5.0.3",
+    "version":"5.0.5",
     "url":"http://download.redis.io/releases/redis-<% version %>.tar.gz"
 }]
