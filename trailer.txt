@@ -16,3 +16,4 @@ failure
 chrono
 rayon
 crossbeam
+inotify
