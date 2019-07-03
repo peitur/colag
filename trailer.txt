@@ -13,3 +13,6 @@ getopts
 log
 unix-socket
 failure
+chrono
+rayon
+crossbeam
