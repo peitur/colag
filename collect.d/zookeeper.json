@@ -1,4 +1,10 @@
-[{
+[
+{
     "version":"3.5.5",
-    "url":"http://apache.mirrors.spacedump.net/zookeeper/zookeeper-<% version %>/zookeeper-<% version %>.tar.gz"
-}]
+    "url":"http://apache.mirrors.spacedump.net/zookeeper/zookeeper-<% version %>/apache-zookeeper-<% version %>-bin.tar.gz"
+},
+{
+    "version":"3.5.5",
+    "url":"http://apache.mirrors.spacedump.net/zookeeper/zookeeper-<% version %>/apache-zookeeper-<% version %>.tar.gz"
+}
+]

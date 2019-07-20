@@ -1,7 +1,7 @@
 [
-  { "version":"0.9.10", "url":"https://launchpad.net/graphite/0.9/<% version %>/+download/graphite-web-<% version %>.tar.gz"},
-  { "version":"0.9.10", "url":"https://launchpad.net/graphite/0.9/<% version %>/+download/carbon-<% version %>.tar.gz"},
-  { "version":"0.9.10", "url":"https://launchpad.net/graphite/0.9/<% version %>/+download/whisper-<% version %>.tar.gz"},
-  { "version":"0.9.10", "url":"https://launchpad.net/graphite/0.9/<% version %>/+download/check-dependencies.py", "filename":"check-dependencies-<% version %>.py"}
+  { "version":"1.1.5", "url":"https://launchpad.net/graphite/0.9/<% version %>/+download/graphite-web-<% version %>.tar.gz"},
+  { "version":"1.1.5", "url":"https://launchpad.net/graphite/0.9/<% version %>/+download/carbon-<% version %>.tar.gz"},
+  { "version":"1.1.5", "url":"https://launchpad.net/graphite/0.9/<% version %>/+download/whisper-<% version %>.tar.gz"},
+  { "version":"1.1.5", "url":"https://launchpad.net/graphite/0.9/<% version %>/+download/check-dependencies.py", "filename":"check-dependencies-<% version %>.py"}
 
 ]
