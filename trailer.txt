@@ -18,3 +18,4 @@ rayon
 crossbeam
 tokio
 futures
+inotify
