@@ -1,11 +1,11 @@
 [
   {
-    "version":"1.4.0",
+    "version":"1.5.2",
     "url":"https://releases.hashicorp.com/consul/<%version%>/consul_<%version%>_darwin_amd64.zip",
     "signature":"https://releases.hashicorp.com/consul/<%version%>/consul_<%version%>_SHA256SUMS"
   },
   {
-    "version":"1.4.0",
+    "version":"1.5.2",
     "url":"https://releases.hashicorp.com/consul/<%version%>/consul_<%version%>_linux_amd64.zip",
     "signature":"https://releases.hashicorp.com/consul/<%version%>/consul_<%version%>_SHA256SUMS"
   }

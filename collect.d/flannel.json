@@ -1,0 +1,19 @@
+[
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flannel-v<% version %>-linux-amd64.tar.gz" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flannel-v<% version %>-linux-arm.tar.gz" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flannel-v<% version %>-linux-arm64.tar.gz" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flannel-v<% version %>-linux-ppc64le.tar.gz" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flannel-v<% version %>-linux-s390x.tar.gz" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flannel-v<% version %>-windows-amd64.tar.gz" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-v<% version %>-amd64.docker" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-v<% version %>-arm.docker" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-v<% version %>-arm64.docker" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-v<% version %>-ppc64le.docker" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-v<% version %>-s390x.docker" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld.exe", "filename": "flanneld-v<% version %>.exe" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-amd64", "filename": "flanneld-v<% version %>-amd64" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-ppc64le","filename": "flanneld-v<% version %>-ppc64le" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-arm", "filename": "flanneld-v<% version %>-arm"},
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-arm64", "filename": "flanneld-v<% version %>-arm64" },
+  { "version":"0.11.0", "bsize":"8192", "url":"https://github.com/coreos/flannel/releases/download/v<% version %>/flanneld-s390x", "filename": "flanneld-v<% version %>-s390x"}
+]

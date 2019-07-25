@@ -1,0 +1,17 @@
+[
+  {
+    "version":"3.3.13",
+    "bsize":"8192",
+    "url":"https://github.com/etcd-io/etcd/releases/download/v<% version %>/etcd-v<% version %>-darwin-amd64.zip"
+  },
+  {
+    "version":"3.3.13",
+    "bsize":"8192",
+    "url":"https://github.com/etcd-io/etcd/releases/download/v<% version %>/etcd-v<% version %>-linux-amd64.tar.gz"
+  },
+  {
+    "version":"3.3.13",
+    "bsize":"8192",
+    "url":"https://github.com/etcd-io/etcd/releases/download/v<% version %>/etcd-v<% version %>-linux-arm64.tar.gz"
+  }
+]
