@@ -193,7 +193,7 @@ if __name__ == "__main__":
             try:
                 download_file( x_dir, x_url, x_path, bsize=bsize )
             except Exception as e:
-                print( "# EXCEPTION: Failed to download %s to %s: " % ( x_url, x_path, e ) )
+                print( "# EXCEPTION: Failed to download %s to %s: %s" % ( x_url, x_path, e ) )
                 pprint( e )
 
             if not Path( x_path ).exists():
