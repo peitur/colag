@@ -7,6 +7,7 @@ ansible
 ansible-vagrant
 arun-cassandra-driver
 awscli
+boto3
 bcrypt
 blinker
 bumpversion
