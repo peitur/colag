@@ -110,7 +110,16 @@ def versions_over( vlist, version ):
             res.append( x )
     return res
 
+def versions_exact( vlist, version ):
+    if version not in vlist:
+        raise AttributeError("Version %s not in version list!" % ( version ) )
 
+    v = Version( version )
+    res = list()
+    for x in sorted( vlist ):
+        if v == x:
+            res.append( x )
+    return res
 
 
 if __name__ == "__main__":
@@ -134,14 +143,6 @@ if __name__ == "__main__":
     print("32: %s" % ( ao1 >= b3 ) )
 
 
-    for x in data:
-        print("----------------------------")
-        print( x )
-        for e in parse_product( x ) :
-            if len( e ) > 0:
-                pprint( e )
-
-        print("----------------------------")
 
     print("----------------------------")
     version1 = "1.3.3"
@@ -154,3 +155,16 @@ if __name__ == "__main__":
     print("looking for post-%s" % ( version2 ) )
     pprint( versions_over( prod, version2 ) )
     print("----------------------------")
+    version3 = "1.3.3"
+    pprint("Versions: %s" % ( ", ".join(prod)) )
+    print("looking for post-%s" % ( version3 ) )
+    pprint( versions_exact( prod, version3 ) )
+    print("----------------------------")
+
+    for x in data:
+        print("----------------------------")
+        print( x )
+        for e in parse_product( x ) :
+            if len( e ) > 0:
+                pprint( e )
+        print("----------------------------")
