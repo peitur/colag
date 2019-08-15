@@ -178,6 +178,21 @@ def rmdir_tree( path ):
 def mk_temp_dir( root="/tmp" ):
     return "%s/crate_%s" % ( root, random_string( 6 ) )
 
+def get_versions_index( module, **opt ):
+    res = dict()
+    module = module.lstrip().rstrip()
+    q = get_request( module, get_crates_url( module ))
+
+    if not q:
+        pprint( q )
+        return None
+
+    if 'versions' in q:
+        for x in q['versions']:
+            res[ q['versions']['num'] ] = x
+
+    return res
+
 def collect_pkg_full( module, **opt ):
     module = module.lstrip().rstrip()
 
@@ -188,7 +203,6 @@ def collect_pkg_full( module, **opt ):
         return None
     else:
         module_seen.append( module )
-
 
     q = get_request( module, get_crates_url( module ))
     if not q:
