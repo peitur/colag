@@ -83,7 +83,7 @@ def parse_product( s ):
         if len( m[0] ) > 1:
            parts = re.split( r",", m[0][1] )
            for p in parts:
-               n = re.findall( r"([<>=!]+)([0-9\.]+)", p )
+               n = re.findall( r"([<>=!]+)([0-9\.a-zA-Z]+)", p )
                if n:
                    res.append( n[0] )
     return res
@@ -122,15 +122,10 @@ def versions_exact( vlist, version ):
             res.append( x )
     return res
 
-def mycmp(version1, version2):
-    def normalize(v):
-        return [int(x) for x in re.sub(r'(\.0+)*$','', v).split(".")]
-    return cmp(normalize(version1), normalize(version2))
-
 if __name__ == "__main__":
 
-    prod = ["1.0.0","1.0.1","1.0.2","1.1.0","1.1.1","1.2.0","1.3.0","1.3.3","1.3.4","1.6.0","2.0.1","2.2.0","2.5.2",]
-    data = ["test","test==1.0.2", "test>=1.0.0", "test<2.0.1", "test>=1.0.1,<=1.3.4"]
+    prod = ["1.0.0","1.0.1","1.0.2","1.1.0","1.1.1","1.2.0","1.3.0","1.3.3","1.3.4r","1.6.0","2.0.1","2.2.0","2.5.2",]
+    data = ["test","test==1.0.2", "test>=1.0.0", "test<2.0.1", "test>=1.0.1,<=1.3.4r"]
 
     a1 = Version("1.2.3.4")
     b1 = Version("1.2.3.4")
