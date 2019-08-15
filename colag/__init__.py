@@ -124,7 +124,7 @@ def versions_exact( vlist, version ):
 def versions_stable( vlist ):
     res = list()
     for x in sorted( vlist ):
-        if not re.match( r"(.*rc[0-9])|(.*[ab]+[0-9])+", x ):
+        if not re.match( r"(.*rc[0-9]*)|(.*[ab]+[0-9]+)", x ):
             res.append( x )
     return res
 
