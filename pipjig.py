@@ -284,16 +284,25 @@ def collect_pkg_full( requirement, **opt ):
     for e in versions:
         if len( e ) > 0:
             try:
+
                 v = colag.Version( e[1] )
                 if e[0] in ("=="):
                     prd = colag.versions_exact( prd, v )
                     version_select = prd[-1]
-                if e[0] in (">", ">="):
-                    prd = colag.versions_over( prd, v )
+                elif e[0] in (">"):
+                    prd = colag.versions_over( prd, v, False )
                     version_select = prd[-1]
-                if e[0] in ("<", "<="):
-                    prd = colag.versions_under( prd, v )
+                elif e[0] in (">="):
+                    prd = colag.versions_over( prd, v, True )
                     version_select = prd[-1]
+                elif e[0] in ("<"):
+                    prd = colag.versions_under( prd, v, False )
+                    version_select = prd[-1]
+                elif e[0] in ("<="):
+                    prd = colag.versions_under( prd, v, True )
+                    version_select = prd[-1]
+                else:
+                    raise AttributeError("Unsupported comparison operation %s" % ( e[0] ) )
             except Exception as err:
                 print( "ERROR: Failed on %s with : %s"% ( e, err ) )
                 raise
