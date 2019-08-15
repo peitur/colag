@@ -83,12 +83,14 @@ def parse_product( s ):
                 if n:
                     res.append( n[0] )
         else:
-            return s
-    return (m[0][0], res)
-
+            return (m[0][0], res)
+    if len( m ) > 0:
+        return (m[0][0], res)
+    else:
+        return (s, res)
 def versions_under( vlist, version, eq = False ):
-    if str(version) not in vlist:
-        raise AttributeError("Version %s not in version list!" % ( version ) )
+#    if str(version) not in vlist:
+#        raise AttributeError("Version %s not in version list!" % ( version ) )
 
     v = version
     res = list()
@@ -104,8 +106,8 @@ def versions_under( vlist, version, eq = False ):
 
 
 def versions_over( vlist, version, eq = False ):
-    if str(version) not in vlist:
-        raise AttributeError("Version %s not in version list!" % ( version ) )
+#    if str(version) not in vlist:
+#        raise AttributeError("Version %s not in version list!" % ( version ) )
 
     v = version
     res = list()
@@ -120,8 +122,8 @@ def versions_over( vlist, version, eq = False ):
     return res
 
 def versions_exact( vlist, version ):
-    if str(version) not in vlist:
-        raise AttributeError("Version %s not in version list!" % ( version ) )
+#    if str(version) not in vlist:
+#        raise AttributeError("Version %s not in version list!" % ( version ) )
 
     v = version
     res = list()
