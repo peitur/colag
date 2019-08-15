@@ -36,16 +36,47 @@ def get_request( proj, url , **opt ):
 
 
 if __name__ == "__main__":
-    
+
+    requirement = "Django<=1.9.1"
+    requirement = "Django>=1.9.1,<=2.2.3"
+    #requirement = "Django"
+
+    module, versions =  colag.parse_product( requirement )
+
     q = get_request( module, "https://pypi.python.org/pypi/%s/json" % ( module ) )
     if not q:
-        return None
+        raise
 
     info = q['info']
     releases = q['releases']
     urls = q['urls']
 
-    pprint( releases )
+#    prd = [ colag.Version( x ) for x in list( releases.keys() ) ]
+    prd = colag.versions_stable( list( releases.keys() ) )
+    pprint( prd )
+    pprint( versions )
+
+    last_rel = list( releases.keys() )[-1]
+    pprint( last_rel )
+    pprint( releases[ last_rel ] )
+
+    for e in versions:
+        pprint( e )
+        if len( e ) > 0:
+            try:
+                v = colag.Version( e[1] )
+                if e[0] in ("=="):
+                    prd = colag.versions_exact( prd, v )
+                    pprint( prd[-1] )
+                if e[0] in (">", ">="):
+                    prd = colag.versions_over( prd, v )
+                    pprint( prd[-1] )
+                if e[0] in ("<", "<="):
+                    prd = colag.versions_under( prd, v )
+                    pprint( prd[-1] )
+            except Exception as err:
+                print( "ERROR: Failed on %s with : %s"% ( e, err ) )
+                raise
 
 
 if __name__ == "__mainx__":
