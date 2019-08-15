@@ -6,6 +6,7 @@ import json
 import hashlib, random, string
 import getopt
 import tarfile, zipfile
+import colag
 
 from pprint import pprint
 from pathlib import Path
@@ -262,14 +263,13 @@ def rmdir_tree( path ):
 def mk_temp_dir( root="/tmp" ):
     return "%s/py_%s" % ( root, random_string( 6 ) )
 
-def collect_pkg_full( module, **opt ):
-    module = module.lstrip().rstrip()
+def collect_pkg_full( requirement, **opt ):
+    module, versions =  colag.parse_product( requirement.lstrip().rstrip() )
 
     if module in module_seen:
         return None
     else:
         module_seen.append( module )
-
 
     q = get_request( module, "https://pypi.python.org/pypi/%s/json" % ( module ) )
     if not q:
@@ -279,8 +279,31 @@ def collect_pkg_full( module, **opt ):
     releases = q['releases']
     urls = q['urls']
 
-    for u in releases[ info['version'] ]:
-        print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, info['version'], u['url'] ) )
+    prd = colag.versions_stable( list( releases.keys() ) )
+    version_select = None
+    for e in versions:
+        if len( e ) > 0:
+            try:
+                v = colag.Version( e[1] )
+                if e[0] in ("=="):
+                    prd = colag.versions_exact( prd, v )
+                    version_select = prd[-1]
+                if e[0] in (">", ">="):
+                    prd = colag.versions_over( prd, v )
+                    version_select = prd[-1]
+                if e[0] in ("<", "<="):
+                    prd = colag.versions_under( prd, v )
+                    version_select = prd[-1]
+            except Exception as err:
+                print( "ERROR: Failed on %s with : %s"% ( e, err ) )
+                raise
+
+    if len( versions ) == 0 and not version_select:
+        version_select = info['version']
+
+#    for u in releases[ info['version'] ]:
+    for u in releases[ version_select ]:
+        print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, version_select, u['url'] ) )
         filename = re.split( r"\/", u['url'])[-1]
         fullfilename = "%s/%s" %( opt['target'] , filename )
 
