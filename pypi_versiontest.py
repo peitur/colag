@@ -1,12 +1,54 @@
 #!/usr/bin/env python3
 
-import os, sys, re
+import sys,re,os,re, datetime
+import requests
+import json
+import hashlib, random, string
+import getopt
+import tarfile, zipfile
+
 from pprint import pprint
+from pathlib import Path
 
 import colag
 
 
+def get_request( proj, url , **opt ):
+    x_size = 0
+    l_size = 0
+    r_size = 0
+    bsize=1024
+    overwrite = False
+    timeout = 10
+
+    if 'bsize' in opt: bsize = opt['bsize']
+    if 'timeout' in opt: timeout = opt['timeout']
+
+    r = requests.get( url, timeout=timeout )
+    if 'content-length' in r.headers:
+        r_size = r.headers['content-length']
+
+    if r.status_code != 200:
+        print("# ERROR: Could not find %s,  %s : " % ( url, r.status_code ) )
+        return None
+
+    return r.json()
+
+
 if __name__ == "__main__":
+    
+    q = get_request( module, "https://pypi.python.org/pypi/%s/json" % ( module ) )
+    if not q:
+        return None
+
+    info = q['info']
+    releases = q['releases']
+    urls = q['urls']
+
+    pprint( releases )
+
+
+if __name__ == "__mainx__":
 
     prod = ["1.0.0","1.0.1","1.0.2","1.1.0","1.1.1","1.2.0","1.3.0","1.3.3","1.3.4r","1.6.0","2.0.1","2.2.0","2.5.2",]
     data = ["test","test==1.0.2", "test>=1.0.0", "test<2.0.1", "test>=1.0.1,<=1.3.4r"]
