@@ -130,7 +130,7 @@ def mycmp(version1, version2):
 if __name__ == "__main__":
 
     prod = ["1.0.0","1.0.1","1.0.2","1.1.0","1.1.1","1.2.0","1.3.0","1.3.3","1.3.4","1.6.0","2.0.1","2.2.0","2.5.2",]
-    data = ["test","test==1.0.0", "test>=1.0.0", "test<2.0.0", "test>=1.2.1,<=2.0.0"]
+    data = ["test","test==1.0.2", "test>=1.0.0", "test<2.0.1", "test>=1.0.1,<=1.3.4"]
 
     a1 = Version("1.2.3.4")
     b1 = Version("1.2.3.4")
@@ -169,7 +169,18 @@ if __name__ == "__main__":
     for x in data:
         print("----------------------------")
         print( x )
-        for e in parse_product( x ) :
+        prd = prod
+        for e in parse_product( x ):
+            pprint( e )
             if len( e ) > 0:
-                pprint( e )
+                if e[0] in ("=="):
+                    prd = versions_exact( prd, e[1] )
+                    pprint( prd[-1] )
+                if e[0] in (">", ">="):
+                    prd = versions_over( prd, e[1] )
+                    pprint( prd[-1] )
+                if e[0] in ("<", "<="):
+                    prd = versions_under( prd, e[1] )
+                    pprint( prd[-1] )
+
         print("----------------------------")
