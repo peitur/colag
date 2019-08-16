@@ -266,10 +266,10 @@ def mk_temp_dir( root="/tmp" ):
 def collect_pkg_full( requirement, **opt ):
     module, versions =  colag.parse_product( requirement.lstrip().rstrip() )
 
-    if module in module_seen:
+    if requirement in module_seen:
         return None
     else:
-        module_seen.append( module )
+        module_seen.append( requirement )
 
     q = get_request( module, "https://pypi.python.org/pypi/%s/json" % ( module ) )
     if not q:
