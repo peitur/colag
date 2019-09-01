@@ -1,0 +1,3 @@
+[
+	{ "version":"2.2.4", "url":"https://github.com/django/django/archive/master.tar.gz", "filename":"django-<% version %>.tar.gz" }
+]
