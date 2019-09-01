@@ -89,7 +89,6 @@ def parse_product( s ):
     else:
         return (s, res)
 
-        
 def versions_under( vlist, version, eq = False ):
 #    if str(version) not in vlist:
 #        raise AttributeError("Version %s not in version list!" % ( version ) )

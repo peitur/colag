@@ -1,10 +1,10 @@
 
 
 [
-  {"version":"1.1.1", "url":"https://raw.githubusercontent.com/JuliaLang/docs.julialang.org/assets/julia-<% version %>.pdf"},
-  {"version":"1.1.1", "url":"https://julialang-s3.julialang.org/bin/mac/x64/1.1/julia-<% version %>-mac64.dmg"},
-  {"version":"1.1.1", "url":"https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-<% version %>-linux-x86_64.tar.gz", "signature":"https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-<% version %>-linux-x86_64.tar.gz.asc"},
-  {"version":"1.1.1", "url":"https://julialang-s3.julialang.org/bin/freebsd/x64/1.1/julia-<% version %>-freebsd-x86_64.tar.gz", "signature":"https://julialang-s3.julialang.org/bin/freebsd/x64/1.1/julia-<% version %>-freebsd-x86_64.tar.gz.asc"},
-  {"version":"1.1.1", "url":"https://github.com/JuliaLang/julia/releases/download/v1.1.1/julia-<% version %>-full.tar.gz", "signature":"https://github.com/JuliaLang/julia/releases/download/v1.1.1/julia-<% version %>-full.tar.gz.asc"}
+  {"version":"1.2.0", "url":"https://raw.githubusercontent.com/JuliaLang/docs.julialang.org/assets/julia-<% version %>.pdf"},
+  {"version":"1.2.0", "url":"https://julialang-s3.julialang.org/bin/mac/x64/1.1/julia-<% version %>-mac64.dmg"},
+  {"version":"1.2.0", "url":"https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-<% version %>-linux-x86_64.tar.gz", "signature":"https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-<% version %>-linux-x86_64.tar.gz.asc"},
+  {"version":"1.2.0", "url":"https://julialang-s3.julialang.org/bin/freebsd/x64/1.1/julia-<% version %>-freebsd-x86_64.tar.gz", "signature":"https://julialang-s3.julialang.org/bin/freebsd/x64/1.1/julia-<% version %>-freebsd-x86_64.tar.gz.asc"},
+  {"version":"1.2.0", "url":"https://github.com/JuliaLang/julia/releases/download/v1.2.0/julia-<% version %>-full.tar.gz", "signature":"https://github.com/JuliaLang/julia/releases/download/v1.2.0/julia-<% version %>-full.tar.gz.asc"}
 
 ]
