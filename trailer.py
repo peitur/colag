@@ -57,7 +57,7 @@ def download_file( proj, url_filename, local_filename, **opt ):
     r_size = 0
     bsize=1024
     overwrite = False
-    timeout = 10
+    timeout = 30
 
     if 'bsize' in opt: bsize = opt['bsize']
     if 'timeout' in opt: timeout = opt['timeout']
@@ -98,7 +98,7 @@ def get_request( proj, url , **opt ):
     r_size = 0
     bsize=1024
     overwrite = False
-    timeout = 10
+    timeout = 30
 
     if 'bsize' in opt: bsize = opt['bsize']
     if 'timeout' in opt: timeout = opt['timeout']

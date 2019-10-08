@@ -25,6 +25,14 @@
 	{ "version":"1.12.9", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.windows-amd64.msi" },
 	{ "version":"1.12.9", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.windows-amd64.zip" },
 	{ "version":"1.12.9", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.linux-arm64.tar.gz" },
-	{ "version":"1.12.9", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.linux-ppc64le.tar.gz" }
-
+	{ "version":"1.12.9", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.linux-ppc64le.tar.gz" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.src.tar.gz" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.linux-amd64.tar.gz" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.darwin-amd64.tar.gz" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.darwin-amd64.pkg" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.linux-arm6l.tar.gz" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.windows-amd64.msi" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.windows-amd64.zip" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.linux-arm64.tar.gz" },
+ 	{ "version":"1.13.1", "bsize":"8192", "url":"https://dl.google.com/go/go<% version %>.linux-ppc64le.tar.gz" }
 ]
