@@ -1,6 +1,6 @@
 [
   {
-    "version":"1.17.3",
+    "version":"1.17.5",
     "url":"https://nginx.org/download/nginx-<% version %>.tar.gz",
     "signature":"https://nginx.org/download/nginx-<% version %>.tar.gz.asc"
   },

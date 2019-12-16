@@ -1,0 +1,26 @@
+[
+  {
+    "skip":"True",
+    "version":"7.3.21-20180226",
+    "bsize":"8192",
+    "url":"https://d2ubxhm80y3bwr.cloudfront.net/Downloads/op5_monitor_archive/op5-monitor-<% version %>.tar.gz"
+  },
+  {
+    "skip":"True",
+    "version":"7.4.11",
+    "bsize":"8192",
+    "url":"https://d2ubxhm80y3bwr.cloudfront.net/Downloads/op5_monitor_archive/op5-monitor-<% version %>.x64.tar.gz"
+  },
+  {
+    "skip":"True",
+    "version":"7.5.5",
+    "bsize":"8192",
+    "url":"https://d2ubxhm80y3bwr.cloudfront.net/Downloads/op5_monitor_archive/op5-monitor-<% version %>.x64.tar.gz"
+  },
+  {
+    "skip":"True",
+    "version":"8.0.9",
+    "bsize":"8192",
+    "url":"https://d2ubxhm80y3bwr.cloudfront.net/Downloads/op5_monitor_archive/Monitor8/Tarball/op5-monitor-<% version %>-x64.tar.gz"
+  }
+]
