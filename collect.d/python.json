@@ -1,9 +1,10 @@
 [
     { "version":"current", "url":"https://bootstrap.pypa.io/get-pip.py" },
-    { "version":"3.7.4",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
-    { "version":"3.6.6",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
-    { "version":"3.5.5",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
-    { "version":"3.4.8",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
+    { "version":"3.8.0",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
+    { "version":"3.7.5",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
+    { "version":"3.6.7",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
+    { "version":"3.5.8",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
+    { "version":"3.4.10",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
     { "version":"3.3.7",  "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" },
-    { "version":"2.7.15", "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" }
+    { "version":"2.7.17", "url":"https://www.python.org/ftp/python/<%version%>/Python-<%version%>.tgz" }
 ]

@@ -1,5 +1,5 @@
 [{
-    "version":"2.6.3",
+    "version":"2.6.8",
     "url":"https://github.com/digitalocean/netbox/archive/v<% version %>.tar.gz",
     "filename":"netbox-v<% version %>.tar.gz"
 }]
