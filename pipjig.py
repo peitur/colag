@@ -13,6 +13,8 @@ from pathlib import Path
 
 module_seen = list()
 
+DEFAULT_CONFIG_FILE="pipjig.json"
+
 def get_pypi_url( module = "" ):
     return "https://pypi.python.org/pypi/%s/json" % ( module )
 
@@ -363,15 +365,22 @@ if __name__ == "__main__":
     opt['script'] = sys.argv.pop(0)
     opt['filename'] = "requirements.txt"
     opt['target'] = "pypack"
-    opt['config'] = None
     opt['egg-include'] = True
     opt['checksum'] = "sha256"
+    opt['config_file'] = DEFAULT_CONFIG_FILE
 
     if len( sys.argv ) > 0:
-        opt['filename'] = sys.argv.pop(0)
 
-    if Path( "pipjig.json" ).exists():
-        cfg = load_file( "pipjig.json" )[0]
+        if len( sys.argv ) == 1:
+            opt['filename'] = sys.argv.pop(0)
+
+        if len( sys.argv ) == 2:
+            opt['config_file'] = sys.argv.pop(0)
+            opt['filename'] = sys.argv.pop(0)
+
+
+    if Path( opt['config_file'] ).exists():
+        cfg = load_file( opt['config_file'] )[0]
         opt['target'] = cfg['target']
 
     target = Path( opt['target'] )
