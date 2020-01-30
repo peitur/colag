@@ -72,7 +72,7 @@ class Version( object ):
         return False
 
 def parse_product( s ):
-    rx = re.compile( r"^([a-zA-Z0-9\-_]+)(.*)$" )
+    rx = re.compile( r"^([a-zA-Z0-9\-_\.]+)(.*)$" )
     m = rx.findall( s )
     res = list()
     if m:
