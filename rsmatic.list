@@ -1,0 +1,7 @@
+rsync://rsync.apache.org/apache-dist
+rsync://rsync.archlinux.org/core
+rsync://rsync.archlinux.org/extra
+rsync://rsync.archlinux.org/community
+rsync://ftp.acc.umu.se/mirror/fedora/epel/7
+rsync://ftp.acc.umu.se/mirror/fedora/epel/8
+rsync://ftp.acc.umu.se/mirror/kali.org/
