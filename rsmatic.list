@@ -1,3 +1,4 @@
+rsync://ftp.acc.umu.se/mirror/qubes-os.org/
 rsync://ftp.acc.umu.se/mirror/apache.org/
 rsync://ftp.lysator.liu.se/pub/archlinux/core
 rsync://ftp.lysator.liu.se/pub/archlinux/extra
@@ -10,7 +11,6 @@ rsync://ftp.lysator.liu.se/pub/ubuntu-dvd/
 rsync://ftp.acc.umu.se/mirror/fedora/epel/7/
 rsync://ftp.acc.umu.se/mirror/fedora/epel/8/
 rysnc://ftp.acc.umu.se/mirror/alpinelinux.org/latest-stable/
-rysnc://ftp.acc.umu.se/mirror/qubes-os.org/
 rsync://ftp.acc.umu.se/mirror/parrotsec.org/parrot/
 rysnc://ftp.acc.umu.se/mirror/pentoo.ch/
 rsync://ftp.acc.umu.se/mirror/tails/
