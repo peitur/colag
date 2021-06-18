@@ -155,7 +155,7 @@ def rsync_file_list( url, **opt ):
     cmd = list()
     cmd.append("rsync")
     cmd.append("-r")
-
+    cmd.append("--no-motd")
 #    if 'list' in opt and boolify( opt['list'] ):
     cmd.append("--list-only")
 
@@ -203,6 +203,14 @@ if __name__ == "__main__":
 
     opt['config'] = "rsmatic.list"
 
+    tot_stats = dict()
+    tot_stats['num_items'] = 0
+    tot_stats['num_bytes'] = 0
+    tot_stats['num_files'] = 0
+    tot_stats['num_dirs'] = 0
+    tot_stats['num_links'] = 0
+    tot_stats['num_unknownitem'] = 0
+
     for site in load_file( opt['config'] ):
         print("Getting %s" % (site))
 
@@ -233,4 +241,14 @@ if __name__ == "__main__":
                 else:
                     stats['num_unknownitem'] += 1
 
+        tot_stats['num_items'] += stats['num_items']
+        tot_stats['num_bytes'] += stats['num_bytes']
+        tot_stats['num_files'] += stats['num_files']
+        tot_stats['num_dirs'] += stats['num_dirs']
+        tot_stats['num_links'] += stats['num_links']
+        tot_stats['num_unknownitem'] += stats['num_unknownitem']
+
         pprint( stats )
+    print("-------------------------------------------")
+    pprint( tot_stats )
+    print("-------------------------------------------")

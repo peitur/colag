@@ -32,6 +32,8 @@ md5
 mio
 native-tls
 pcap
+openssl
+openssl-sys
 pcap-config
 pcap-file
 pcap-parser
@@ -40,7 +42,7 @@ priority-queue
 rand
 rayon
 regex
-regex
+reqwest
 ring
 rustls
 ryu
