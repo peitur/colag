@@ -201,7 +201,10 @@ def _apply_project( string, version ):
 if __name__ == "__main__":
     opt = dict()
 
-    opt['config'] = "rsmatic.list"
+    opt['config'] = ["rsmatic.list"]
+
+    if len( sys.argv[1:] ) > 0:
+        opt['config'] = sys.argv[1:]
 
     tot_stats = dict()
     tot_stats['num_items'] = 0
@@ -211,44 +214,47 @@ if __name__ == "__main__":
     tot_stats['num_links'] = 0
     tot_stats['num_unknownitem'] = 0
 
-    for site in load_file( opt['config'] ):
-        print("Getting %s" % (site))
+    for config in opt['config']:
+        print("Loading sites from file %s" % ( config ) )
+        for site in load_file( config ):
+            print("Getting %s" % (site))
 
-        stats = dict()
-        stats['num_items'] = 0
-        stats['num_bytes'] = 0
-        stats['num_files'] = 0
-        stats['num_dirs'] = 0
-        stats['num_links'] = 0
-        stats['num_unknownitem'] = 0
-        for f in rsync_file_list( site ):
-            stats['num_items'] += 1
-            parts = re.split( r"\s+", f )
-            if len( parts ) == 5:
-                f_pfield = parts[0]
-                f_size = int( re.sub( r",", "", parts[1] ) )
-                f_date = parts[2]
-                f_time = parts[3]
-                f_name = parts[4]
+            stats = dict()
+            stats['num_items'] = 0
+            stats['num_bytes'] = 0
+            stats['num_files'] = 0
+            stats['num_dirs'] = 0
+            stats['num_links'] = 0
+            stats['num_unknownitem'] = 0
+            for f in rsync_file_list( site ):
+                stats['num_items'] += 1
+                parts = re.split( r"\s+", f )
+                if len( parts ) == 5:
+                    f_pfield = parts[0]
+                    f_size = int( re.sub( r",", "", parts[1] ) )
+                    f_date = parts[2]
+                    f_time = parts[3]
+                    f_name = parts[4]
 
-                stats['num_bytes'] += f_size
-                if re.match(r"^-.+", f_pfield ):
-                    stats['num_files'] += 1
-                elif re.match(r"^d.+", f_pfield ):
-                    stats['num_dirs'] += 1
-                elif re.match(r"^l.+", f_pfield ):
-                    stats['num_links'] += 1
-                else:
-                    stats['num_unknownitem'] += 1
+                    stats['num_bytes'] += f_size
+                    if re.match(r"^-.+", f_pfield ):
+                        stats['num_files'] += 1
+                    elif re.match(r"^d.+", f_pfield ):
+                        stats['num_dirs'] += 1
+                    elif re.match(r"^l.+", f_pfield ):
+                        stats['num_links'] += 1
+                    else:
+                        stats['num_unknownitem'] += 1
 
-        tot_stats['num_items'] += stats['num_items']
-        tot_stats['num_bytes'] += stats['num_bytes']
-        tot_stats['num_files'] += stats['num_files']
-        tot_stats['num_dirs'] += stats['num_dirs']
-        tot_stats['num_links'] += stats['num_links']
-        tot_stats['num_unknownitem'] += stats['num_unknownitem']
+            tot_stats['num_items'] += stats['num_items']
+            tot_stats['num_bytes'] += stats['num_bytes']
+            tot_stats['num_files'] += stats['num_files']
+            tot_stats['num_dirs'] += stats['num_dirs']
+            tot_stats['num_links'] += stats['num_links']
+            tot_stats['num_unknownitem'] += stats['num_unknownitem']
 
-        pprint( stats )
+            pprint( stats )
+
     print("-------------------------------------------")
     pprint( tot_stats )
     print("-------------------------------------------")
