@@ -232,12 +232,6 @@ if __name__ == "__main__":
         opt['config'] = sys.argv[1:]
 
     tot_stats = dict()
-    tot_stats['num_items'] = 0
-    tot_stats['num_bytes'] = 0
-    tot_stats['num_files'] = 0
-    tot_stats['num_dirs'] = 0
-    tot_stats['num_links'] = 0
-    tot_stats['num_unknownitem'] = 0
 
     for config in opt['config']:
         print("Loading sites from file %s" % ( config ) )
@@ -304,12 +298,10 @@ if __name__ == "__main__":
                         else:
                             stats['num_unknownitem'] += 1
 
-            tot_stats['num_items'] += stats['num_items']
-            tot_stats['num_bytes'] += stats['num_bytes']
-            tot_stats['num_files'] += stats['num_files']
-            tot_stats['num_dirs'] += stats['num_dirs']
-            tot_stats['num_links'] += stats['num_links']
-            tot_stats['num_unknownitem'] += stats['num_unknownitem']
+            for k in stats:
+                if k not in tot_stats:
+                    tot_stats[ k ] = 0
+                tot_stats[ k ] += stats[ k ]
 
             pprint( stats )
 
