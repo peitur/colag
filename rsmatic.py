@@ -274,11 +274,11 @@ if __name__ == "__main__":
                         f_name = parts[4]
 
                         stats['num_bytes'] += f_size
-                        if re.match(r"^>f.+", f_pfield ):
+                        if re.match(r"^.f.+", f_pfield ):
                             stats['num_files'] += 1
-                        elif re.match(r"^>d.+", f_pfield ):
+                        elif re.match(r"^.d.+", f_pfield ):
                             stats['num_dirs'] += 1
-                        elif re.match(r"^>l.+", f_pfield ):
+                        elif re.match(r"^.l.+", f_pfield ):
                             stats['num_links'] += 1
                         else:
                             stats['num_unknownitem'] += 1
