@@ -252,8 +252,6 @@ if __name__ == "__main__":
             if len( p ) > 2:
                 limit = p[2]
 
-            print("Getting %s" % (site))
-
             stats = dict()
             stats['num_items'] = 0
             stats['num_bytes'] = 0
@@ -263,6 +261,8 @@ if __name__ == "__main__":
             stats['num_unknownitem'] = 0
 
             if target:
+                print("Syncing %s" % (site))
+
                 for f in rsync_file_get( site, target, bwlimit=limit ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
@@ -283,6 +283,7 @@ if __name__ == "__main__":
                         else:
                             stats['num_unknownitem'] += 1
             else:
+                print("Listing %s" % (site))
                 for f in rsync_file_list( site, bwlimit=limit ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
