@@ -159,10 +159,35 @@ def rsync_file_list( url, **opt ):
 #    if 'list' in opt and boolify( opt['list'] ):
     cmd.append("--list-only")
 
-    if 'bwlimit' in opt and type( opt['bwlimit'] )._name__ in ("int", "float"):
-        cmd.append( "--bwlimit %s" % (opt["bwlimit"] ) )
+    if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float"):
+        cmd.append( "--bwlimit=%s" % (opt["bwlimit"] ) )
 
     cmd.append( url )
+
+    ret = list()
+    try:
+        for f in run_command_iter( cmd, **opt ):
+            yield f
+
+    except Exception as e:
+        raise e
+    return ret
+
+
+def rsync_file_get( url, target, **opt ):
+    debug = opt.get("debug", False )
+    cmd = list()
+    cmd.append("rsync")
+    cmd.append("-r")
+    cmd.append("--no-motd")
+    cmd.append("--out-format=\"%'i %'b %t %n\"")
+#    if 'list' in opt and boolify( opt['list'] ):
+
+    if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float"):
+        cmd.append( "--bwlimit=%s" % (opt["bwlimit"] ) )
+
+    cmd.append( url )
+    cmd.append( target )
 
     ret = list()
     try:
@@ -216,7 +241,17 @@ if __name__ == "__main__":
 
     for config in opt['config']:
         print("Loading sites from file %s" % ( config ) )
-        for site in load_file( config ):
+        for siteline in load_file( config ):
+
+            p = re.split(r";", siteline.lstrip().rstrip() )
+            site = p[0]
+            target = None
+            limit = None
+            if len( p ) > 1:
+                target = p[1]
+            if len( p ) > 2:
+                limit = p[2]
+
             print("Getting %s" % (site))
 
             stats = dict()
@@ -226,25 +261,47 @@ if __name__ == "__main__":
             stats['num_dirs'] = 0
             stats['num_links'] = 0
             stats['num_unknownitem'] = 0
-            for f in rsync_file_list( site ):
-                stats['num_items'] += 1
-                parts = re.split( r"\s+", f )
-                if len( parts ) == 5:
-                    f_pfield = parts[0]
-                    f_size = int( re.sub( r",", "", parts[1] ) )
-                    f_date = parts[2]
-                    f_time = parts[3]
-                    f_name = parts[4]
 
-                    stats['num_bytes'] += f_size
-                    if re.match(r"^-.+", f_pfield ):
-                        stats['num_files'] += 1
-                    elif re.match(r"^d.+", f_pfield ):
-                        stats['num_dirs'] += 1
-                    elif re.match(r"^l.+", f_pfield ):
-                        stats['num_links'] += 1
-                    else:
-                        stats['num_unknownitem'] += 1
+            if target:
+                for f in rsync_file_get( site, target, bwlimit=limit ):
+                    stats['num_items'] += 1
+                    parts = re.split( r"\s+", f )
+                    if len( parts ) == 5:
+                        f_pfield = parts[0]
+                        f_size = int( re.sub( r",", "", parts[1] ) )
+                        f_date = parts[2]
+                        f_time = parts[3]
+                        f_name = parts[4]
+
+                        stats['num_bytes'] += f_size
+                        if re.match(r"^>f.+", f_pfield ):
+                            stats['num_files'] += 1
+                        elif re.match(r"^>d.+", f_pfield ):
+                            stats['num_dirs'] += 1
+                        elif re.match(r"^>l.+", f_pfield ):
+                            stats['num_links'] += 1
+                        else:
+                            stats['num_unknownitem'] += 1
+            else:
+                for f in rsync_file_list( site, bwlimit=limit ):
+                    stats['num_items'] += 1
+                    parts = re.split( r"\s+", f )
+                    if len( parts ) == 5:
+                        f_pfield = parts[0]
+                        f_size = int( re.sub( r",", "", parts[1] ) )
+                        f_date = parts[2]
+                        f_time = parts[3]
+                        f_name = parts[4]
+
+                        stats['num_bytes'] += f_size
+                        if re.match(r"^-.+", f_pfield ):
+                            stats['num_files'] += 1
+                        elif re.match(r"^d.+", f_pfield ):
+                            stats['num_dirs'] += 1
+                        elif re.match(r"^l.+", f_pfield ):
+                            stats['num_links'] += 1
+                        else:
+                            stats['num_unknownitem'] += 1
 
             tot_stats['num_items'] += stats['num_items']
             tot_stats['num_bytes'] += stats['num_bytes']
