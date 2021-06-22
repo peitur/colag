@@ -360,7 +360,8 @@ if __name__ == "__main__":
             pprint( stats )
 
     print("-------------------------------------------")
-    ( n, u ) = byte_unit( tot_stats["num_bytes"] )
-    tot_stats['bytes_hum'] = "%.6s %s" % ( n, u )
+    if 'num_bytes' in tot_stats:
+        ( n, u ) = byte_unit( tot_stats["num_bytes"] )
+        tot_stats['bytes_hum'] = "%.6s %s" % ( n, u )
     pprint( tot_stats )
     print("-------------------------------------------")
