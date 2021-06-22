@@ -212,6 +212,21 @@ def boolify( s ):
     else:
         raise AttributeError("Bool string type not supported %s" % ( s ) )
 
+def byte_unit( s ):
+    current = int( s )
+    units = ["B","KB","MB","GB", "TB", "PB"]
+
+    for i,x in enumerate( units ):
+        if current < 1024:
+            return (current, units[i] )
+
+        if i >= len( units ) - 1:
+            return (current, units[i] )
+
+        current = current / 1024
+    return (0,"none")
+
+
 ################################################################################
 def _apply_version( string, version ):
     return re.sub( r"<%\s*version\s*%>", version, string )
@@ -222,25 +237,36 @@ def _apply_project( string, version ):
 ################################################################################
 
 
-
 if __name__ == "__main__":
     opt = dict()
-
+    opt['mode'] = None
     opt['config'] = ["rsmatic.list"]
 
     if len( sys.argv[1:] ) > 0:
-        opt['config'] = sys.argv[1:]
+        opt['mode'] = sys.argv[1]
+    else:
+        print("ERROR: Missing mode, must be one of [sync,list]")
+        sys.exit(1)
+
+    if len( sys.argv[2:] ) > 1:
+        opt['config'] = sys.argv[2:]
+
+    if opt['mode'] not in ("sync","list"):
+        print("ERROR: Unknown mode %s, suported modes are [sync,list] " % ( opt['mode'] ) )
+        sys.exit(2)
 
     tot_stats = dict()
 
     for config in opt['config']:
         print("Loading sites from file %s" % ( config ) )
+
         for siteline in load_file( config ):
 
             p = re.split(r";", siteline.lstrip().rstrip() )
             site = p[0]
             target = None
             limit = None
+
             if len( p ) > 1:
                 target = p[1]
             if len( p ) > 2:
@@ -254,8 +280,8 @@ if __name__ == "__main__":
             stats['num_links'] = 0
             stats['num_unknownitem'] = 0
 
-            if target:
-                print("Syncing %s" % (site))
+            if opt['mode'] in ("sync"):
+                print("Syncing %s to %s using %s KiB" % (site, target, limit ))
 
                 for f in rsync_file_get( site, target, bwlimit=limit ):
                     stats['num_items'] += 1
@@ -276,7 +302,9 @@ if __name__ == "__main__":
                             stats['num_links'] += 1
                         else:
                             stats['num_unknownitem'] += 1
-            else:
+
+            elif opt['mode'] in ("list"):
+
                 print("Listing %s" % (site))
                 for f in rsync_file_list( site, bwlimit=limit ):
                     stats['num_items'] += 1
@@ -298,13 +326,21 @@ if __name__ == "__main__":
                         else:
                             stats['num_unknownitem'] += 1
 
+            else:
+                print("Nothing to do here, unmanaged mode")
+                sys.exit(8)
+
             for k in stats:
                 if k not in tot_stats:
                     tot_stats[ k ] = 0
                 tot_stats[ k ] += stats[ k ]
 
+            ( n, u ) = byte_unit( stats["num_bytes"] )
+            stats['bytes_hum'] = "%.7s %s" % ( n, u )
             pprint( stats )
 
     print("-------------------------------------------")
+    ( n, u ) = byte_unit( tot_stats["num_bytes"] )
+    tot_stats['bytes_hum'] = "%.8s %s" % ( n, u )
     pprint( tot_stats )
     print("-------------------------------------------")
