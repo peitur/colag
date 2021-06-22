@@ -7,6 +7,7 @@ import json
 import hashlib
 import getopt
 
+from datetime import datetime
 from pprint import pprint
 from pathlib import Path
 
@@ -159,6 +160,10 @@ def rsync_file_list( url, **opt ):
 #    if 'list' in opt and boolify( opt['list'] ):
     cmd.append("--list-only")
 
+    if 'logfile' in opt and type( opt['logfile'] ).__name__ in ("str"):
+        cmd.append( "--log-file=%s" % (opt["logfile"] ) )
+        cmd.append( "--log-file-format=\"%t %o %i %b [%l] %M %n\"" )
+
     if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float"):
         cmd.append( "--bwlimit=%s" % (opt["bwlimit"] ) )
 
@@ -182,6 +187,10 @@ def rsync_file_get( url, target, **opt ):
     cmd.append("--no-motd")
     cmd.append("--out-format=\"%'i %'b %t %n\"")
 #    if 'list' in opt and boolify( opt['list'] ):
+
+    if 'logfile' in opt and type( opt['logfile'] ).__name__ in ("str"):
+        cmd.append( "--log-file=%s" % (opt["logfile"] ) )
+        cmd.append( "--log-file-format=\"%t %o %i %b [%l] %M %n\"" )
 
     if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float"):
         cmd.append( "--bwlimit=%s" % (opt["bwlimit"] ) )
@@ -234,6 +243,15 @@ def _apply_version( string, version ):
 def _apply_project( string, version ):
     return re.sub( r"<%\s*project\s*%>", version, string )
 
+def time_now_raw():
+    return datetime.now()
+
+def time_now_isoformat():
+    return time_now_raw().isoformat()
+
+def time_now_string():
+    return time_now_raw().strftime( "%Y%m%d_%H%M%S.%f" )
+
 ################################################################################
 
 
@@ -254,7 +272,7 @@ if __name__ == "__main__":
     if opt['mode'] not in ("sync","list"):
         print("ERROR: Unknown mode %s, suported modes are [sync,list] " % ( opt['mode'] ) )
         sys.exit(2)
-    
+
     tot_stats = dict()
 
     for config in opt['config']:
@@ -266,6 +284,8 @@ if __name__ == "__main__":
             site = p[0]
             target = None
             limit = None
+
+            logfile = "%s.%s.log" % ( opt['mode'], time_now_string() )
 
             if len( p ) > 1:
                 target = p[1]
@@ -281,8 +301,8 @@ if __name__ == "__main__":
             stats['num_unknownitem'] = 0
 
             if opt['mode'] in ("sync"):
-                print("Syncing %s to %s using %s KiB" % (site, target, limit ))
 
+                print("Syncing %s to %s using %s KiB logging to %s" % (site, target, limit, logfile ))
                 for f in rsync_file_get( site, target, bwlimit=limit ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
@@ -305,8 +325,8 @@ if __name__ == "__main__":
 
             elif opt['mode'] in ("list"):
 
-                print("Listing %s" % (site))
-                for f in rsync_file_list( site, bwlimit=limit ):
+                print("Listing %s logging to %s" % (site, logfile ))
+                for f in rsync_file_list( site, bwlimit=limit, logfile=logfile ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
                     if len( parts ) == 5:
