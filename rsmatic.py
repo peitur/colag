@@ -242,19 +242,19 @@ if __name__ == "__main__":
     opt['mode'] = None
     opt['config'] = ["rsmatic.list"]
 
-    if len( sys.argv[1:] ) > 0:
+    if len( sys.argv ) > 0:
         opt['mode'] = sys.argv[1]
     else:
         print("ERROR: Missing mode, must be one of [sync,list]")
         sys.exit(1)
 
-    if len( sys.argv[2:] ) > 1:
+    if len( sys.argv ) > 1:
         opt['config'] = sys.argv[2:]
 
     if opt['mode'] not in ("sync","list"):
         print("ERROR: Unknown mode %s, suported modes are [sync,list] " % ( opt['mode'] ) )
         sys.exit(2)
-
+    
     tot_stats = dict()
 
     for config in opt['config']:
@@ -341,6 +341,6 @@ if __name__ == "__main__":
 
     print("-------------------------------------------")
     ( n, u ) = byte_unit( tot_stats["num_bytes"] )
-    tot_stats['bytes_hum'] = "%.8s %s" % ( n, u )
+    tot_stats['bytes_hum'] = "%.6s %s" % ( n, u )
     pprint( tot_stats )
     print("-------------------------------------------")
