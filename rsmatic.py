@@ -260,13 +260,13 @@ if __name__ == "__main__":
     opt['mode'] = None
     opt['config'] = ["rsmatic.list"]
 
-    if len( sys.argv ) > 0:
+    if len( sys.argv ) > 1:
         opt['mode'] = sys.argv[1]
     else:
         print("ERROR: Missing mode, must be one of [sync,list]")
         sys.exit(1)
 
-    if len( sys.argv ) > 1:
+    if len( sys.argv ) > 2:
         opt['config'] = sys.argv[2:]
 
     if opt['mode'] not in ("sync","list"):
