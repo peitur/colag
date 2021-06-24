@@ -252,6 +252,10 @@ def time_now_isoformat():
 def time_now_string():
     return time_now_raw().strftime( "%Y%m%d_%H%M%S.%f" )
 
+def date_now_string():
+    return time_now_raw().strftime( "%Y%m%d" )
+
+
 ################################################################################
 
 
@@ -285,7 +289,7 @@ if __name__ == "__main__":
             target = None
             limit = None
 
-            logfile = "%s.%s.log" % ( opt['mode'], time_now_string() )
+            logfile = "%s.%s.log" % ( opt['mode'], date_now_string() )
 
             if len( p ) > 1:
                 target = p[1]
@@ -300,10 +304,10 @@ if __name__ == "__main__":
             stats['num_links'] = 0
             stats['num_unknownitem'] = 0
 
-            if opt['mode'] in ("sync"):
+            if opt['mode'] in ("sync", "get"):
 
                 print("Syncing %s to %s using %s KiB logging to %s" % (site, target, limit, logfile ))
-                for f in rsync_file_get( site, target, bwlimit=limit ):
+                for f in rsync_file_get( site, target, bwlimit=limit, logfile=logfile ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
                     if len( parts ) == 5:
@@ -326,7 +330,7 @@ if __name__ == "__main__":
             elif opt['mode'] in ("list"):
 
                 print("Listing %s logging to %s" % (site, logfile ))
-                for f in rsync_file_list( site, bwlimit=limit, logfile=logfile ):
+                for f in rsync_file_list( site, bwlimit=limit ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
                     if len( parts ) == 5:
