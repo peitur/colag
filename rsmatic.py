@@ -307,7 +307,7 @@ if __name__ == "__main__":
             if opt['mode'] in ("sync", "get"):
 
                 if not target.exists():
-                    target.mkdir( parents=True, exists_ok=True )
+                    target.mkdir( parents=True, exist_ok=True )
 
                 print("Syncing %s to %s using %s KiB logging to %s" % (site, target, limit, logfile ))
                 for f in rsync_file_get( site, str(target), bwlimit=limit,logfile=logfile ):

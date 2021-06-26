@@ -1,12 +1,5 @@
-rsync://ftp.acc.umu.se/mirror/apache.org/;/mnt/mirror/apache.org;6144
-rsync://ftp.acc.umu.se/mirror/qubes-os.org/;/mnt/mirror/quebeos;6144
-rsync://ftp.acc.umu.se/mirror/kali.org/;/mnt/mirror/kali.org;6144
-rsync://ftp.lysator.liu.se/pub/centos/7/;/mnt/mirror/centos/7;6144
-rsync://ftp.lysator.liu.se/pub/centos/8/;/mnt/mirror/centos/8;6144
-rsync://ftp.acc.umu.se/mirror/fedora/epel/7/;/mnt/mirror/centos/7/epel;6144
-rsync://ftp.acc.umu.se/mirror/fedora/epel/8/;/mnt/mirror/centos/8/epel;6144
-rsync://ftp.acc.umu.se/mirror/parrotsec.org/parrot/;/mnt/mirror/parrot;6144
-rysnc://ftp.acc.umu.se/mirror/pentoo.ch/;/mnt/mirror/pentoo;6144
-rsync://ftp.acc.umu.se/mirror/tails/;/mnt/mirror/tails;6144
-rsync://ftp.acc.umu.se/mirror/ipfire.org/releases/;/mnt/mirror/ipfire;6144
-rsync://ftp.acc.umu.se/mirror/torproject.org/dist/;/mnt/mirror/torproject;6144
+rsync://ftp.acc.umu.se/mirror/pentoo.ch/;/mnt/mirror/pentoo;6144
+rsync://ftp.acc.umu.se/mirror/alpinelinux.org/latest-stable/;/mnt/mirror/alpine/stable;6144
+rsync://ftp.lysator.liu.se/pub/archlinux/core;/mnt/mirror/arch/core;6144
+rsync://ftp.lysator.liu.se/pub/archlinux/extra;/mnt/mirror/arch/extra;6144
+rsync://ftp.lysator.liu.se/pub/archlinux/community;/mnt/mirror/arch/community;6144

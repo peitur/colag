@@ -1,4 +1,4 @@
-rsync://ftp.acc.umu.se/mirror/qubes-os.org/;/mnt/mirror/quebeos;6144
+rsync://ftp.acc.umu.se/mirror/qubes-os.org/;/mnt/mirror/qubeos;6144
 rsync://ftp.acc.umu.se/mirror/apache.org/;/mnt/mirror/apache.org;6144
 rsync://ftp.lysator.liu.se/pub/archlinux/core;/mnt/mirror/arch/core;6144
 rsync://ftp.lysator.liu.se/pub/archlinux/extra;/mnt/mirror/arch/extra;6144
