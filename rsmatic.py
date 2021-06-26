@@ -285,10 +285,10 @@ if __name__ == "__main__":
             target = None
             limit = None
 
-            logfile = "%s.%s.log" % ( opt['mode'], time_now_string() )
+            logfile = "%s.%s.log" % ( opt['mode'], "now" )
 
             if len( p ) > 1:
-                target = p[1]
+                target = Path(  p[1] )
             if len( p ) > 2:
                 limit = p[2]
 
@@ -302,8 +302,11 @@ if __name__ == "__main__":
 
             if opt['mode'] in ("sync"):
 
+                if not target.exists():
+                    target.mkdir( parents=True, exists_ok=True )
+
                 print("Syncing %s to %s using %s KiB logging to %s" % (site, target, limit, logfile ))
-                for f in rsync_file_get( site, target, bwlimit=limit ):
+                for f in rsync_file_get( site, str(target), bwlimit=limit,logfile=logfile ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
                     if len( parts ) == 5:
