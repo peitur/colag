@@ -151,7 +151,7 @@ def run_command_iter( cmd, **opt ):
         if prc.poll():
             break
 
-def rsync_file_list( url, **opt ):
+def rsync_file_list( url, target=None, **opt ):
     debug = opt.get("debug", False )
     cmd = list()
     cmd.append("rsync")
@@ -168,6 +168,9 @@ def rsync_file_list( url, **opt ):
         cmd.append( "--bwlimit=%s" % (opt["bwlimit"] ) )
 
     cmd.append( url )
+
+    if target:
+        cmd.append( target )
 
     ret = list()
     try:
@@ -286,15 +289,15 @@ if __name__ == "__main__":
 
             p = re.split(r";", siteline.lstrip().rstrip() )
             site = p[0]
-            target = None
+            target = "."
             limit = None
-
-            logfile = "%s.%s.log" % ( opt['mode'], "now" )
 
             if len( p ) > 1:
                 target = Path(  p[1] )
             if len( p ) > 2:
                 limit = p[2]
+
+            logfile = "%s/%s.%s.log" % ( target, opt['mode'], time_now_string() )
 
             stats = dict()
             stats['num_items'] = 0
