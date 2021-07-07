@@ -367,6 +367,9 @@ if __name__ == "__main__":
 
             ( n, u ) = byte_unit( stats["num_bytes"] )
             stats['bytes_hum'] = "%.7s %s" % ( n, u )
+            stats["site"] = site
+            stats["target"] = target.__str__()
+            stats["limit"] = limit
             pprint( stats )
 
     print("-------------------------------------------")

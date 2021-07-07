@@ -1,4 +1,4 @@
 [{
     "checksum":"sha256",
-    "target":"/vagrant/packages/collected"
+    "target":"/mnt/collected"
 }]

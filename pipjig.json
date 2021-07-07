@@ -1,6 +1,6 @@
 [
 {
 	"checksum":"sha256",
-	"target":"/vagrant/share/pip/src"
+	"target":"/mnt/pypi"
 }
 ]
