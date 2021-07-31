@@ -198,6 +198,9 @@ def rsync_file_get( url, target, **opt ):
     if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float"):
         cmd.append( "--bwlimit=%s" % (opt["bwlimit"] ) )
 
+    if 'deltype' in opt and opt['deltype'] in ("before","after","during","delay","excluded"):
+        cmd.append("--delete-%s" % (opt['deltype'] ) )
+
     cmd.append( url )
     cmd.append( target )
 
@@ -313,7 +316,7 @@ if __name__ == "__main__":
                     target.mkdir( parents=True, exist_ok=True )
 
                 print("Syncing %s to %s using %s KiB logging to %s" % (site, target, limit, logfile ))
-                for f in rsync_file_get( site, str(target), bwlimit=limit,logfile=logfile ):
+                for f in rsync_file_get( site, str(target), bwlimit=limit,logfile=logfile, deltype="after" ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
                     if len( parts ) == 5:
