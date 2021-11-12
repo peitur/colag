@@ -1,0 +1,10 @@
+[
+    {
+        "repo":"https://github.com/peitur/cola.git",
+        "rename":"collecor",
+        "flags":[]
+    },{
+        "repo":"https://github.com/peitur/shell-utils",
+        "flags":[]
+    }
+]
