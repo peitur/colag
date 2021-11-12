@@ -13,6 +13,7 @@ Simple python based file batch collector
  - pipjig.py : get packages from pypi with references
  - rsmatic.py : rsync large datavolumes (e.g. get repos and such)
  - trailer.py : get rust cargo packages with deps
+ - gitat.py : handle batches of git repos
 
 
 ## collect.py
@@ -112,3 +113,28 @@ Tool is not running in paralell, this can be done by running multiple jobs at on
 ## trailer.py
 
 **trailer.py** <batchfile>
+ 
+## gitat.py
+ Handles batches of git repos
+ 
+Main config
+```json
+[
+	{
+		"debug":"no",
+		"target":"test"
+	}
+]
+```
+ 
+Example of batch file
+```json
+[
+    {
+        "repo":"https://github.com/peitur/colag.git",
+        "rename":"collecors"
+    },{
+        "repo":"https://github.com/peitur/shell-utils"
+    }
+]
+```
