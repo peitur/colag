@@ -1,0 +1,16 @@
+rsync://ftp.sunet.se/mirror/raspbian/;/mnt/mirror/raspbian;4096
+rsync://ftp.sunet.se/mirror/xbmc.org/;/mnt/mirror/xbmc;4096
+rsync://ftp.sunet.se/mirror/osmc.tv/;/mnt/mirror/osmc;4096
+rsync://ftp.sunet.se/mirror/apache.org/;/mnt/mirror/apache.org;4096
+rsync://ftp.sunet.se/mirror/qubes-os.org/;/mnt/mirror/qubesos;4096
+rsync://ftp.sunet.se/mirror/kali.org/;/mnt/mirror/kali.org;4096
+rsync://ftp.lysator.liu.se/pub/centos/7/;/mnt/mirror/centos/7;4096
+rsync://ftp.lysator.liu.se/pub/centos/8/;/mnt/mirror/centos/8;4096
+rsync://ftp.sunet.se/mirror/fedora/epel/7/;/mnt/mirror/centos/7/epel;4096
+rsync://ftp.sunet.se/mirror/fedora/epel/8/;/mnt/mirror/centos/8/epel;4096
+rsync://ftp.sunet.se/mirror/parrotsec.org/parrot/;/mnt/mirror/parrot;4096
+rsync://ftp.sunet.se/mirror/pentoo.ch/;/mnt/mirror/pentoo;4096
+rsync://ftp.sunet.se/mirror/tails/;/mnt/mirror/tails;4096
+rsync://ftp.sunet.se/mirror/torproject.org/dist/;/mnt/mirror/torproject;4096
+rsync://ftp.sunet.se/mirror/pentoo.ch/;/mnt/mirror/pentoo;4096
+rsync://ftp.sunet.se/mirror/alpinelinux.org/latest-stable/;/mnt/mirror/alpine/stable;4096

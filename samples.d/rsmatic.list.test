@@ -1,0 +1,3 @@
+rsync://ftp.acc.umu.se/mirror/apache.org/
+rsync://ftp.lysator.liu.se/pub/centos/7/
+rsync://ftp.lysator.liu.se/pub/centos/8/
