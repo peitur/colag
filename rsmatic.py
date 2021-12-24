@@ -186,7 +186,9 @@ def rsync_file_get( url, target, **opt ):
     debug = opt.get("debug", False )
     cmd = list()
     cmd.append("rsync")
-    cmd.append("-r")
+    cmd.append("-a")
+    cmd.append("-z")
+    cmd.append("--safe-links")
     cmd.append("--no-motd")
     cmd.append("--out-format=\"%'i %'b %t %n\"")
 #    if 'list' in opt and boolify( opt['list'] ):
