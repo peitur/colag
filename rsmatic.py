@@ -197,7 +197,7 @@ def rsync_file_get( url, target, **opt ):
         cmd.append( "--log-file=%s" % (opt["logfile"] ) )
         cmd.append( "--log-file-format=\"%t %o %i %b [%l] %M %n\"" )
 
-    if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float"):
+    if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float","str"):
         cmd.append( "--bwlimit=%s" % (opt["bwlimit"] ) )
 
     if 'deltype' in opt and opt['deltype'] in ("before","after","during","delay","excluded"):
