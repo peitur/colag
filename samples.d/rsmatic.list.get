@@ -1,5 +1,5 @@
 rsync://ftp.sunet.se/mirror/qubes-os.org/,/mnt/mirror/qubesos
-rsync://ftp.sunet.se/mirror/apache.org/,/mnt/mirror/apache.org
+rsync.apache.org::apache-dist;/mnt/mirror/apache.org;1024
 rsync://ftp.lysator.liu.se/pub/archlinux/core
 rsync://ftp.lysator.liu.se/pub/archlinux/extra
 rsync://ftp.lysator.liu.se/pub/archlinux/community
