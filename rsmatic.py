@@ -291,6 +291,8 @@ if __name__ == "__main__":
         print("Loading sites from file %s" % ( config ) )
 
         for siteline in load_file( config ):
+            if len( siteline ) < 3:
+                continue
 
             p = re.split(r";", siteline.lstrip().rstrip() )
             site = p[0]
