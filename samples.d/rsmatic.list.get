@@ -1,3 +1,4 @@
+rsync://ftp.se.FreeBSD.org;/mnt/mirror/freebsd;4096
 rsync://ftp.uio.no/OpenBSD/;/mnt/mirror/openbsd;4096
 ftp.rfc-editor.org::rfcs-pdf-only;/mnt/mirror/rfcs-pdf-only;1024
 ftp.rfc-editor.org::rfc-ed-all;/mnt/mirror/rfc-ed-all;1024
