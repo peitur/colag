@@ -186,7 +186,9 @@ def rsync_file_get( url, target, **opt ):
     debug = opt.get("debug", False )
     cmd = list()
     cmd.append("rsync")
-    cmd.append("-r")
+    cmd.append("-a")
+    cmd.append("-z")
+    cmd.append("--safe-links")
     cmd.append("--no-motd")
     cmd.append("--out-format=\"%'i %'b %t %n\"")
 #    if 'list' in opt and boolify( opt['list'] ):
@@ -195,7 +197,7 @@ def rsync_file_get( url, target, **opt ):
         cmd.append( "--log-file=%s" % (opt["logfile"] ) )
         cmd.append( "--log-file-format=\"%t %o %i %b [%l] %M %n\"" )
 
-    if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float"):
+    if 'bwlimit' in opt and type( opt['bwlimit'] ).__name__ in ("int", "float","str"):
         cmd.append( "--bwlimit=%s" % (opt["bwlimit"] ) )
 
     if 'deltype' in opt and opt['deltype'] in ("before","after","during","delay","excluded"):
@@ -289,6 +291,8 @@ if __name__ == "__main__":
         print("Loading sites from file %s" % ( config ) )
 
         for siteline in load_file( config ):
+            if len( siteline ) < 3:
+                continue
 
             p = re.split(r";", siteline.lstrip().rstrip() )
             site = p[0]
