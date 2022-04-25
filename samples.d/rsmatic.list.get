@@ -21,3 +21,4 @@ rsync://ftp.sunet.se/mirror/alpinelinux.org/latest-stable/;/external/mirror/repo
 rsync://ftp.sunet.se/mirror/archlinux;/external/mirror/repos/arch;4096
 rsync://ftp.sunet.se/mirror/ubuntu;/external/mirror/repos/ubuntu;4096
 rsync://ftp.sunet.se/mirror/ubuntu-releases;/external/mirror/repos/ubuntu-releases;4096
+rsync://ftp.sunet.se/mirror/rockylinux.org;/external/mirror/repos/rockylinux;4096
