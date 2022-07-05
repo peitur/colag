@@ -1,0 +1,4 @@
+ftp.rfc-editor.org::rfcs-pdf-only;/external/mirror/repos/rfcs-pdf-only;4096
+ftp.rfc-editor.org::rfc-ed-all;/external/mirror/repos/rfc-ed-all;4096
+rsync://ftp.sunet.se/mirror/torproject.org/dist/;/external/mirror/repos/torproject;4096
+rsync.apache.org::apache-dist;/external/mirror/repos/apache.org;4096
