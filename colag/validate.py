@@ -45,7 +45,7 @@ class SimpleDictValidator( object ):
         return False
 
     def _validate_boolish( self, data ):
-        if data in (True, False, "true","false","yes","no", "Yes","No" ):
+        if data in (True, False, "True","False", "true","false","yes","no", "Yes","No" ):
             return True
         return False
 

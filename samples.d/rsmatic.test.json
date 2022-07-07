@@ -1,0 +1,32 @@
+[
+    {
+        "debug": true,
+        "source":"rsync://ftp.uio.no/FreeBSD",
+        "target":"/disk/freebsd",
+        "options":{
+            "bandwidth":"4096",
+            "delete-after":true,
+            "times":true
+        }
+    },
+    {
+        "debug": true,
+        "source":"sync://ftp.uio.no/OpenBSD",
+        "target":"/disk/openbsd",
+        "options":{
+            "bandwidth":"4096",
+            "delete-after":true,
+            "times":true
+        }
+    },
+    {
+        "debug": true,
+        "source":"rsync://ftp.sunet.se/mirror/netbsd.org/NetBSD",
+        "target":"/disk/netbsd",
+        "options":{
+            "bandwidth":"4096",
+            "delete-after":true,
+            "times":true
+        }
+    }
+]
