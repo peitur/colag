@@ -92,6 +92,13 @@ class RsmaticConfig( object ):
     
 
 
+class RsyncCommand( object ):
+    
+    def __init__( self, **options ):
+        pass
+    
+    
+
 if __name__ == "__main__":
 
     c = RsmaticConfig( "samples.d/rsmatic.test.json")
