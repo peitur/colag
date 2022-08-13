@@ -27,8 +27,7 @@ class GenericCommand( object ):
 
 
     def run_iterator( self ):
-        res = list()
-        
+
         if self.__debug: print( "CMD Running:> '%s'" % ( " ".join( self.__cmd ) ) )
 
         prc = subprocess.Popen( self.__cmd, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, cwd=self.__opt.get( "cwd", None ), universal_newlines=True, shell=False )
@@ -38,10 +37,10 @@ class GenericCommand( object ):
             if prc.poll():
                 break
             
-        return ( prc.returncode, res )
+        return ( prc.returncode, list() )
         
 
-    def run_command_list( self ):
+    def run_list( self ):
 
         res = list()
         
@@ -61,3 +60,4 @@ class GenericCommand( object ):
 if __name__ == "__main__":
     c = GenericCommand( "ls -al" )
     [ print( s ) for s in c.run_iterator() ]
+    [ print( s ) for s in c.run_list() ]
