@@ -12,17 +12,20 @@ class RsmaticConfig( object ):
         self.__debug = opt.get( "debug", False )
         self.__filename = filename
         self.__data = None
+        self.__logfile = opt.get("logfile", None )
         
         self.__static_options = [
             "--no-motd",
-            "--recursive"
+            "--recursive",
+            "--safe-links",
+            "--out-format=\"%'i %'b %t %n\""
         ]
-        
         
         self.__valid_config = {
             "debug":{ "type":"bool", "mandatory": False },
             "source":{ "type":"str", "pattern":r".+", "mandatory":True },
             "target":{ "type":"str", "pattern":r".+", "mandatory":True },
+            "logfile":{"mandatory": False, "pattern": r".+" , "type": "str"  },
             "options":{"type":"dict", "mandatory": False, "pattern": None,  }
         }
         
@@ -67,6 +70,11 @@ class RsmaticConfig( object ):
             "delay-updates":{"mandatory": False, "pattern": None , "type":"flag"  }
         }
     
+        self.__loginfo = {
+            "logfile":{ "mandatory": False, "pattern": r"^[a-zA-Z0-9]+$", "type":"str", "option":"--log-file" },
+            "logformat":{ "mandatory": False, "pattern": None , "type":"flag", "option":"--log-file-format=\"%t %o %i %b [%l] %M %n\"" }
+        }
+        
         self.__load_file()
         
     def __load_file( self ):
@@ -85,6 +93,9 @@ class RsmaticConfig( object ):
 
         self.__full_config = cdata.copy()
     
+    def filename( self ):
+        return self.__filename
+    
     def config( self ):
         return self.__full_config.copy()
     
@@ -94,12 +105,23 @@ class RsyncCommand( object ):
     
     def __init__( self, **options ):
         self.__debug = options.get("debug", False )
-        self.__config = options.copy()
+        self.__config = None        
     
+    def load_config( self, filename ):
+        self.__config = RsmaticConfig( filename )
+        
+    def set_config( self, conf ):
+        if type( conf ).__name__ not in ("RsmaticConfig"):
+            raise AttributeError("Bad configuration object for rsmatic")
+        self.__config = conf
+
     def run( self ):
         pass
 
 if __name__ == "__main__":
+    filename = "samples.d/rsmatic.test.json"
+    c = RsmaticConfig( filename )
 
-    c = RsmaticConfig( "samples.d/rsmatic.test.json")
-    pprint( c.config() )
+    r = RsyncCommand( )
+    r.load_config( filename )
+    r.run()
