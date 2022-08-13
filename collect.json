@@ -1,4 +1,4 @@
 [{
     "checksum":"sha256",
-    "target":"/mnt/collected"
+    "target":"test"
 }]
