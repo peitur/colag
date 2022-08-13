@@ -22,14 +22,14 @@ class RsmaticConfig( object ):
         
         
         self._valid_config = {
-            "debug":{"type":"bool", "mandatory": False },
+            "debug":{ "type":"bool", "mandatory": False },
             "source":{ "type":"str", "pattern":r".+", "mandatory":True },
             "target":{ "type":"str", "pattern":r".+", "mandatory":True },
             "options":{"type":"dict", "mandatory": False, "pattern": None,  }
         }
         
         self._valid_options = {
-            "port":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int"  },
+            "port":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int", "option":""  },
             "ipv4":{"mandatory": False, "pattern": None , "type":"flag"  },
             "ipv6":{"mandatory": False, "pattern": None , "type":"flag"  },
             "list-only":{"mandatory": False, "pattern": None , "type":"flag"  },            
@@ -95,9 +95,10 @@ class RsmaticConfig( object ):
 class RsyncCommand( object ):
     
     def __init__( self, **options ):
+        self.__debug = options.get("debug", False )
+    
+    def run( self ):
         pass
-    
-    
 
 if __name__ == "__main__":
 
