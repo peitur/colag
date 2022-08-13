@@ -3,6 +3,7 @@
         "debug": true,
         "source":"rsync://ftp.uio.no/FreeBSD",
         "target":"/disk/freebsd",
+        "logfile":"/disk/freebsd/mirror.log",
         "options":{
             "bandwidth":"4096",
             "delete-after":true,
@@ -13,6 +14,7 @@
         "debug": true,
         "source":"sync://ftp.uio.no/OpenBSD",
         "target":"/disk/openbsd",
+        "logfile":"/disk/openbsd/mirror.log",
         "options":{
             "bandwidth":"4096",
             "delete-after":true,
