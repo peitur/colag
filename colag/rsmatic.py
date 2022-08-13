@@ -3,32 +3,30 @@
 
 import sys,os,re
 import json
-# import colag
-# import colag.validate.SimpleDictValidator as Validator
 
 from pprint import pprint
 
 class RsmaticConfig( object ):
     
     def __init__( self, filename, **opt ):
-        self._debug = opt.get( "debug", False )
-        self._filename = filename
-        self._data = None
+        self.__debug = opt.get( "debug", False )
+        self.__filename = filename
+        self.__data = None
         
-        self._static_options = [
+        self.__static_options = [
             "--no-motd",
             "--recursive"
         ]
         
         
-        self._valid_config = {
+        self.__valid_config = {
             "debug":{ "type":"bool", "mandatory": False },
             "source":{ "type":"str", "pattern":r".+", "mandatory":True },
             "target":{ "type":"str", "pattern":r".+", "mandatory":True },
             "options":{"type":"dict", "mandatory": False, "pattern": None,  }
         }
         
-        self._valid_options = {
+        self.__valid_options = {
             "port":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int", "option":""  },
             "ipv4":{"mandatory": False, "pattern": None , "type":"flag"  },
             "ipv6":{"mandatory": False, "pattern": None , "type":"flag"  },
@@ -69,26 +67,26 @@ class RsmaticConfig( object ):
             "delay-updates":{"mandatory": False, "pattern": None , "type":"flag"  }
         }
     
-        self._load_file()
+        self.__load_file()
         
-    def _load_file( self ):
-        cdata = json.load( open(self._filename, "r" ) )
+    def __load_file( self ):
+        cdata = json.load( open(self.__filename, "r" ) )
         for cache in cdata:
-            pprint( cache )
+
             ## temporary until validator works as intended (famous last words)
             for c in cache:
-                if c not in self._valid_config:
+                if c not in self.__valid_config:
                     raise AttributeError("Unsupported configuration option: %s" % ( c ) )
                 
             if 'options' in cache and type( cache['options'] ).__name__ in ( "dict" ):
                 for o in cache['options']:
-                    if o not in self._valid_options:
+                    if o not in self.__valid_options:
                         raise AttributeError("Unsupported rsync option: %s" % ( o ) )
 
-        self._full_config = cdata.copy()
+        self.__full_config = cdata.copy()
     
     def config( self ):
-        return self._full_config.copy()
+        return self.__full_config.copy()
     
 
 
@@ -96,6 +94,7 @@ class RsyncCommand( object ):
     
     def __init__( self, **options ):
         self.__debug = options.get("debug", False )
+        self.__config = options.copy()
     
     def run( self ):
         pass
