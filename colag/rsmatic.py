@@ -105,8 +105,14 @@ class RsyncCommand( object ):
     
     def __init__( self, **options ):
         self.__debug = options.get("debug", False )
+        self.__logfile = options.get("logfile", None )
+        
         self.__config = None        
-    
+        self.__command = list()
+                
+        self.__command.append("rsync")
+
+        
     def load_config( self, filename ):
         self.__config = RsmaticConfig( filename )
         
@@ -116,7 +122,7 @@ class RsyncCommand( object ):
         self.__config = conf
 
     def run( self ):
-        pass
+        pprint( self.__config )
 
 if __name__ == "__main__":
     filename = "samples.d/rsmatic.test.json"
