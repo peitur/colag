@@ -13,7 +13,7 @@
     },
     {
         "debug": true,
-        "source":"sync://ftp.uio.no/OpenBSD",
+        "source":"rsync://ftp.uio.no/OpenBSD",
         "target":"/disk/openbsd",
         "logfile":"/disk/openbsd/mirror.log",
         "options":{
