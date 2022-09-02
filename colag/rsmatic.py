@@ -80,7 +80,7 @@ class RsmaticConfig( object ):
         self.__load_file()
     
     def __check_conf_value( self, k, v ):
-        print( "checking %s : %s" % ( k, v ) )
+
         ## if type is 'flag', ignore pattern
         if self.__valid_options[k]['type'] in ("flag"):
             return True 
@@ -96,7 +96,6 @@ class RsmaticConfig( object ):
             if self.__valid_options[k]['type'] in ( "list" ):
                 if type( v ).__name__ not in ("list"):
                     v = [ v ]
-
             
             if self.__valid_options[k]['type'] in ("bool"):
                 v = colag.util.boolify( v )
@@ -129,8 +128,20 @@ class RsmaticConfig( object ):
 
         self.__full_config = cdata.copy()
     
+    def option_is_flag( self, k ):
+        if self.__valid_options[k]['type'] == "flag":
+            return True
+        return False
+
+    def option_is_list( self, k ):
+        if self.__valid_options[k]['type'] == "list":
+            return True
+        return False
+
+    
     def filename( self ):
         return self.__filename
+    
     
     def config( self ):
         return self.__full_config.copy()
@@ -148,7 +159,32 @@ class RsyncCommand( object ):
                 
         self.__command.append("rsync")
 
+    def __mk_generic_option( self, o, v ):
+        if self.__config.option_is_flag( o ):
+            return "--%s" % ( o )
+        elif self.__config.option_is_list( o ):
+            if type( v ).__name__ not in ("list"):
+                v = [ v ]
+            return " ".join( ["--%s=%s" % ( o, i ) for i in v ] )
+        return "--%s=%s" % ( o, v ) 
+
         
+    def __mk_command( self ):
+        conf =  self.__config.config()
+
+        for item in conf:
+
+            options = item['options']
+            for c in options:
+                val = options[c]
+                self.__command.append( self.__mk_generic_option( c, val ) )
+
+            self.__command.append( item['source'] )
+            self.__command.append( item['target'] )
+
+        return self.__command
+        
+    
     def load_config( self, filename ):
         self.__config = RsmaticConfig( filename )
         
@@ -158,8 +194,8 @@ class RsyncCommand( object ):
         self.__config = conf
 
     def run( self ):
-        pprint( self.__config.config() )
-
+        cmd = self.__mk_command()
+        
 if __name__ == "__main__":
     filename = "samples.d/rsmatic.test.json"
     c = RsmaticConfig( filename )
