@@ -6,6 +6,8 @@ import json
 
 from pprint import pprint
 
+import colag.util
+
 class RsmaticConfig( object ):
     
     def __init__( self, filename, **opt ):
@@ -70,13 +72,43 @@ class RsmaticConfig( object ):
             "delay-updates":{"mandatory": False, "pattern": None , "type":"flag"  }
         }
     
-        self.__loginfo = {
-            "logfile":{ "mandatory": False, "pattern": r"^[a-zA-Z0-9]+$", "type":"str", "option":"--log-file" },
+        self.__logfile = {
+            "logfile":{ "mandatory": False, "pattern": r".+", "type":"str", "option":"--log-file" },
             "logformat":{ "mandatory": False, "pattern": None , "type":"flag", "option":"--log-file-format=\"%t %o %i %b [%l] %M %n\"" }
         }
         
         self.__load_file()
+    
+    def __check_conf_value( self, k, v ):
+        print( "checking %s : %s" % ( k, v ) )
+        ## if type is 'flag', ignore pattern
+        if self.__valid_options[k]['type'] in ("flag"):
+            return True 
         
+        ## if type is correct, ignore pattern
+        try:
+            if self.__valid_options[k]['type'] in ( "int" ):
+                v = int( v )
+
+            if self.__valid_options[k]['type'] in ( "float" ):
+                v = float( v )
+
+            if self.__valid_options[k]['type'] in ( "list" ):
+                if type( v ).__name__ not in ("list"):
+                    v = [ v ]
+
+            
+            if self.__valid_options[k]['type'] in ("bool"):
+                v = colag.util.boolify( v )
+
+            if self.__valid_options[k]['type'] in ("str"):
+                if not re.match( self.__valid_options[k]['pattern'], v ):
+                    return False
+                    
+        except Exception as e:        
+            return False
+        return True
+    
     def __load_file( self ):
         cdata = json.load( open(self.__filename, "r" ) )
         for cache in cdata:
@@ -85,11 +117,15 @@ class RsmaticConfig( object ):
             for c in cache:
                 if c not in self.__valid_config:
                     raise AttributeError("Unsupported configuration option: %s" % ( c ) )
-                
+                                
             if 'options' in cache and type( cache['options'] ).__name__ in ( "dict" ):
                 for o in cache['options']:
                     if o not in self.__valid_options:
                         raise AttributeError("Unsupported rsync option: %s" % ( o ) )
+
+                    if not self.__check_conf_value( o, cache['options'][o] ):
+                        raise AttributeError("Invalid option type or format for %s found '%s'" % ( c, cache['options'][o] ) )
+
 
         self.__full_config = cdata.copy()
     
@@ -122,7 +158,7 @@ class RsyncCommand( object ):
         self.__config = conf
 
     def run( self ):
-        pprint( self.__config )
+        pprint( self.__config.config() )
 
 if __name__ == "__main__":
     filename = "samples.d/rsmatic.test.json"

@@ -7,7 +7,8 @@
         "options":{
             "bandwidth":"4096",
             "delete-after":true,
-            "times":true
+            "times":true, 
+            "exclude":"test1"
         }
     },
     {
@@ -18,7 +19,8 @@
         "options":{
             "bandwidth":"4096",
             "delete-after":true,
-            "times":true
+            "times":true,
+            "exclude":[ "test1", "test2", "test3" ]
         }
     },
     {
