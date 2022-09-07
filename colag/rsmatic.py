@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 
+from functools import cache
 import sys,os,re
 import json
 
@@ -10,10 +11,11 @@ import colag.util
 
 class RsmaticConfig( object ):
     
-    def __init__( self, filename, **opt ):
+    def __init__( self, opt ):
         self.__debug = opt.get( "debug", False )
         self.__filename = filename
-        self.__data = None
+        self.__data = opt
+        self.__full_config = None
         self.__logfile = opt.get("logfile", None )
         
         self.__static_options = [
@@ -77,7 +79,7 @@ class RsmaticConfig( object ):
             "logformat":{ "mandatory": False, "pattern": None , "type":"flag", "option":"--log-file-format=\"%t %o %i %b [%l] %M %n\"" }
         }
         
-        self.__load_file()
+        self.__validate_config()
     
     def __check_conf_value( self, k, v ):
 
@@ -108,25 +110,22 @@ class RsmaticConfig( object ):
             return False
         return True
     
-    def __load_file( self ):
-        cdata = json.load( open(self.__filename, "r" ) )
-        for cache in cdata:
+    def __validate_config( self ):
+        cache  = self.__data
+        ## temporary until validator works as intended (famous last words)
+        for c in cache:
+            if c not in self.__valid_config:
+                raise AttributeError("Unsupported configuration option: %s" % ( c ) )
+                            
+        if 'options' in cache and type( cache['options'] ).__name__ in ( "dict" ):
+            for o in cache['options']:
+                if o not in self.__valid_options:
+                    raise AttributeError("Unsupported rsync option: %s" % ( o ) )
 
-            ## temporary until validator works as intended (famous last words)
-            for c in cache:
-                if c not in self.__valid_config:
-                    raise AttributeError("Unsupported configuration option: %s" % ( c ) )
-                                
-            if 'options' in cache and type( cache['options'] ).__name__ in ( "dict" ):
-                for o in cache['options']:
-                    if o not in self.__valid_options:
-                        raise AttributeError("Unsupported rsync option: %s" % ( o ) )
+                if not self.__check_conf_value( o, cache['options'][o] ):
+                    raise AttributeError("Invalid option type or format for %s found '%s'" % ( c, cache['options'][o] ) )
 
-                    if not self.__check_conf_value( o, cache['options'][o] ):
-                        raise AttributeError("Invalid option type or format for %s found '%s'" % ( c, cache['options'][o] ) )
-
-
-        self.__full_config = cdata.copy()
+        self.__full_config = cache.copy()
     
     def option_is_flag( self, k ):
         if self.__valid_options[k]['type'] == "flag":
@@ -138,23 +137,26 @@ class RsmaticConfig( object ):
             return True
         return False
 
-    
     def filename( self ):
         return self.__filename
     
-    
     def config( self ):
         return self.__full_config.copy()
-    
 
+    def get( self, k, defval=None ):
+        return self.__full_config.get( k, defval )
 
 class RsyncCommand( object ):
     
-    def __init__( self, **options ):
+    def __init__( self, options ):
+        
+        if not type( options ).__name__ in ("dict", "RsmaticConfig" ):
+            raise AttributeError( "Bad config value type for command builder : %s" % ( type( options ).__name__ ) )
+        
         self.__debug = options.get("debug", False )
         self.__logfile = options.get("logfile", None )
         
-        self.__config = None        
+        self.__config = options        
         self.__command = list()
                 
         self.__command.append("rsync")
@@ -170,24 +172,19 @@ class RsyncCommand( object ):
 
         
     def __mk_command( self ):
-        conf =  self.__config.config()
+        item =  self.__config.config()
 
-        for item in conf:
+        options = item['options']
+        for c in options:
+            val = options[c]
+            self.__command.append( self.__mk_generic_option( c, val ) )
 
-            options = item['options']
-            for c in options:
-                val = options[c]
-                self.__command.append( self.__mk_generic_option( c, val ) )
-
-            self.__command.append( item['source'] )
-            self.__command.append( item['target'] )
+        self.__command.append( item['source'] )
+        self.__command.append( item['target'] )
 
         return self.__command
         
     
-    def load_config( self, filename ):
-        self.__config = RsmaticConfig( filename )
-        
     def set_config( self, conf ):
         if type( conf ).__name__ not in ("RsmaticConfig"):
             raise AttributeError("Bad configuration object for rsmatic")
@@ -195,11 +192,11 @@ class RsyncCommand( object ):
 
     def run( self ):
         cmd = self.__mk_command()
-        
+
 if __name__ == "__main__":
     filename = "samples.d/rsmatic.test.json"
-    c = RsmaticConfig( filename )
+    for conf in json.load( open( filename, "r" ) ):
+        c = RsmaticConfig( conf )
 
-    r = RsyncCommand( )
-    r.load_config( filename )
-    r.run()
+        r = RsyncCommand( c )
+        r.run()
