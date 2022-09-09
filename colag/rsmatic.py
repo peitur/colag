@@ -127,6 +127,9 @@ class RsmaticConfig( object ):
 
         self.__full_config = cache.copy()
     
+    def debug( self, d=True ):
+        self.__debug = colag.util.boolify( d )
+    
     def option_is_flag( self, k ):
         if self.__valid_options[k]['type'] == "flag":
             return True
@@ -143,8 +146,13 @@ class RsmaticConfig( object ):
     def config( self ):
         return self.__full_config.copy()
 
+    def static_config( self ):
+        return self.__static_options.copy()
+    
     def get( self, k, defval=None ):
         return self.__full_config.get( k, defval )
+
+        
 
 class RsyncCommand( object ):
     
@@ -160,6 +168,8 @@ class RsyncCommand( object ):
         self.__command = list()
                 
         self.__command.append("rsync")
+        for o in self.__config.static_config():
+            self.__command.append( o )
 
     def __mk_generic_option( self, o, v ):
         if self.__config.option_is_flag( o ):
@@ -192,11 +202,16 @@ class RsyncCommand( object ):
 
     def run( self ):
         cmd = self.__mk_command()
+        if self.__debug:
+            print("CMD: %s" % ( " ".join( cmd ) ) )
+
 
 if __name__ == "__main__":
     filename = "samples.d/rsmatic.test.json"
     for conf in json.load( open( filename, "r" ) ):
         c = RsmaticConfig( conf )
-
+        
+        c.debug()
+        
         r = RsyncCommand( c )
         r.run()
