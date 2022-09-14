@@ -5,6 +5,7 @@ rstnc://ftp.sunet.se/mirror/turnkeylinux;/external/mirror/repos/turnkeylinux;409
 rsync://ftp.sunet.se/mirror/qubes-os.org/;/external/mirror/repos/qubesos;4096
 rsync://ftp.sunet.se/mirror/kali.org/;/external/mirror/repos/kali.org;4096
 rsync://mirror.nsc.liu.se/CentOS;/external/mirror/repos/centos;4096
+rsync://mirror.netsite.dk/centos-stream;/external/mirror/repos/centos9;4096
 rsync://ftp.sunet.se/mirror/fedora/epel/7/;/external/mirror/repos/epel/7;4096
 rsync://ftp.sunet.se/mirror/fedora/epel/8/;/external/mirror/repos/epel/8;4096
 rsync://ftp.sunet.se/mirror/parrotsec.org/parrot/;/external/mirror/repos/parrot;4096
