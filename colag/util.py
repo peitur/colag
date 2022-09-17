@@ -76,6 +76,12 @@ def date_now_string():
 def random_string( length ):
     return ''.join(random.SystemRandom().choice( string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range( length ))
 
+def random_tempdir( rootdir="/tmp", rlen=5, create=False ):
+    random_dir = "%s/%s" % ( rootdir, random_string( rlen ) )
+    if create and not pathlib.Path( random_dir ).exists():
+        os.makedirs( random_dir, exists_ok=False )
+    return random_dir
+
 
 if __name__ == "__main__":
     pass
