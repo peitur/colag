@@ -1,1 +1,13 @@
-
+[
+    {
+        "baseurl":"http://testsite1"
+    },
+    {
+        "baseurl":"http://testsite2",
+        "gpgcheck":"0",
+        "reposdir":"test.d"
+    },
+    {
+        "baseurl":"http://testsite3"
+    }
+]
