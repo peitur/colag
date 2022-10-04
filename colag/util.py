@@ -73,7 +73,7 @@ def time_now_string():
 def date_now_string():
     return time_now_raw().strftime( "%Y%m%d" )
 
-def random_string( length ):
+def random_string( length=10):
     return ''.join(random.SystemRandom().choice( string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range( length ))
 
 def random_tempdir( rootdir="/tmp", rlen=5, create=False ):
