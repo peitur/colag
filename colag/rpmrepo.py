@@ -58,8 +58,6 @@ class RepoSyncRPM( object ):
         self.__debug = opt.get("debug", False )
         self.__options = opt.copy()
         self.__base_command = self.__detect_repo_mgm()
-        self.__config = RepoSyncConfigGen( **opt )
-        self.__base_command = "/usr/sbin/dnf"
     
 
     def __detect_repo_mgm( self ):
