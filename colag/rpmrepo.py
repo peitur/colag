@@ -97,25 +97,31 @@ class RepoSyncConfigGen( object ):
         self.__reposdir = mconf.get("reposdir")
         self.__rootdir = opt.get("rootdir", "/tmp" )
         self.__init_environment()
+        self.__main_file()
+        self.__repo_file()
 
     def __init_environment( self ):
         self.__temp_repo_dir = colag.util.random_tempdir( rootdir=self.__rootdir ,rlen=16, create=True )
         self.__main_config.set( "reposdir", "%s/%s" % ( self.__temp_repo_dir, self.__reposdir ) )
-        
+        pathlib.Path( self.__main_config.get("reposdir" ) ).mkdir( parents=True )
 
     def __main_file( self ):
         filename = pathlib.Path( "%s/main.conf" % ( self.__temp_repo_dir ) )
         if self.__debug:
-            print("Creating main config file %s" % ( ) )
+            print("Creating main config file %s" % ( filename ) )
+            
         with open( filename, "w" ) as fd:
-            fd.write( self.__main_config )
+            fd.write( self.__main_config.config_format() )
         
     
     def __repo_file( self ):
-        for item in self.__repo_configs:
-            filename = pathlib.Path( "%s/repos.d/%s.repo" % ( self.__temp_repo_dir, item.id() ) )
+        for id, item in self.__repo_configs.items():
+            filename = pathlib.Path( "%s/%s/%s.repo" % ( self.__temp_repo_dir, self.__reposdir, id ) )
+            if self.__debug:
+                print("Creating repo config file %s" % ( filename ) )
+            
             with open( filename, "w" ) as fd:
-                fd.write( self.__main_config )
+                fd.write( item.config_format() )
     
     def environment( self ):
         return self.__temp_repo_dir
@@ -187,6 +193,7 @@ class RepoSyncConfigMain( object ):
             if v:
                 lines.append("\t%s=%s" % ( c, v) )
 
+        lines.append("")
         return "\n".join( lines )
 
 
@@ -250,6 +257,7 @@ class RepoSyncConfigRepo( object ):
             if v:
                 lines.append("\t%s=%s" % ( c, v) )
 
+        lines.append("")
         return "\n".join( lines )
 
 def config_read( filename, **opt ):
@@ -278,7 +286,10 @@ if __name__ == "__main__":
     import colag.rpmrepo
 
     s = config_read("samples.d/rpmsync.json")
-    gen = RepoSyncConfigGen( s['main'], s['repos'], rootdir="test1" )
+    gen = RepoSyncConfigGen( s['main'], s['repos'], rootdir="test1", debug=True )
+    print("##### Full configuration  #####")
     gen.print_all()
+    print("###############################")
+
     gen.cleanup()
     
