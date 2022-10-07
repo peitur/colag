@@ -115,6 +115,7 @@ class RepoSyncConfigMain( object ):
     def __init__( self, conf, **opt ):
         self.__debug = opt.get("debug", False )
         self.__input = conf
+        self.__id = conf.get("id", "main" )
         self.__configuration = dict()
         self.__options = opt.copy()
         self.__validator = colag.validate.SimpleDictValidator( MAIN_OPTIONS )
@@ -138,25 +139,89 @@ class RepoSyncConfigMain( object ):
             if op in MAIN_OPTIONS:
                 self.__configuration[ op ] = self.__input[ op ]
 
+    def id( self, val=None ):
+        if val:
+            self.__id = val
+        return self.__id
+
     def configuration( self ):
         return self.__configuration.copy()
     
-    
+    def config_format( self ):
+        lines = list()
+        lines.append( "[%s]" %( self.__id ) )
+        for c,v in self.__configuration.items():
+            if v:
+                lines.append("\t%s=%s" % ( c, v) )
+
+        return lines
+
 class RepoSyncConfigRepo( object ):
     
     def __init__( self, conf, **opt ):
         self.__debug = opt.get("debug", False )
+        self.__input = conf
+        self.__id = None
         self.__configuration = dict()
         self.__options = opt.copy()
         self.__validator = colag.validate.SimpleDictValidator( REPO_OPTIONS )
 
+        self.__load_defaults()
+        self.__apply_input()
+
+
+    ## 1. load defaults
+    ## 2. apply settings from input
+    def __load_defaults( self ):
+        for op in REPO_OPTIONS:
+            vals = REPO_OPTIONS[ op ]
+            if 'default' in vals:
+                if vals['default']:
+                    self.__configuration[ op ] = vals[ "default" ]
+
+    def __apply_input( self ):
+        if type( self.__input ).__name__ != "dict":
+            raise ValueError("Invalid configurtation format")
+        
+        for op in self.__input:
+            if op in REPO_OPTIONS:
+                if op in ('id'):
+                    self.__id = self.__input[ op ]
+                else:
+                    self.__configuration[ op ] = self.__input[ op ]
+
+
+    def id( self, val=None ):
+        if val:
+            self.__id = val
+        return self.__id
+
+    def configuration( self ):
+        return self.__configuration.copy()
+
+    def config_format( self ):
+        lines = list()
+        lines.append( "[%s]" %( self.__id ) )
+        for c,v in self.__configuration.items():
+            if v:
+                lines.append("\t%s=%s" % ( c, v) )
+
+        return lines
+
 
 def config_read( filename, **opt ):
     items = json.load( open( filename ) )
-    for item in items:
-        conf = colag.rpmrepo.RepoSyncConfigMain( item )
+    if "main" in items:
+        main = items['main']
+        mconf = colag.rpmrepo.RepoSyncConfigMain( main )
+        print( "\n".join( mconf.config_format() ) )
         
-        pprint( conf.configuration())
+    if "repos" in items:
+        repos = items['repos']
+        for repo in repos:
+            conf = colag.rpmrepo.RepoSyncConfigRepo( repo )
+            print(  "\n".join( conf.config_format() ) )
+        
         
 
 if __name__ == "__main__":

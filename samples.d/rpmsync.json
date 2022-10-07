@@ -1,13 +1,19 @@
-[
-    {
-        "baseurl":"http://testsite1"
-    },
-    {
-        "baseurl":"http://testsite2",
-        "gpgcheck":"0",
-        "reposdir":"test.d"
-    },
-    {
-        "baseurl":"http://testsite3"
-    }
-]
+{
+    "main":{},
+    "repos": [
+        {
+            "id":"aaa",
+            "baseurl":"http://testsite1"
+        },
+        {
+            "id":"bbb",
+            "baseurl":"http://testsite2",
+            "gpgcheck":"0",
+            "reposdir":"test.d"
+        },
+        {
+            "id":"ccc",
+            "baseurl":"http://testsite3"
+        }
+    ]
+}
