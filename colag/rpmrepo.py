@@ -14,7 +14,7 @@ MAIN_OPTIONS={
     "clean_requirements_on_remove":{ "pattern":"^([01]$)", "default":"1"},
     "best":{ "pattern":"^([01]$)", "default": "1" },
     "skip_if_unavailable":{ "pattern":"^[01]$)", "default":"0" },
-    "reposdir":{"pattern":"^([01])$", "default": "repo.d"}
+    "reposdir":{"pattern":"^([01])$", "default": "repo.d", "update": True}
 }
 
 REPO_OPTIONS={
@@ -88,27 +88,49 @@ class RepoSyncRPM( object ):
 
 class RepoSyncConfigGen( object ):
     
-    def __init__( self, **opt ):
+    def __init__( self, mconf, rclist, **opt ):
         self.__debug = opt.get("debug", False )
         self.__options = opt.copy()
-        self.__temp_repo_dir = colag.util.random_tempdir()
-        self.__main_config_file = "main.conf"
-        self.__repo_config_file = "%s.repo" % ( colag.util.random_string() )
-        self.__repo_config_data = dict()
-        self.__main_config_data = dict()
+        self.__temp_repo_dir = None
+        self.__main_config = mconf
+        self.__repo_configs = rclist
+        self.__reposdir = mconf.get("reposdir")
+        self.__rootdir = opt.get("rootdir", "/tmp" )
+        self.__init_environment()
 
+    def __init_environment( self ):
+        self.__temp_repo_dir = colag.util.random_tempdir( rootdir=self.__rootdir ,rlen=16, create=True )
+        self.__main_config.set( "reposdir", "%s/%s" % ( self.__temp_repo_dir, self.__reposdir ) )
+        
 
     def __main_file( self ):
-        pass
-    
+        filename = pathlib.Path( "%s/main.conf" % ( self.__temp_repo_dir ) )
+        if self.__debug:
+            print("Creating main config file %s" % ( ) )
+        with open( filename, "w" ) as fd:
+            fd.write( self.__main_config )
+        
     
     def __repo_file( self ):
-        pass
+        for item in self.__repo_configs:
+            filename = pathlib.Path( "%s/repos.d/%s.repo" % ( self.__temp_repo_dir, item.id() ) )
+            with open( filename, "w" ) as fd:
+                fd.write( self.__main_config )
+    
+    def environment( self ):
+        return self.__temp_repo_dir
     
     def cleanup( self ):
+        if self.__debug:
+            print("Cleaning up temporary directory %s" % ( self.__temp_repo_dir ) )
         if pathlib.Path( self.__temp_repo_dir ).exists():
             shutil.rmtree( self.__temp_repo_dir )
-
+            
+            
+    def print_all( self ):
+        print( self.__main_config.config_format() )
+        for _, r in self.__repo_configs.items():
+            print( r.config_format() )
 
 class RepoSyncConfigMain( object ):
     
@@ -144,6 +166,17 @@ class RepoSyncConfigMain( object ):
             self.__id = val
         return self.__id
 
+    def set( self, key, val ):
+        if key in MAIN_OPTIONS:
+            if 'update' in MAIN_OPTIONS[ key ] and MAIN_OPTIONS[ key ]['update']:
+                self.__configuration[ key ] = val
+            else:
+                AttributeError( "Key is read only: %s" % ( key ) )
+                
+    def get( self, key ):
+        if key in MAIN_OPTIONS:
+            return self.__configuration.get( key, None )
+                    
     def configuration( self ):
         return self.__configuration.copy()
     
@@ -154,7 +187,8 @@ class RepoSyncConfigMain( object ):
             if v:
                 lines.append("\t%s=%s" % ( c, v) )
 
-        return lines
+        return "\n".join( lines )
+
 
 class RepoSyncConfigRepo( object ):
     
@@ -190,6 +224,16 @@ class RepoSyncConfigRepo( object ):
                 else:
                     self.__configuration[ op ] = self.__input[ op ]
 
+    def set( self, key, val ):
+        if key in REPO_OPTIONS:
+            if 'update' in REPO_OPTIONS[ key ] and REPO_OPTIONS[ key ]['update']:
+                self.__configuration[ key ] = val
+            else:
+                AttributeError( "Key is read only: %s" % ( key ) )
+
+    def get( self, key ):
+        if key in REPO_OPTIONS:
+            return self.__configuration.get( key, None )
 
     def id( self, val=None ):
         if val:
@@ -206,25 +250,35 @@ class RepoSyncConfigRepo( object ):
             if v:
                 lines.append("\t%s=%s" % ( c, v) )
 
-        return lines
-
+        return "\n".join( lines )
 
 def config_read( filename, **opt ):
     items = json.load( open( filename ) )
+    objects = dict()
+    
     if "main" in items:
         main = items['main']
         mconf = colag.rpmrepo.RepoSyncConfigMain( main )
-        print( "\n".join( mconf.config_format() ) )
+        objects[ mconf.id() ] = mconf
         
     if "repos" in items:
         repos = items['repos']
         for repo in repos:
             conf = colag.rpmrepo.RepoSyncConfigRepo( repo )
-            print(  "\n".join( conf.config_format() ) )
-        
-        
+            if 'repos' not in objects:
+                objects['repos'] = dict()
+                
+            if conf.id() in objects['repos']:
+                raise AttributeError("Duplicate repo IDs in configuration: %s" % ( conf.id() ))
+            objects['repos'][ conf.id() ] = conf
+
+    return objects
 
 if __name__ == "__main__":
     import colag.rpmrepo
 
     s = config_read("samples.d/rpmsync.json")
+    gen = RepoSyncConfigGen( s['main'], s['repos'], rootdir="test1" )
+    gen.print_all()
+    gen.cleanup()
+    
