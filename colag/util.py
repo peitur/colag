@@ -77,9 +77,9 @@ def random_string( length=10):
     return ''.join(random.SystemRandom().choice( string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range( length ))
 
 def random_tempdir( rootdir="/tmp", rlen=5, create=False ):
-    random_dir = "%s/%s" % ( rootdir, random_string( rlen ) )
-    if create and not pathlib.Path( random_dir ).exists():
-        os.makedirs( random_dir, exists_ok=False )
+    random_dir = pathlib.Path( "%s/%s" % ( rootdir, random_string( rlen ) ) )
+    if create and not random_dir.exists():
+        random_dir.mkdir( exist_ok=False, parents=True )
     return random_dir
 
 
