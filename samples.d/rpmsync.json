@@ -1,4 +1,8 @@
 {
+    "command":{
+        "newest-only":true,
+        "download_path":"test1/repos"
+    },
     "main":{},
     "repos": [
         {
