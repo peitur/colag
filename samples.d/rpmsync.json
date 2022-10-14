@@ -2,18 +2,10 @@
     "main":{},
     "repos": [
         {
-            "id":"aaa",
-            "baseurl":"http://testsite1"
-        },
-        {
-            "id":"bbb",
-            "baseurl":"http://testsite2",
-            "gpgcheck":"0",
-            "reposdir":"test.d"
-        },
-        {
-            "id":"ccc",
-            "baseurl":"http://testsite3"
+            "id":"centos-9-kiwi",
+            "name":"Appliance Builder (CentOS_9)",
+            "baseurl":"https://download.opensuse.org/repositories/Virtualization:/Appliances:/Builder/CentOS_9/",
+            "gpgcheck":"https://download.opensuse.org/repositories/Virtualization:/Appliances:/Builder/CentOS_9/repodata/repomd.xml.key"
         }
     ]
 }
