@@ -5,6 +5,7 @@ import pathlib, shutil, json
 
 import colag.util
 import colag.validate
+import colag.command
 
 from pprint import pprint
 COMMAND_OPTIONS={
@@ -132,6 +133,8 @@ class RepoSyncCommand( object ):
                 
         return  cmd
     
+    
+    
     def  set_config( self, filename ):
         print("Updated main config %s" % ( filename ) )
         self.__config_file = pathlib.Path( filename )
@@ -142,7 +145,9 @@ class RepoSyncCommand( object ):
         self.__base_command = cmd
 
     def run( self, filename=None ):
-        return self.__command( filename  )
+        cmd = self.__command( filename  )
+        for line in colag.command.GenericCommand( cmd, debug=self.__debug, just_print=True ).run_iterator():
+            line = line.lstrip().rstrip()
             
 class RepoSyncConfigGen( object ):
     
