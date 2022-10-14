@@ -7,6 +7,13 @@ import colag.util
 import colag.validate
 
 from pprint import pprint
+COMMAND_OPTIONS={
+    "source":{"type":"flag", "default": False },
+    "newest-only":{"type":"flag", "default": True },
+    "urls":{ "type":"flag", "default": False },
+    "tempcache":{ "type":"flag", "default": True },
+    "download_path":{"mandatory": True, "type":"str" }
+}
 
 MAIN_OPTIONS={
     "gpgcheck":{"pattern":"^([01]$)", "default":"1" },
@@ -53,13 +60,33 @@ REPO_MGM_PATHS={
 }
 
 
-class RepoSyncRPM( object ):
-    def __init__( self, **opt ):
+class RepoSyncCommand( object ):
+    def __init__( self, opt ):
         self.__debug = opt.get("debug", False )
         self.__options = opt.copy()
+        self.__input =  opt.copy()
+        self.__config_file = None
         self.__base_command = self.__detect_repo_mgm()
-    
+        self.__configuration = dict()
+        self.__validator = colag.validate.SimpleDictValidator( COMMAND_OPTIONS )
+        
+        self.__load_defaults()
+        self.__apply_input()
 
+    def __load_defaults( self ):
+        for op in COMMAND_OPTIONS:
+            vals = COMMAND_OPTIONS[ op ]
+            if 'default' in vals:
+                self.__configuration[ op ] = vals[ "default" ]
+
+    def __apply_input( self ):
+        if type( self.__input ).__name__ != "dict":
+            raise ValueError("Invalid configurtation format")
+        
+        for op in self.__input:
+            if op in COMMAND_OPTIONS:
+                self.__configuration[ op ] = self.__input[ op ]
+                       
     def __detect_repo_mgm( self ):
         det = dict()
         
@@ -83,7 +110,40 @@ class RepoSyncRPM( object ):
                 raise EnvironmentError("Missing reposync tool")
 
         return None
+        
+    def __command( self, filename=None ):
+        if not self.__base_command:
+            raise OSError( "Missing rpm repo coammand to use")
+        if filename:
+            self.set_config( filename )
+            
+        if not self.__config_file:
+            raise RuntimeError( "Missing configuration, please set configuration file first" )
+        
+        cmd = list()
+        cmd.append( self.__base_command  )
+        cmd.append( "--config=%s" % ( self.__config_file ) )
+        
+        for c in self.__configuration:
+            if  self.__configuration[ c ] and  COMMAND_OPTIONS[ c ]["type"] == "flag":
+                cmd.append( "--%s" % ( c ) )
+            if  self.__configuration[ c ] and  COMMAND_OPTIONS[ c ]["type"] == "str":
+                cmd.append( "--%s=%s" % ( c, self.__configuration[ c ] ) )
+                
+        return  cmd
+    
+    def  set_config( self, filename ):
+        print("Updated main config %s" % ( filename ) )
+        self.__config_file = pathlib.Path( filename )
+        if not self.__config_file.exists():
+            raise FileNotFoundError( "No such file %s" % (filename) )
 
+    def set_base_command( self, cmd ):
+        self.__base_command = cmd
+
+    def run( self, filename=None ):
+        return self.__command( filename  )
+            
 class RepoSyncConfigGen( object ):
     
     def __init__( self, mconf, rclist, **opt ):
@@ -94,6 +154,7 @@ class RepoSyncConfigGen( object ):
         self.__repo_configs = rclist
         self.__reposdir = mconf.get("reposdir")
         self.__rootdir = opt.get("rootdir", "/tmp" )
+        self.__main_filename = opt.get("mainfile", "main.conf")
         self.__init_environment()
         self.__main_file()
         self.__repo_file()
@@ -104,7 +165,7 @@ class RepoSyncConfigGen( object ):
         pathlib.Path( self.__main_config.get("reposdir" ) ).mkdir( parents=True )
 
     def __main_file( self ):
-        filename = pathlib.Path( "%s/main.conf" % ( self.__temp_repo_dir ) )
+        filename = pathlib.Path( "%s/%s" % ( self.__temp_repo_dir, self.__main_filename ) )
         if self.__debug:
             print("Creating main config file %s" % ( filename ) )
             
@@ -121,8 +182,11 @@ class RepoSyncConfigGen( object ):
             with open( filename, "w" ) as fd:
                 fd.write( item.config_format() )
     
+    def mainfile( self ):
+        return pathlib.Path( "%s/%s" % ( self.__temp_repo_dir, self.__main_filename ) )
+    
     def environment( self ):
-        return self.__temp_repo_dir
+        return pathlib.Path( self.__temp_repo_dir )
     
     def cleanup( self ):
         if self.__debug:
@@ -258,10 +322,15 @@ class RepoSyncConfigRepo( object ):
         lines.append("")
         return "\n".join( lines )
 
+
+
 def config_read( filename, **opt ):
     items = json.load( open( filename ) )
     objects = dict()
     
+    if "command" in items:
+        objects['command'] = colag.rpmrepo.RepoSyncCommand( items['command'] )
+        
     if "main" in items:
         main = items['main']
         mconf = colag.rpmrepo.RepoSyncConfigMain( main )
@@ -288,6 +357,6 @@ if __name__ == "__main__":
     print("##### Full configuration  #####")
     gen.print_all()
     print("###############################")
-
+    pprint( s['command'].run() )
     gen.cleanup()
     
