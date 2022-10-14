@@ -13,7 +13,6 @@ class RsmaticConfig( object ):
     
     def __init__( self, opt ):
         self.__debug = opt.get( "debug", False )
-        self.__filename = filename
         self.__data = opt
         self.__full_config = None
         self.__logfile = opt.get("logfile", None )
@@ -22,6 +21,7 @@ class RsmaticConfig( object ):
             "--no-motd",
             "--recursive",
             "--safe-links",
+            "--ignore-missing-args",
             "--out-format=\"%'i %'b %t %n\""
         ]
         
@@ -37,7 +37,7 @@ class RsmaticConfig( object ):
             "port":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int" },
             "ipv4":{"mandatory": False, "pattern": None , "type":"flag" },
             "ipv6":{"mandatory": False, "pattern": None , "type":"flag" },
-            "list-only":{"mandatory": False, "pattern": None , "type":"flag" },            
+            "list-only":{"mandatory": False, "pattern": None , "type":"flag"},            
             "checksum":{"mandatory": False, "pattern": None , "type":"flag" },
             "recursive":{"mandatory": False, "pattern": None , "type":"flag" },
             "archive":{"mandatory": False, "pattern": None , "type":"flag" },
@@ -65,7 +65,7 @@ class RsmaticConfig( object ):
             "include":{"mandatory": False, "pattern": ".+" , "type":"list"  },
             "include-from":{"mandatory": False, "pattern": ".+" , "type":"str"  },
             "bwlimit":  {"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int"  },
-            "bandwidth":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int"  },
+            "bandwidth":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int", "rename":"bwlimit"  },
             "protect-args":{"mandatory": False, "pattern": None , "type":"flag"  },
             "contimeout":{"mandatory": False, "pattern": "^[0-9]+$" , "type":"int"  },
             "numeric-ids":{"mandatory": False, "pattern": None , "type":"flag"  },
@@ -140,6 +140,11 @@ class RsmaticConfig( object ):
             return True
         return False
 
+    def option_rename( self, o ):
+        if 'rename' in self.__valid_options[ o ]:
+            o = self.__valid_options[ o ]['rename']
+        return o        
+
     def filename( self ):
         return self.__filename
     
@@ -163,7 +168,6 @@ class RsyncCommand( object ):
         
         self.__debug = options.get("debug", False )
         self.__logfile = options.get("logfile", None )
-        
         self.__config = options        
         self.__command = list()
                 
@@ -172,6 +176,7 @@ class RsyncCommand( object ):
             self.__command.append( o )
 
     def __mk_generic_option( self, o, v ):
+        o = self.__config.option_rename( o )
         if self.__config.option_is_flag( o ):
             return "--%s" % ( o )
         elif self.__config.option_is_list( o ):
@@ -189,6 +194,7 @@ class RsyncCommand( object ):
             val = options[c]
             self.__command.append( self.__mk_generic_option( c, val ) )
 
+
         self.__command.append( item['source'] )
         self.__command.append( item['target'] )
 
@@ -201,10 +207,7 @@ class RsyncCommand( object ):
         self.__config = conf
 
     def run( self ):
-        cmd = self.__mk_command()
-        if self.__debug:
-            print("CMD: %s" % ( " ".join( cmd ) ) )
-
+        return self.__mk_command().copy()
 
 if __name__ == "__main__":
     filename = "samples.d/rsmatic.test.json"
