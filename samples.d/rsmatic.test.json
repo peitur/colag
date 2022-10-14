@@ -11,28 +11,5 @@
             "ignore-errors":true,
             "exclude":["snapshots","development"]
         }
-    },
-    {
-        "debug": true,
-        "source":"rsync://ftp.uio.no/OpenBSD",
-        "target":"test/openbsd",
-        "logfile":"test/openbsd/mirror.log",
-        "options":{
-            "bandwidth":"4096",
-            "delete-after":true,
-            "times":true,
-            "exclude":[ "test1", "test2", "test3" ]
-        }
-    },
-    {
-        "debug": true,
-        "source":"rsync://ftp.sunet.se/mirror/netbsd.org/NetBSD",
-        "target":"test/netbsd",
-        "logfile":"test/netbsd/mirror.log",
-        "options":{
-            "bandwidth":"4096",
-            "delete-after":true,
-            "times":true
-        }
     }
 ]
