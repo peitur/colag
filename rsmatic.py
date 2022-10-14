@@ -7,6 +7,8 @@ import json
 import hashlib
 import getopt
 
+import colag.rsmatic
+
 from datetime import datetime
 from pprint import pprint
 from pathlib import Path
@@ -144,14 +146,24 @@ def run_command_iter( cmd, **opt ):
 
     if debug: print( "Running: '%s'" % ( " ".join( cmd ) ) )
 
+    buffer = list()
     prc = subprocess.Popen( cmd, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, universal_newlines=True )
     for line in prc.stdout.readlines():
-        yield line.rstrip()
-
+        buffer.append( line.rstrip().lstrip() )
+        
+        while( len( buffer ) >= 10 ):
+            buffer.pop(0)
+            
+        yield line.rstrip().lstrip()
         if prc.poll():
+            print("#"*32)
+            pprint( buffer )
+            print("#"*32)
+
             break
 
-def rsync_file_list( url, target=None, **opt ):
+
+def rsync_file_list_x( url, target=None, **opt ):
     debug = opt.get("debug", False )
     cmd = list()
     cmd.append("rsync")
@@ -182,7 +194,8 @@ def rsync_file_list( url, target=None, **opt ):
     return ret
 
 
-def rsync_file_get( url, target, **opt ):
+
+def rsync_file_get_x( url, target, **opt ):
     debug = opt.get("debug", False )
     cmd = list()
     cmd.append("rsync")
@@ -214,6 +227,37 @@ def rsync_file_get( url, target, **opt ):
     except Exception as e:
         raise e
     return ret
+
+
+def rsync_file_list( opt ):
+    debug = opt.get("debug", False )
+
+    opt['options']['list-only'] = True
+    conf = colag.rsmatic.RsmaticConfig( opt )
+    cmd = colag.rsmatic.RsyncCommand( conf ).run()
+
+    try:
+        for f in run_command_iter( cmd,debug=True  ):
+            yield f
+
+    except Exception as e:
+        raise e
+
+
+def rsync_file_get( opt ):
+    debug = opt.get("debug", False )
+
+    conf = colag.rsmatic.RsmaticConfig( opt )
+    cmd = colag.rsmatic.RsyncCommand( conf ).run()
+    
+    try:
+        for f in run_command_iter( cmd, debug=True ):
+            yield f
+
+    except Exception as e:
+        raise e
+
+
 
 
 def read_env( key ):
@@ -291,19 +335,10 @@ if __name__ == "__main__":
         print("Loading sites from file %s" % ( config ) )
 
         for siteline in load_file( config ):
-            if len( siteline ) < 3:
-                continue
 
-            p = re.split(r";", siteline.lstrip().rstrip() )
-            site = p[0]
-            target = "."
-            limit = None
-
-            if len( p ) > 1:
-                target = Path(  p[1] )
-            if len( p ) > 2:
-                limit = p[2]
-
+            target = Path( siteline['target'] )
+            site = siteline['source']
+            
             logfile = "%s/%s.%s.log" % ( target, opt['mode'], time_now_string() )
 
             stats = dict()
@@ -319,8 +354,8 @@ if __name__ == "__main__":
                 if not target.exists():
                     target.mkdir( parents=True, exist_ok=True )
 
-                print("Syncing %s to %s using %s KiB logging to %s" % (site, target, limit, logfile ))
-                for f in rsync_file_get( site, str(target), bwlimit=limit,logfile=logfile, deltype="after" ):
+                print("Syncing %s to %s logging to %s" % (site, target, logfile ))
+                for f in rsync_file_get( siteline ):
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
                     if len( parts ) == 5:
@@ -343,7 +378,8 @@ if __name__ == "__main__":
             elif opt['mode'] in ("list"):
 
                 print("Listing %s logging to %s" % (site, logfile ))
-                for f in rsync_file_list( site, bwlimit=limit ):
+                for f in rsync_file_list( siteline ):
+                    
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
                     if len( parts ) == 5:
@@ -376,7 +412,6 @@ if __name__ == "__main__":
             stats['bytes_hum'] = "%.7s %s" % ( n, u )
             stats["site"] = site
             stats["target"] = target.__str__()
-            stats["limit"] = limit
             pprint( stats )
 
     print("-------------------------------------------")
