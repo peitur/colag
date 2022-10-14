@@ -147,10 +147,11 @@ def run_command_iter( cmd, **opt ):
     if debug: print( "Running: '%s'" % ( " ".join( cmd ) ) )
 
     buffer = list()
-    prc = subprocess.Popen( cmd, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, universal_newlines=True )
+    errors = list()
+    prc = subprocess.Popen( cmd, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, universal_newlines=True, shell=False )
     for line in prc.stdout.readlines():
         buffer.append( line.rstrip().lstrip() )
-        
+                
         while( len( buffer ) >= 10 ):
             buffer.pop(0)
             
@@ -237,6 +238,7 @@ def rsync_file_list( opt ):
     cmd = colag.rsmatic.RsyncCommand( conf ).run()
 
     try:
+
         for f in run_command_iter( cmd,debug=True  ):
             yield f
 
@@ -379,6 +381,9 @@ if __name__ == "__main__":
 
                 print("Listing %s logging to %s" % (site, logfile ))
                 for f in rsync_file_list( siteline ):
+                    print( f )
+                    if re.match("^rsync.*", f ):
+                        continue
                     
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
