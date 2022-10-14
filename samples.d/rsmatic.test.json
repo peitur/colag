@@ -3,11 +3,12 @@
         "debug": true,
         "source":"rsync://ftp1.de.FreeBSD.org",
         "target":"test/freebsd",
-        "logfile":"/disk/freebsd/mirror.log",
+        "logfile":"test/freebsd/mirror.log",
         "options":{
             "bandwidth":"4096",
             "delete-after":true,
             "times":true, 
+            "ignore-errors":true,
             "exclude":["snapshots","development"]
         }
     },
@@ -15,7 +16,7 @@
         "debug": true,
         "source":"rsync://ftp.uio.no/OpenBSD",
         "target":"test/openbsd",
-        "logfile":"/disk/openbsd/mirror.log",
+        "logfile":"test/openbsd/mirror.log",
         "options":{
             "bandwidth":"4096",
             "delete-after":true,
@@ -27,6 +28,7 @@
         "debug": true,
         "source":"rsync://ftp.sunet.se/mirror/netbsd.org/NetBSD",
         "target":"test/netbsd",
+        "logfile":"test/netbsd/mirror.log",
         "options":{
             "bandwidth":"4096",
             "delete-after":true,

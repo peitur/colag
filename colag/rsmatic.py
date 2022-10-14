@@ -25,6 +25,10 @@ class RsmaticConfig( object ):
             "--out-format=\"%'i %'b %t %n\""
         ]
         
+        if self.__logfile:
+            self.__static_options.append( "--log-file=%s"  % ( self.__logfile ) )
+            self.__static_options.append( "--log-file-format=\"%t %o %i %b [%l] %M %n\"" )
+        
         self.__valid_config = {
             "debug":{ "type":"bool", "mandatory": False },
             "source":{ "type":"str", "pattern":r".+", "mandatory":True },
@@ -71,14 +75,11 @@ class RsmaticConfig( object ):
             "numeric-ids":{"mandatory": False, "pattern": None , "type":"flag"  },
             "min-size":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int"  },
             "max-size":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int"  },
-            "delay-updates":{"mandatory": False, "pattern": None , "type":"flag"  }
+            "delay-updates":{"mandatory": False, "pattern": None , "type":"flag" },
+            "ignore-errors":{"mandatory": False, "pattern": None , "type":"flag" },
+            "ignore-missing-args":{"mandatory": False, "pattern": None , "type":"flag" }
         }
-    
-        self.__logfile = {
-            "logfile":{ "mandatory": False, "pattern": r".+", "type":"str", "option":"--log-file" },
-            "logformat":{ "mandatory": False, "pattern": None , "type":"flag", "option":"--log-file-format=\"%t %o %i %b [%l] %M %n\"" }
-        }
-        
+            
         self.__validate_config()
     
     def __check_conf_value( self, k, v ):
