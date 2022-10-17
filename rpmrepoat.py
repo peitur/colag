@@ -25,7 +25,6 @@ if __name__  == "__main__":
     gen.print_all()
     print("###############################")
     s['command'].set_config( gen.mainfile() )
-    s['command'].set_base_command( "/usr/bin/dnf" )
     pprint( s['command'].run() )
 
     gen.cleanup()

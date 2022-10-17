@@ -17,7 +17,8 @@ class GenericCommand( object ):
         
         if type( cmd ).__name__ in ( "str" ):
             self.__cmd  = shlex.split( cmd )
-
+        else:
+            self.__cmd  = [ str( s ) for s in  cmd ]
 
     def run_iterator( self ):
 
