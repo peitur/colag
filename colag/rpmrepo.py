@@ -9,11 +9,12 @@ import colag.command
 
 from pprint import pprint
 COMMAND_OPTIONS={
-    "source":{"type":"flag", "default": False },
-    "newest-only":{"type":"flag", "default": True },
-    "urls":{ "type":"flag", "default": False },
-    "tempcache":{ "type":"flag", "default": True },
-    "download_path":{"mandatory": True, "type":"str" }
+    "source":{"type":"flag", "default": False, "supported_by":["reposync", "dnf", "yum"]  },
+    "newest-only":{"type":"flag", "default": True, "supported_by":["reposync", "dnf", "yum"]  },
+    "urls":{ "type":"flag", "default": False, "supported_by":["reposync", "dnf", "yum"]  },
+    "tempcache":{ "type":"flag", "default": True, "supported_by":["reposync", "yum"] },
+    "download-path":{"mandatory": True, "type":"str", "supported_by":["reposync", "dnf", "yum"] },
+    "download_path":{"mandatory": True, "type":"str", "supported_by":["reposync", "dnf", "yum"] }
 }
 
 MAIN_OPTIONS={
@@ -55,9 +56,9 @@ REPO_OPTIONS={
 }
 
 REPO_MGM_PATHS={
-    "dnf":{ "needs":[] },
-    "yum":{ "needs":["reposync"]},
-    "reposync": {}
+    "dnf":{ "needs":[], "sub":"reposync" },
+    "yum":{ "needs":["reposync"],  "sub":"" },
+    "reposync": { "needs":[], "sub":""  }
 }
 
 
@@ -113,6 +114,10 @@ class RepoSyncCommand( object ):
         return None
         
     def __command( self, filename=None ):
+        
+        if os.environ.get('USER') not in ("root"):
+            raise OSError( "Must be root for this operation: %s" % ( os.environ.get('USERNAME') )  )
+        
         if not self.__base_command:
             raise OSError( "Missing rpm repo coammand to use")
         if filename:
@@ -126,14 +131,15 @@ class RepoSyncCommand( object ):
         cmd.append( "--config=%s" % ( self.__config_file ) )
         
         for c in self.__configuration:
-            if  self.__configuration[ c ] and  COMMAND_OPTIONS[ c ]["type"] == "flag":
-                cmd.append( "--%s" % ( c ) )
-            if  self.__configuration[ c ] and  COMMAND_OPTIONS[ c ]["type"] == "str":
-                cmd.append( "--%s=%s" % ( c, self.__configuration[ c ] ) )
-                
+            if  pathlib.Path( self.__base_command ).name in COMMAND_OPTIONS[ c ]["supported_by"]:
+                if  self.__configuration[ c ] and  COMMAND_OPTIONS[ c ]["type"] == "flag":
+                    cmd.append( "--%s" % ( c ) )
+                elif  self.__configuration[ c ] and  COMMAND_OPTIONS[ c ]["type"] == "str":
+                    cmd.append( "--%s=%s" % ( c, self.__configuration[ c ] ) )
+        
+        cmd.append( REPO_MGM_PATHS[ pathlib.Path( self.__base_command ).name ]['sub'] )
+            
         return  cmd
-    
-    
     
     def  set_config( self, filename ):
         print("Updated main config %s" % ( filename ) )
@@ -146,8 +152,10 @@ class RepoSyncCommand( object ):
 
     def run( self, filename=None ):
         cmd = self.__command( filename  )
-        for line in colag.command.GenericCommand( cmd, debug=self.__debug, just_print=True ).run_iterator():
+        print( " ".join( cmd ) )
+        for line in colag.command.GenericCommand( cmd, debug=self.__debug, just_print=False ).run_iterator():
             line = line.lstrip().rstrip()
+            print( line )            
             
 class RepoSyncConfigGen( object ):
     
@@ -192,6 +200,9 @@ class RepoSyncConfigGen( object ):
     
     def environment( self ):
         return pathlib.Path( self.__temp_repo_dir )
+    
+    def destination( self ):
+        return self.__repo_path
     
     def cleanup( self ):
         if self.__debug:
@@ -258,7 +269,7 @@ class RepoSyncConfigMain( object ):
         lines.append( "[%s]" %( self.__id ) )
         for c,v in self.__configuration.items():
             if v:
-                lines.append("\t%s=%s" % ( c, v) )
+                lines.append("%s=%s" % ( c, v) )
 
         lines.append("")
         return "\n".join( lines )
@@ -322,7 +333,7 @@ class RepoSyncConfigRepo( object ):
         lines.append( "[%s]" %( self.__id ) )
         for c,v in self.__configuration.items():
             if v:
-                lines.append("\t%s=%s" % ( c, v) )
+                lines.append("%s=%s" % ( c, v) )
 
         lines.append("")
         return "\n".join( lines )
