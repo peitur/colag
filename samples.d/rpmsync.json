@@ -1,7 +1,8 @@
 {
     "command":{
         "newest-only":true,
-        "download_path":"test1/repos"
+        "download-path":"test1/store/repos",
+        "urls": true
     },
     "main":{},
     "repos": [
@@ -9,7 +10,8 @@
             "id":"centos-9-kiwi",
             "name":"Appliance Builder (CentOS_9)",
             "baseurl":"https://download.opensuse.org/repositories/Virtualization:/Appliances:/Builder/CentOS_9/",
-            "gpgcheck":"https://download.opensuse.org/repositories/Virtualization:/Appliances:/Builder/CentOS_9/repodata/repomd.xml.key"
+            "gpgkey":"https://download.opensuse.org/repositories/Virtualization:/Appliances:/Builder/CentOS_9/repodata/repomd.xml.key",
+            "gpgcheck":"1"
         }
     ]
 }
