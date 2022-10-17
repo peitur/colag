@@ -2,7 +2,7 @@
     "command":{
         "newest-only":true,
         "download-path":"test1/store/repos",
-        "urls": true
+        "urls": false
     },
     "main":{},
     "repos": [

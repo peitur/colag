@@ -13,8 +13,8 @@ COMMAND_OPTIONS={
     "newest-only":{"type":"flag", "default": True, "supported_by":["reposync", "dnf", "yum"]  },
     "urls":{ "type":"flag", "default": False, "supported_by":["reposync", "dnf", "yum"]  },
     "tempcache":{ "type":"flag", "default": True, "supported_by":["reposync", "yum"] },
-    "download-path":{"mandatory": True, "type":"str", "supported_by":["reposync", "dnf", "yum"] },
-    "download_path":{"mandatory": True, "type":"str", "supported_by":["reposync", "dnf", "yum"] }
+    "download-path":{"mandatory": True, "type":"str", "supported_by":[ "dnf" ] },
+    "download_path":{"mandatory": True, "type":"str", "supported_by":["reposync", "yum"] }
 }
 
 MAIN_OPTIONS={
@@ -152,8 +152,7 @@ class RepoSyncCommand( object ):
 
     def run( self, filename=None ):
         cmd = self.__command( filename  )
-        print( " ".join( cmd ) )
-        for line in colag.command.GenericCommand( cmd, debug=self.__debug, just_print=False ).run_iterator():
+        for line in colag.command.GenericCommand( cmd, debug=True, just_print=False ).run_iterator():
             line = line.lstrip().rstrip()
             print( line )            
             
