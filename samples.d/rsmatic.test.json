@@ -1,7 +1,7 @@
 [
     {
         "debug": true,
-        "source":"rsync://ftp1.de.FreeBSD.org",
+        "source":"rsync://ftp.uio.no/FreeBSD/",
         "target":"test/freebsd",
         "logfile":"test/freebsd/mirror.log",
         "options":{
