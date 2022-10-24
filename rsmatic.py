@@ -145,7 +145,7 @@ def run_command_iter( cmd, **opt ):
         cmd = shlex.split( cmd )
 
     if debug: print( "Running: '%s'" % ( " ".join( cmd ) ) )
-
+    
     buffer = list()
     errors = list()
     prc = subprocess.Popen( cmd, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, universal_newlines=True, shell=False )
@@ -379,9 +379,12 @@ if __name__ == "__main__":
 
             elif opt['mode'] in ("list"):
 
+                if not target.exists():
+                    target.mkdir( parents=True, exist_ok=True )
+
                 print("Listing %s logging to %s" % (site, logfile ))
                 for f in rsync_file_list( siteline ):
-                    print( f )
+
                     if re.match("^rsync.*", f ):
                         continue
                     

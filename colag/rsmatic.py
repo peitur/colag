@@ -22,6 +22,7 @@ class RsmaticConfig( object ):
             "--recursive",
             "--safe-links",
             "--ignore-missing-args",
+            "--prune-empty-dirs",
             "--out-format=\"%'i %'b %t %n\""
         ]
         
@@ -77,7 +78,9 @@ class RsmaticConfig( object ):
             "max-size":{"mandatory": False, "pattern": r"^[0-9]+$" , "type":"int"  },
             "delay-updates":{"mandatory": False, "pattern": None , "type":"flag" },
             "ignore-errors":{"mandatory": False, "pattern": None , "type":"flag" },
-            "ignore-missing-args":{"mandatory": False, "pattern": None , "type":"flag" }
+            "ignore-missing-args":{"mandatory": False, "pattern": None , "type":"flag" },
+            "verbose":{"mandatory": False, "pattern": None , "type":"flag" },
+            "prune-empty-dirs":{"mandatory": False, "pattern": None, "type":"flag" }
         }
             
         self.__validate_config()
@@ -179,11 +182,14 @@ class RsyncCommand( object ):
     def __mk_generic_option( self, o, v ):
         o = self.__config.option_rename( o )
         if self.__config.option_is_flag( o ):
-            return "--%s" % ( o )
+            if v:
+                return "--%s" % ( o )
+            return ""
         elif self.__config.option_is_list( o ):
             if type( v ).__name__ not in ("list"):
                 v = [ v ]
-            return " ".join( ["--%s=%s" % ( o, i ) for i in v ] )
+            return ["--%s=%s" % ( o, i ) for i in v ]
+        
         return "--%s=%s" % ( o, v ) 
 
         
@@ -193,12 +199,15 @@ class RsyncCommand( object ):
         options = item['options']
         for c in options:
             val = options[c]
-            self.__command.append( self.__mk_generic_option( c, val ) )
-
+            opt = self.__mk_generic_option( c, val )
+            if type( opt ).__name__ in ("list"):
+                self.__command += opt
+            else:
+                self.__command.append( opt )
 
         self.__command.append( item['source'] )
         self.__command.append( item['target'] )
-
+        
         return self.__command
         
     
