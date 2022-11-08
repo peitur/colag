@@ -39,6 +39,7 @@ libssh2-sring
 log
 memchr
 md5
+mdbook
 mio
 native-tls
 notify
