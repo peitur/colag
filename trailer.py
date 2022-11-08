@@ -279,7 +279,6 @@ if __name__ == "__main__":
     ## 5. Check requirements
     ## -- for each requirement, redo from step 1
 
-
     modules = load_file( opt['filename'] )
     for module in modules:
         version = None
