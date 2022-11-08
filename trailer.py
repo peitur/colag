@@ -7,6 +7,8 @@ import hashlib, random, string
 import getopt
 import tarfile, zipfile
 
+import colag.util
+
 from pprint import pprint
 from pathlib import Path
 
@@ -20,32 +22,6 @@ def get_crates_dl_url( module, version ):
 
 def random_string( length ):
     return ''.join(random.SystemRandom().choice( string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range( length ))
-
-################################################################################
-## Hashing large files
-################################################################################
-def file_hash( filename, chksum="sha256" ):
-    BLOCKSIZE = 65536
-
-    if chksum == "sha1":
-        hasher = hashlib.sha1()
-    elif chksum == "sha224":
-        hasher = hashlib.sha224()
-    elif chksum == "sha256":
-        hasher = hashlib.sha256()
-    elif chksum == "sha384":
-        hasher = hashlib.sha384()
-    elif chksum == "sha512":
-        hasher = hashlib.sha512()
-    else:
-        hasher = hashlib.sha256()
-
-    with open( filename, 'rb') as f:
-        buf = f.read(BLOCKSIZE)
-        while len(buf) > 0:
-            hasher.update(buf)
-            buf = f.read(BLOCKSIZE)
-    return hasher.hexdigest()
 
 ################################################################################
 ## HTTP operations, download large files
@@ -211,8 +187,16 @@ def collect_pkg_full( module, **opt ):
 
     latest = dict()
     links = dict()
+
     if 'versions' in q:
-        latest = q['versions'][0]
+
+        latest = None      
+        i = 0
+        if not opt['prerelease']:
+            while re.match( r"^[.0-9]+-rc.+$", q['versions'][i]['num'] ):
+                i += 1            
+        latest =  q['versions'][i].copy()
+            
         links = latest['links']
         version = latest['num']
         url = get_crates_dl_url( module, version )
@@ -235,7 +219,7 @@ def collect_pkg_full( module, **opt ):
             hd['04.ctime'] = datetime.datetime.fromtimestamp( fst.st_ctime ).isoformat()
             hd['05.mtime'] = datetime.datetime.fromtimestamp( fst.st_mtime ).isoformat()
             hd['06.atime'] = datetime.datetime.fromtimestamp( fst.st_atime ).isoformat()
-            hd['07.checksum'] = "%s:%s" % ( opt['checksum'], file_hash( fullfilename, opt['checksum'] ) )
+            hd['07.checksum'] = "%s:%s" % ( opt['checksum'], colag.util.file_hash( fullfilename, opt['checksum'] ) )
             hd['10.release'] = latest
 
             if not Path( chkfile ).exists():
@@ -265,13 +249,17 @@ if __name__ == "__main__":
     opt['target'] = "trailer"
     opt['config'] = None
     opt['checksum'] = "sha256"
-
+    opt['prerelease'] = False
+    
     if len( sys.argv ) > 0:
         opt['filename'] = sys.argv.pop(0)
 
+    print( "reading crate list from %s" % ( opt['filename'] ) )
     if Path( "trailer.json" ).exists():
         cfg = load_file( "trailer.json" )[0]
         opt['target'] = cfg['target']
+        if 'prerelease' in cfg:
+            opt['prerelease'] = cfg['prerelease']
 
     target = Path( opt['target'] )
     if not target.exists():
