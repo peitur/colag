@@ -29,6 +29,7 @@ git2
 gitignore
 glob
 handlebars
+hermit-abi = "0.1.6"
 hmac
 hyper
 indexmap

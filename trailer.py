@@ -191,12 +191,18 @@ def collect_pkg_full( module, **opt ):
     if 'versions' in q:
 
         latest = None      
-        i = 0
+        
+        i = 0  
         if not opt['prerelease']:
             while re.match( r"^[.0-9]+-rc.+$", q['versions'][i]['num'] ):
-                i += 1            
+                i += 1
         latest =  q['versions'][i].copy()
-            
+
+        if 'version' in opt and opt['version']:    
+            for i in q['versions']:
+                if str( i['num'] ) ==  opt['version']:
+                    latest = i.copy()
+                    
         links = latest['links']
         version = latest['num']
         url = get_crates_dl_url( module, version )
@@ -276,4 +282,11 @@ if __name__ == "__main__":
 
     modules = load_file( opt['filename'] )
     for module in modules:
+        version = None
+        m =re.match(r"^(\S+)\s*=\s*\"(\S+)\"", module )
+        if m:
+            module = m.group(1).lstrip().rstrip()
+            version = m.group(2).lstrip().rstrip()
+            
+        opt['version'] = version
         collect_pkg_full( module, **opt )
