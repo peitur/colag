@@ -193,8 +193,6 @@ def dirtree( root, path ):
         rootparts = pathlib.Path( root ).parts
         ppath = "/".join( pathparts[ len( rootparts ): ] )
 
-        print("Checking %s - %s" % ( root, ppath ) )
-
         if item.is_dir():
             res = res + dirtree( root, ppath )
         else:
