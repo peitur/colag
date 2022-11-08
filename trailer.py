@@ -219,14 +219,15 @@ def collect_pkg_full( module, **opt ):
         print( "# [ %s ] [ checking ] Version: %s  => %s" % ( module, version, url ) )
         filename = "%s-%s.crate" % (module, version)
         fullfilename = "%s/%s" %( opt['target'] , filename )
+        chkfile = "%s.%s.json" % ( fullfilename, opt['checksum'] )
 
-        if not Path( fullfilename ).exists():
+        if not Path( fullfilename ).exists() or not Path( chkfile ).exists():
 
             if not download_file( module, url, fullfilename ):
                 return None
 
             hd = dict()
-            chkfile = "%s.%s.json" % ( fullfilename, opt['checksum'] )
+
             fst = Path( fullfilename ).stat()
             hd['01.filename'] = filename
             hd['02.source'] = url
