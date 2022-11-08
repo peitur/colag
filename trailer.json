@@ -1,6 +1,6 @@
 [
 {
 	"checksum":"sha256",
-	"target":"/mnt/cargo"
+	"target":"trailer"
 }
 ]
