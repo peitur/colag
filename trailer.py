@@ -216,21 +216,29 @@ def collect_pkg_full( module, **opt ):
 
     if 'versions' in q:
 
-        latest = None      
-        
         i = 0  
         if not opt['prerelease']:
-            while re.match( r"^[.0-9]+-(rc|beta|alpha|alfa|test).+$", q['versions'][i]['num'] ):
+            while re.match( r"^[.0-9]+-(rc|beta|alpha|alfa|test).*$", q['versions'][i]['num'] ) and i < len( q['versions'] ):
                 i += 1
-        latest =  q['versions'][i].copy()
+                if i >= len( q['versions'] ):
+                    break
+            if i < len( q['versions'] ):
+                latest =  q['versions'][i].copy()
 
         if 'version' in opt and opt['version']:
             i = 0
             rx = version_regex( opt['version'] )
             while not re.match( rx, q['versions'][i]['num'] ):
                 i += 1
-            latest =  q['versions'][i].copy()
-            
+                if i >= len( q['versions'] ):
+                    break
+                
+            if i < len( q['versions'] ):
+                latest =  q['versions'][i].copy()
+        
+        if not latest:
+            latest = q['versions'][0]
+        
         links = latest['links']
         version = latest['num']
         url = get_crates_dl_url( module, version )
