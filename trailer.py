@@ -194,15 +194,28 @@ def collect_pkg_full( module, **opt ):
         
         i = 0  
         if not opt['prerelease']:
-            while re.match( r"^[.0-9]+-rc.+$", q['versions'][i]['num'] ):
+            while re.match( r"^[.0-9]+-(rc|beta|alpha|alfa|test).+$", q['versions'][i]['num'] ):
                 i += 1
         latest =  q['versions'][i].copy()
 
-        if 'version' in opt and opt['version']:    
-            for i in q['versions']:
-                if str( i['num'] ) ==  opt['version']:
-                    latest = i.copy()
-                    
+        if 'version' in opt and opt['version']:
+        # while opt['version'] not matching i[num]
+        # ^ over version, if 3 numbers, match highest 
+        # = exact version, exact match
+            rx = re.compile(".")
+            v = re.match( r"([\^=]*)(.+)", opt['version'] )
+            l = len( re.split( r"\.", v.group(2) ) )
+            
+            if v.group(1) in ( '^' ):
+                rx = re.compile( r"^%s" % ( v.group(2) ) )
+            if v.group(1) in ( '', '=' ):
+                rx = re.compile( r"^%s$" % ( v.group(2) ) )
+
+            i = 0
+            while not rx.match( q['versions'][i]['num'] ):
+                i += 1
+            latest =  q['versions'][i].copy()
+            
         links = latest['links']
         version = latest['num']
         url = get_crates_dl_url( module, version )
@@ -233,15 +246,17 @@ def collect_pkg_full( module, **opt ):
                 write_file( chkfile, [ hd ] )
 
         reqlist_raw = get_request( module, "https://crates.io%s" %( links['dependencies']))
-        reqlist = [ x['crate_id'] for x in reqlist_raw['dependencies'] ]
-        if len( reqlist ) > 0:
-            for req in reqlist:
-
+        if len( reqlist_raw['dependencies']  ) > 0:
+            for r in reqlist_raw['dependencies'] :
+                req = r['crate_id']
+                ver = r['req']
+                
                 if len( req ) == 0: continue
                 if req == module: continue
                 if re.match( r"[\[\]]+", req ): continue
 
 #                    print("## [%s] %s => %s" % ( len(module_seen), module, req ) )
+                opt['version'] = ver
                 collect_pkg_full( req, **opt )
 
     return None
