@@ -169,6 +169,32 @@ def get_versions_index( module, **opt ):
 
     return res
 
+def version_regex( vstring ):
+
+    m = re.match( r"([\^=]*)(.+)", vstring )
+    h = m.group(1)
+    v = m.group(2)
+    
+    p = re.split( r"\.", v )
+    
+    
+    ## Any version, so lets take newest, i.e. first matching
+    if len(p) == 0:
+        return r".+"
+
+    if len(p) <= 1 and p[-1] in ("*"):
+        return r".+"
+
+    if len( p ) > 1:
+        if h in ("^") or p[-1] in ("*"):
+            return r"^%s\." % ( ".".join( p[:len(p)-1]) )    
+
+        if h in ("","="):
+            return r"^%s$" % ( ".".join( p[:len(p)]) )    
+    
+    return r".+"
+        
+    
 def collect_pkg_full( module, **opt ):
     module = module.lstrip().rstrip()
 
@@ -199,20 +225,9 @@ def collect_pkg_full( module, **opt ):
         latest =  q['versions'][i].copy()
 
         if 'version' in opt and opt['version']:
-        # while opt['version'] not matching i[num]
-        # ^ over version, if 3 numbers, match highest 
-        # = exact version, exact match
-            rx = re.compile(".")
-            v = re.match( r"([\^=]*)(.+)", opt['version'] )
-            l = len( re.split( r"\.", v.group(2) ) )
-            
-            if v.group(1) in ( '^' ):
-                rx = re.compile( r"^%s" % ( v.group(2) ) )
-            if v.group(1) in ( '', '=' ):
-                rx = re.compile( r"^%s$" % ( v.group(2) ) )
-
             i = 0
-            while not rx.match( q['versions'][i]['num'] ):
+            rx = version_regex( opt['version'] )
+            while not re.match( rx, q['versions'][i]['num'] ):
                 i += 1
             latest =  q['versions'][i].copy()
             
