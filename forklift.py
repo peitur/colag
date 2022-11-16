@@ -26,45 +26,6 @@ CRAATE_IMPORT_OVERWRITE=True
 
 
 
-def _read_text( filename ):
-    result = list()
-    try:
-        fd = open( filename, "r" )
-        for line in fd.readlines():
-            result.append( line.lstrip().rstrip() )
-        return result
-    except Exception as e:
-        print("ERROR Reading %s: %s" % ( filename, e ))
-
-    return result
-
-def _read_json( filename ):
-    return json.loads( "\n".join( _read_text( filename ) ) )
-
-def load_file( filename ):
-    filesplit = re.split( r"\.", filename )
-    if filesplit[-1] in ( "json" ):
-        return _read_json( filename )
-    else:
-        return _read_text( filename )
-
-
-def _write_json( filename, data ):
-    return _write_text( filename, json.dumps( data, indent=2, sort_keys=True ) )
-
-def _write_text( filename, data ):
-    fd = open( filename, "w" )
-    fd.write( str( data ) )
-    fd.close()
-
-def write_file( filename, data ):
-    filesplit = re.split( "\.", filename )
-    if filesplit[-1] in ( "json" ):
-        return _write_json( filename, data )
-    else:
-        return _write_text( filename, data )
-
-
 def cargo_meta_file( filepath, filename=CARGO_FILE ):
     values = list()
     cfile = "%s/%s" % ( filepath, filename )

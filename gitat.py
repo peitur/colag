@@ -8,6 +8,8 @@ import json
 import hashlib
 import getopt
 
+import colag.util
+
 from datetime import datetime
 from pprint import pprint
 from pathlib import Path
@@ -15,46 +17,6 @@ from pathlib import Path
 
 ################################################################################
 ## Local file operaitons
-################################################################################
-
-def _read_text( filename ):
-    result = list()
-    try:
-        fd = open( filename, "r" )
-        for line in fd.readlines():
-            result.append( line.lstrip().rstrip() )
-        return result
-    except Exception as e:
-        print("ERROR Reading %s: %s" % ( filename, e ))
-
-    return result
-
-def _read_json( filename ):
-    return json.loads( "\n".join( _read_text( filename ) ) )
-
-def load_file( filename ):
-    filesplit = re.split( r"\.", filename )
-    if filesplit[-1] in ( "json" ):
-        return _read_json( filename )
-    else:
-        return _read_text( filename )
-
-
-def _write_json( filename, data ):
-    return _write_text( filename, json.dumps( data, indent=2, sort_keys=True ) )
-
-def _write_text( filename, data ):
-    fd = open( filename, "w" )
-    fd.write( str( data ) )
-    fd.close()
-
-def write_file( filename, data ):
-    filesplit = re.split( "\.", filename )
-    if filesplit[-1] in ( "json" ):
-        return _write_json( filename, data )
-    else:
-        return _write_text( filename, data )
-
 ################################################################################
 
 
@@ -130,42 +92,12 @@ def git_repo_sync( item, **opt ):
 
 
 
-
-
-
-def read_env( key ):
-    if key not in os.environ:
-        return None
-    return os.environ.get( key )
-
-def boolify( s ):
-    if s in (True, 1, "1", "yes", "Yes", "YES", "True" ):
-        return True
-    elif s in (False, 0, "0", "no", "No", "NO", "False"):
-        return False
-    else:
-        raise AttributeError("Bool string type not supported %s" % ( s ) )
-
-
 ################################################################################
 def _apply_version( string, version ):
     return re.sub( r"<%\s*version\s*%>", version, string )
 
 def _apply_project( string, version ):
     return re.sub( r"<%\s*project\s*%>", version, string )
-
-def time_now_raw():
-    return datetime.now()
-
-def time_now_isoformat():
-    return time_now_raw().isoformat()
-
-def time_now_string():
-    return time_now_raw().strftime( "%Y%m%d_%H%M%S.%f" )
-
-def date_now_string():
-    return time_now_raw().strftime( "%Y%m%d" )
-
 
 ################################################################################
 
@@ -183,7 +115,7 @@ if __name__ == "__main__":
     opt['target'] = config['target']
     
     if 'debug' in config:
-        opt['debug'] = boolify( config['debug'] )
+        opt['debug'] = colag.util.boolify( config['debug'] )
         
     for bf in sys.argv[1:]:
         
