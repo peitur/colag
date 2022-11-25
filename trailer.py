@@ -136,7 +136,7 @@ def collect_pkg_full( module, **opt ):
                 print( "# [ %s ] [ checksum ] %s -> %s  " % ( module, fullfilename, chkfile ) )
                 colag.util.write_file( chkfile, [ hd ] )
 
-        reqlist_raw = colag.util.quest( module, "https://crates.io%s" %( links['dependencies']))
+        reqlist_raw = colag.util.get_request( module, "https://crates.io%s" %( links['dependencies']))
         if len( reqlist_raw['dependencies']  ) > 0:
             for r in reqlist_raw['dependencies'] :
                 req = r['crate_id']

@@ -14,7 +14,12 @@ COMMAND_OPTIONS={
     "urls":{ "type":"flag", "default": False, "supported_by":["reposync", "dnf", "yum"]  },
     "tempcache":{ "type":"flag", "default": True, "supported_by":["reposync", "yum"] },
     "download-path":{"mandatory": True, "type":"str", "supported_by":[ "dnf" ] },
-    "download_path":{"mandatory": True, "type":"str", "supported_by":["reposync", "yum"] }
+    "download_path":{"mandatory": True, "type":"str", "supported_by":["reposync", "yum"] },
+    "downloadcomps":{"type":"flag", "default": True, "supported_by":["reposync", "yum"]  },
+    "delete":{"type":"flag", "default": True, "supported_by":["reposync", "yum"]  },
+    "download-metadata":{"type":"flag", "default": True, "supported_by":["reposync","yum"]  },
+    "norepopath":{"type":"flag", "default": True, "supported_by":["reposync", "yum"]  },
+
 }
 
 MAIN_OPTIONS={
@@ -102,8 +107,6 @@ class RepoSyncCommand( object ):
                         det[ tool ] = pathlib.Path( "%s/%s" % ( p, tool ) )
                         continue
 
-        if 'dnf' in det:
-            return det['dnf']
         
         if 'yum' in det:
             if 'reposync' in det:
@@ -111,12 +114,12 @@ class RepoSyncCommand( object ):
             else:
                 raise EnvironmentError("Missing reposync tool")
 
+        if 'dnf' in det:
+            return det['dnf']
+
         return None
         
     def __command( self, filename=None ):
-        
-        if os.environ.get('USER') not in ("root"):
-            raise OSError( "Must be root for this operation: %s" % ( os.environ.get('USERNAME') )  )
         
         if not self.__base_command:
             raise OSError( "Missing rpm repo coammand to use")
