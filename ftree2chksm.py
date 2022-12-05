@@ -62,6 +62,9 @@ def load_file( lmbda, **opt ):
 
     return result
 
+def dirtree( path, filter=".*", pref="" ):
+    for f in [ "%s/%s" %( path, f.name ) for f in Path( path ) if re.match( filter, f.name ) ]:
+        print( f )
 
 def print_exception( e ):
     exc_type, exc_value, exc_traceback = sys.exc_info()
