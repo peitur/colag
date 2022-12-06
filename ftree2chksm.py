@@ -128,4 +128,4 @@ if __name__ == "__main__":
     opt['checksum'] = "sha256"
 
     for f in dirtree( opt["path"] ):
-        print( "%s : %s" % (f, file_hash( str(f), opt["checksum"] ))
+        print( "%s : %s" % (f, file_hash( str(f), opt["checksum"] )))
