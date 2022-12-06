@@ -1,7 +1,6 @@
-
 #!/usr/bin/env python3
 
-import sys
+import sys, os, re
 import hashlib
 import traceback
 from pprint import pprint
@@ -12,6 +11,30 @@ SUPPORTED_CHECKSUM=("md5", "sha1", "sha224", "sha256", "sha384","sha512")
 ################################################################################
 ## Hashing large files
 ################################################################################
+def file_hash( filename, chksum="sha256" ):
+    BLOCKSIZE = 65536
+
+    if chksum == "sha1":
+        hasher = hashlib.sha1()
+    elif chksum == "sha224":
+        hasher = hashlib.sha224()
+    elif chksum == "sha256":
+        hasher = hashlib.sha256()
+    elif chksum == "sha384":
+        hasher = hashlib.sha384()
+    elif chksum == "sha512":
+        hasher = hashlib.sha512()
+    else:
+        hasher = hashlib.sha256()
+
+    with open( filename, 'rb') as f:
+        buf = f.read(BLOCKSIZE)
+        while len(buf) > 0:
+            hasher.update(buf)
+            buf = f.read(BLOCKSIZE)
+    return hasher.hexdigest()
+
+
 def data_hash( buffer, **opt ):
 
     chksum = "md5"
@@ -63,8 +86,13 @@ def load_file( lmbda, **opt ):
     return result
 
 def dirtree( path, filter=".*", pref="" ):
-    for f in [ "%s/%s" %( path, f.name ) for f in Path( path ) if re.match( filter, f.name ) ]:
-        print( f )
+    res = list()
+    for f in [ Path("%s/%s" %( path, f.name )) for f in Path( path ) if re.match( filter, f.name ) and f.name not in (".","..") ]:
+       if f.is_dir():
+           res += dirtree( str( f ), filter, pref )     
+       else:
+           ees.append( f )
+    return res
 
 def print_exception( e ):
     exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -93,18 +121,10 @@ def print_exception( e ):
 ################################################################################
 
 
-
 if __name__ == "__main__":
     opt = dict()
     opt['script'] = sys.argv.pop(0)
-    opt['filename'] = sys.argv.pop(0)
+    opt['path'] = sys.argv.pop(0)
     opt['checksum'] = "sha256"
 
-    if len( sys.argv ) > 0:
-        opt['checksum'] = sys.argv.pop(0)
-
-    if opt['checksum'] not in SUPPORTED_CHECKSUM:
-        raise AttributeError("Unsupported checksum %s, must be one of [%s]" % ( opt['checksum'], ",".join(SUPPORTED_CHECKSUM) ) )
-
-    for x in load_file( data_hash, **opt ):
-        print("%s %s" % ( x[0], x[1] ) )
+    pprint( dirtree( opt["path"] )) 
