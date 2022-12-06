@@ -87,7 +87,7 @@ def load_file( lmbda, **opt ):
 
 def dirtree( path, filter=".*", pref="" ):
     res = list()
-    for f in [ Path("%s/%s" %( path, f.name )) for f in Path( path ) if re.match( filter, f.name ) and f.name not in (".","..") ]:
+    for f in [ Path("%s/%s" %( path, f.name )) for f in Path( path ).iterdir() if re.match( filter, f.name ) and f.name not in (".","..") ]:
        if f.is_dir():
            res += dirtree( str( f ), filter, pref )     
        else:
