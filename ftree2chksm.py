@@ -91,7 +91,7 @@ def dirtree( path, filter=".*", pref="" ):
        if f.is_dir():
            res += dirtree( str( f ), filter, pref )     
        else:
-           ees.append( f )
+           res.append( f )
     return res
 
 def print_exception( e ):
@@ -127,4 +127,5 @@ if __name__ == "__main__":
     opt['path'] = sys.argv.pop(0)
     opt['checksum'] = "sha256"
 
-    pprint( dirtree( opt["path"] )) 
+    for f in dirtree( opt["path"] ):
+        print( "%s : %s" % (f, file_hash( str(f), opt["checksum"] ))
