@@ -127,5 +127,8 @@ if __name__ == "__main__":
     opt['path'] = sys.argv.pop(0)
     opt['checksum'] = "sha256"
 
+    if len( sys.argv ) > 0:
+        opt["checksum"] = sys.argv.pop(0)
+
     for f in dirtree( opt["path"] ):
         print( "%s : %s" % (f, file_hash( str(f), opt["checksum"] )))
