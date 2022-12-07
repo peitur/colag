@@ -14,7 +14,9 @@ SUPPORTED_CHECKSUM=("md5", "sha1", "sha224", "sha256", "sha384","sha512")
 def file_hash( filename, chksum="sha256" ):
     BLOCKSIZE = 65536
 
-    if chksum == "sha1":
+    if chksum == "md5":
+        hasher = hashlib.sha1()
+    elif chksum == "sha1":
         hasher = hashlib.sha1()
     elif chksum == "sha224":
         hasher = hashlib.sha224()
@@ -85,12 +87,12 @@ def load_file( lmbda, **opt ):
 
     return result
 
-def dirtree( path, filter=".*", pref="" ):
+def dirtree( path, filter=".*" ):
     res = list()
-    for f in [ Path("%s/%s" %( path, f.name )) for f in Path( path ).iterdir() if re.match( filter, f.name ) and f.name not in (".","..") ]:
+    for f in [ Path("%s/%s" %( path, f.name )) for f in Path( path ).iterdir() if re.match( filter, f.name ) and f.name not in (".","..", ".git") ]:
        if f.is_dir():
-           res += dirtree( str( f ), filter, pref )     
-       else:
+           res += dirtree( str( f ), filter )     
+       elif f.is_file():
            res.append( f )
     return res
 
@@ -124,8 +126,11 @@ def print_exception( e ):
 if __name__ == "__main__":
     opt = dict()
     opt['script'] = sys.argv.pop(0)
-    opt['path'] = sys.argv.pop(0)
-    opt['checksum'] = "sha256"
+    opt['path'] = "."
+    opt['checksum'] = "sha1"
+
+    if len( sys.argv ) > 0:
+        opt["path"] = sys.argv.pop(0)
 
     if len( sys.argv ) > 0:
         opt["checksum"] = sys.argv.pop(0)
