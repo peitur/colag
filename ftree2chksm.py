@@ -131,4 +131,4 @@ if __name__ == "__main__":
         opt["checksum"] = sys.argv.pop(0)
 
     for f in dirtree( opt["path"] ):
-        print( "%s\t%s" % ( file_hash( str(f), opt["checksum"] ), f ))
+        print( "%s %s %s" % ( file_hash( str(f), opt["checksum"] ), f.size(), f ))
