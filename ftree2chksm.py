@@ -93,7 +93,7 @@ def dirtree( root, path="", filter=".*" ):
     for f in [ "%s/%s" %( path, f.name ) for f in Path( rpath ).iterdir() if re.match( filter, f.name ) and f.name not in (".","..", ".git") ]:
        i = Path( "%s/%s" % (root, f ))
        if i.is_dir():
-           res += dirtree( f, str(i), filter )     
+           res += dirtree( root, f, filter )     
        elif i.is_file():
            res.append( f )
     return res
