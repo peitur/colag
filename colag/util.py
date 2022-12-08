@@ -10,6 +10,10 @@ import tarfile, zipfile
 from pathlib import Path
 from pprint import pprint
 
+from colag.checksum import file_hash
+from colag.checksum import data_hash
+
+
 BOOLIFY_TRUE=( True, "True", "Yes", "yes" )
 BOOLIFY_FALSE=(False, "False", "No", "no")
 
@@ -26,34 +30,6 @@ def read_env( key ):
     if key not in os.environ:
         return None
     return os.environ.get( key )
-
-################################################################################
-## Hashing large files
-################################################################################
-def file_hash( filename, chksum="sha256" ):
-    BLOCKSIZE = 65536
-
-    if chksum == "sha1":
-        hasher = hashlib.sha1()
-    elif chksum == "sha224":
-        hasher = hashlib.sha224()
-    elif chksum == "sha256":
-        hasher = hashlib.sha256()
-    elif chksum == "sha384":
-        hasher = hashlib.sha384()
-    elif chksum == "sha512":
-        hasher = hashlib.sha512()
-    elif chksum == "md5":
-        hasher = hashlib.md5()
-    else:
-        hasher = hashlib.sha256()
-
-    with open( filename, 'rb') as f:
-        buf = f.read(BLOCKSIZE)
-        while len(buf) > 0:
-            hasher.update(buf)
-            buf = f.read(BLOCKSIZE)
-    return hasher.hexdigest()
 
 
 def download_file( proj, url_filename, local_filename, **opt ):
@@ -202,6 +178,22 @@ def random_tempdir( rootdir="/tmp", rlen=5, create=False ):
         random_dir.mkdir( exist_ok=False, parents=True )
     return random_dir
 
+def dirtree( root, path="", filter=".*" ):
+    res = list()
+
+    pref = ""
+    rpath = root
+    if len( path ) > 0:
+       rpath = "%s/%s" % ( root, path )
+       pref = "%s/" % ( path )
+
+    for f in [ "%s%s" %( pref, f.name ) for f in Path( rpath ).iterdir() if re.match( filter, f.name ) and f.name not in (".","..", ".git") ]:
+       i = Path( "%s/%s" % (root, f ))
+       if i.is_dir():
+           res += dirtree( root, f, filter )     
+       elif i.is_file():
+           res.append( f )
+    return res
 
 if __name__ == "__main__":
     pass
