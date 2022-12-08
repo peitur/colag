@@ -145,4 +145,4 @@ if __name__ == "__main__":
         opt["checksum"] = sys.argv.pop(0)
 
     for f in dirtree( opt["path"] ):
-        print( "%-32s %16s %s" % ( file_hash( str(f) ), f.stat().st_size, f ))
+        print( "%-32s %16s %s" % ( file_hash( str(f) ), pathlib.Path(f).stat().st_size, f ))
