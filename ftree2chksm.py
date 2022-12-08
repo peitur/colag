@@ -134,6 +134,7 @@ def print_exception( e ):
 if __name__ == "__main__":
     opt = dict()
     opt['script'] = sys.argv.pop(0)
+
     opt['path'] = "."
     opt['checksum'] = "sha1"
 
