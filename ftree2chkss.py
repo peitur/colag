@@ -172,5 +172,9 @@ if __name__ == "__main__":
     if len( sys.argv ) > 0:
         opt["checksum"] = sys.argv.pop(0)
 
+
+    size_sum = 0
     flist = dirtree( opt['path'] )
-    print( "%32s %s" % ( filelist_hash( flist, opt["checksum"] ), opt['path'] ))
+    for f in flist:
+        size_sum += Path( f ).stat().st_size
+    print( "%32s %16s %s" % ( filelist_hash( flist, opt["checksum"] ), size_sum, opt['path'] ))
