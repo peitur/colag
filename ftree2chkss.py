@@ -174,7 +174,7 @@ if __name__ == "__main__":
 
 
     size_sum = 0
-    flist = dirtree( opt['path'] )
+    flist = [ "%s/%s" % ( opt["path"], F ) for f in dirtree( opt['path'] ) ]
     for f in flist:
         size_sum += Path( f ).stat().st_size
     print( "%32s %16s %s" % ( filelist_hash( flist, opt["checksum"] ), size_sum, opt['path'] ))
