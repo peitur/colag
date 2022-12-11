@@ -85,7 +85,7 @@ def filelist_hash( flist, **opt ):
         hasher = hashlib.sha512()
     else:
         hasher = hashlib.sha256()
-    for filename in flist ):
+    for filename in flist:
         with open( filename, 'rb') as f:
             buf = f.read(BLOCKSIZE)
             while len(buf) > 0:
