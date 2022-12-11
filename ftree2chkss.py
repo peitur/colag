@@ -68,7 +68,7 @@ def data_hash( buffer, **opt ):
 
 
 
-def filelist_hash( flist, **opt ):
+def filelist_hash( flist, chksum="sha1", **opt ):
     BLOCKSIZE = 65536
 
     if chksum == "md5":
