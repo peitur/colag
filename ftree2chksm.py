@@ -144,5 +144,5 @@ if __name__ == "__main__":
     if len( sys.argv ) > 0:
         opt["checksum"] = sys.argv.pop(0)
 
-    for f in dirtree( opt["path"] ):
+    for f in [ "%s/%s" % ( opt["path"], f ) for f in dirtree( opt["path"] ) ]:
         print( "%32s %16s %s" % ( file_hash( f, opt["checksum"] ), Path(f).stat().st_size, f ))
