@@ -7,6 +7,14 @@ from pprint import pprint
 from pathlib import Path
 
 SUPPORTED_CHECKSUM=("md5", "sha1", "sha224", "sha256", "sha384","sha512")
+CHECKSUM_MAP={
+    32:"md5",
+    40:"sha1",
+    56:"sha224",
+    64:"sha256",
+    96:"sha384",
+    128:"sha512",    
+}
 
 ################################################################################
 ## Hashing large files
@@ -37,11 +45,7 @@ def file_hash( filename, chksum="sha256" ):
     return hasher.hexdigest()
 
 
-def data_hash( buffer, **opt ):
-
-    chksum = "md5"
-    if 'checksum' in opt:
-        chksum = opt['checksum']
+def data_hash( buffer, chksum="sha1", **opt ):
 
     if chksum in SUPPORTED_CHECKSUM:
         if chksum == "md5":
@@ -65,6 +69,34 @@ def data_hash( buffer, **opt ):
             print_exception(e)
 
     raise RuntimeError( "Unknown hash function %s" % ( chksum ) )
+
+
+
+def filelist_hash( flist, chksum="sha1", **opt ):
+    BLOCKSIZE = 65536
+
+    if chksum == "md5":
+        hasher = hashlib.sha1()
+    elif chksum == "sha1":
+        hasher = hashlib.sha1()
+    elif chksum == "sha224":
+        hasher = hashlib.sha224()
+    elif chksum == "sha256":
+        hasher = hashlib.sha256()
+    elif chksum == "sha384":
+        hasher = hashlib.sha384()
+    elif chksum == "sha512":
+        hasher = hashlib.sha512()
+    else:
+        hasher = hashlib.sha256()
+    for filename in flist:
+        with open( filename, 'rb') as f:
+            buf = f.read(BLOCKSIZE)
+            while len(buf) > 0:
+                hasher.update(buf)
+                buf = f.read(BLOCKSIZE)
+    return hasher.hexdigest()
+
 
 ################################################################################
 ## Local file operaitons
@@ -104,6 +136,11 @@ def dirtree( root, path="", filter=".*" ):
            res.append( f )
     return res
 
+def detect_algorithm( s ):
+    if len( s ) in CHECKSUM_MAP:
+        return CHECKSUM_MAP[ len(s) ]
+    raise AttributeError("Malformed checksum size")
+
 def print_exception( e ):
     exc_type, exc_value, exc_traceback = sys.exc_info()
     print("*** print_tb:")
@@ -135,15 +172,44 @@ if __name__ == "__main__":
     opt = dict()
     opt['script'] = sys.argv.pop(0)
 
-    opt['path'] = "."
+    opt['path'] = None
     opt['checksum'] = "sha1"
-
+    opt['reference'] = None
+    
+    
     if len( sys.argv ) > 0:
         opt["path"] = sys.argv.pop(0)
 
     if len( sys.argv ) > 0:
+        opt["reference"] = sys.argv.pop(0)
+
+    if len( sys.argv ) > 0:
         opt["checksum"] = sys.argv.pop(0)
 
-    for f in dirtree( opt["path"] ):
-        x = "%s/%s" % ( opt["path"], f )
-        print( "%32s %16s %s" % ( file_hash( x, opt["checksum"] ), Path(x).stat().st_size, f ))
+    if not opt['path']:
+        raise  AttributeError("Missing path")
+    
+    if not opt['reference']:
+        raise  AttributeError("Missing reference file")
+    
+    with open( opt['reference'], "r" ) as fp:
+        for line in fp:
+            line = line.lstrip().rstrip()
+            (checksum, size, path ) = [ l.lstrip().rstrip() for l in re.split(r"\s+", line ) ]
+            filepath = Path( "%s/%s" % ( opt['path'], path ) )
+            if filepath.exists():
+                alg = detect_algorithm( checksum )
+                fchecksum = file_hash( str( filepath ), alg )
+                fsize = filepath.stat().st_size
+                
+                if checksum == fchecksum and int( size )  == fsize:
+                    print("File %s ... OK" % ( path ) )
+                else:
+                    print("File %s ... FAIL" % ( path ) )
+                    
+            else:
+                print("File %s ... MISSING" % ( filepath ))
+            
+#    for c in SUPPORTED_CHECKSUM:
+#        s =  data_hash( ".", c )
+#        print( "%s:\"%s\"" % ( len( s ) , c ) )

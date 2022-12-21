@@ -66,6 +66,34 @@ def data_hash( buffer, **opt ):
 
     raise RuntimeError( "Unknown hash function %s" % ( chksum ) )
 
+
+
+def filelist_hash( flist, chksum="sha1", **opt ):
+    BLOCKSIZE = 65536
+
+    if chksum == "md5":
+        hasher = hashlib.sha1()
+    elif chksum == "sha1":
+        hasher = hashlib.sha1()
+    elif chksum == "sha224":
+        hasher = hashlib.sha224()
+    elif chksum == "sha256":
+        hasher = hashlib.sha256()
+    elif chksum == "sha384":
+        hasher = hashlib.sha384()
+    elif chksum == "sha512":
+        hasher = hashlib.sha512()
+    else:
+        hasher = hashlib.sha256()
+    for filename in flist:
+        with open( filename, 'rb') as f:
+            buf = f.read(BLOCKSIZE)
+            while len(buf) > 0:
+                hasher.update(buf)
+                buf = f.read(BLOCKSIZE)
+    return hasher.hexdigest()
+
+
 ################################################################################
 ## Local file operaitons
 ################################################################################
@@ -144,6 +172,9 @@ if __name__ == "__main__":
     if len( sys.argv ) > 0:
         opt["checksum"] = sys.argv.pop(0)
 
-    for f in dirtree( opt["path"] ):
-        x = "%s/%s" % ( opt["path"], f )
-        print( "%32s %16s %s" % ( file_hash( x, opt["checksum"] ), Path(x).stat().st_size, f ))
+
+    size_sum = 0
+    flist = [ "%s/%s" % ( opt["path"],  f) for f in dirtree( opt['path'] ) ]
+    for f in flist:
+        size_sum += Path( f ).stat().st_size
+    print( "%32s %16s %s" % ( filelist_hash( flist, opt["checksum"] ), size_sum, opt['path'] ))
