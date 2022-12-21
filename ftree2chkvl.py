@@ -198,7 +198,8 @@ if __name__ == "__main__":
             (checksum, size, path ) = [ l.lstrip().rstrip() for l in re.split(r"\s+", line ) ]
             filepath = Path( "%s/%s" % ( opt['path'], path ) )
             if filepath.exists():
-                fchecksum = file_hash( str( filepath ), opt['checksum'] )
+                alg = detect_algorithm( checksum )
+                fchecksum = file_hash( str( filepath ), alg )
                 fsize = filepath.stat().st_size
                 
                 if checksum == fchecksum and int( size )  == fsize:
@@ -207,7 +208,7 @@ if __name__ == "__main__":
                     print("File %s ... FAIL" % ( path ) )
                     
             else:
-                print("Missing %s" % ( filepath ))
+                print("File %s ... MISSING" % ( filepath ))
             
 #    for c in SUPPORTED_CHECKSUM:
 #        s =  data_hash( ".", c )
