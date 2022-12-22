@@ -7,6 +7,14 @@ import hashlib, random, string
 import colag.util
 
 SUPPORTED_CHECKSUM=("md5", "sha1", "sha224", "sha256", "sha384","sha512")
+CHECKSUM_MAP={
+    32:"md5",
+    40:"sha1",
+    56:"sha224",
+    64:"sha256",
+    96:"sha384",
+    128:"sha512",    
+}
 
 
 from pprint import pprint
@@ -75,6 +83,10 @@ def data_hash( buffer, **opt ):
 
     raise RuntimeError( "Unknown hash function %s" % ( chksum ) )
 
+def detect_algorithm( s ):
+    if len( s ) in CHECKSUM_MAP:
+        return CHECKSUM_MAP[ len(s) ]
+    raise AttributeError("Malformed checksum size")
 
 
 if __name__ ==  "__main__":
