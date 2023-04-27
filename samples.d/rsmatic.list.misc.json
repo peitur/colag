@@ -29,7 +29,7 @@
         "debug": true,
         "source":"rsync://ftp.sunet.se/mirror/torproject.org/dist/",
         "target":"/external/mirror/repos/torproject",
-        "logfile":"/external/mirror/repos/rfcs-pdf-only/mirror.log",
+        "logfile":"/external/mirror/repos/torproject/mirror.log",
         "options":{
             "bandwidth":"4096",
             "delete-after":true,
