@@ -1,7 +1,3 @@
-<<<<<<< HEAD
 rsync://ftp.uio.no/FreeBSD/;/external/mirror/repos/freebsd;4096
-=======
-rsync://ftp.uio.no/FreeBSD;/external/mirror/repos/freebsd;4096
->>>>>>> f71926ec5f868427f6a83ad19364cca2d09869a5
 rsync://ftp.uio.no/OpenBSD/;/external/mirror/repos/openbsd;4096
 rsync://ftp.sunet.se/mirror/netbsd.org/NetBSD;/external/mirror/repos/netbsd;4096
