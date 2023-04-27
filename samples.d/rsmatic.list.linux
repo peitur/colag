@@ -1,7 +1,7 @@
 rsync://ftp.sunet.se/mirror/raspbian/;/external/mirror/repos/raspbian;4096
 rsync://ftp.sunet.se/mirror/xbmc.org/;/external/mirror/repos/xbmc;4096
 rsync://ftp.sunet.se/mirror/osmc.tv/;/external/mirror/repos/osmc;4096
-rstnc://ftp.sunet.se/mirror/turnkeylinux;/external/mirror/repos/turnkeylinux;4096
+rsync://ftp.sunet.se/mirror/turnkeylinux;/external/mirror/repos/turnkeylinux;4096
 rsync://ftp.sunet.se/mirror/qubes-os.org/;/external/mirror/repos/qubesos;4096
 rsync://ftp.sunet.se/mirror/kali.org/;/external/mirror/repos/kali.org;4096
 rsync://mirror.nsc.liu.se/CentOS;/external/mirror/repos/centos;4096
