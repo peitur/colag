@@ -3,6 +3,7 @@
 import hashlib
 
 import colag.util
+import colag.output
 
 SUPPORTED_CHECKSUM=("md5", "sha1", "sha224", "sha256", "sha384","sha512")
 CHECKSUM_MAP={
@@ -77,7 +78,7 @@ def data_hash( buffer, **opt ):
         hasher.update( buffer.encode('utf-8', "ignore") )
         return hasher.hexdigest()
     except Exception as e:
-        print_exception(e)
+        colag.output.print_exception(e)
 
     raise RuntimeError( "Unknown hash function %s" % ( chksum ) )
 

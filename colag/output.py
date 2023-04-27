@@ -3,8 +3,6 @@
 import sys
 import traceback
 from pprint import pprint
-from pathlib import Path
-
 
 def print_exception( e ):
     exc_type, exc_value, exc_traceback = sys.exc_info()
