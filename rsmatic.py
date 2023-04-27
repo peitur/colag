@@ -342,6 +342,8 @@ if __name__ == "__main__":
             site = siteline['source']
             
             logfile = "%s/%s.%s.log" % ( target, opt['mode'], time_now_string() )
+            if 'logfile' in siteline:
+                logfile = siteline['logfile']
 
             stats = dict()
             stats['num_items'] = 0
