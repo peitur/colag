@@ -102,13 +102,28 @@ Supported options per item:
 
 Batch rsync transfers.
 
-batchfile format is:
-one line per site with ';' sepparating
+batchfile format is in list of json structures:
+```json
+[
+    {
+        "debug": true,
+        "source":"<rsyncsite>",
+        "target":"<targetrootpath>",
+        "logfile":"logfilepath_mirror.log",
+        "options":{
+            "bandwidth":"4096",
+            "delete-after":true,
+            "times":true, 
+            "ignore-errors":true,
+            "exclude":[]
+        }
+    }
+]
 ```
-<rsync-url>;<target>;<rate>
-```
-
-Tool is not running in paralell, this can be done by running multiple jobs at once with different reference files.
+ - source: rsync site to sync
+ - target: where to store locally
+ - logfile: lgfile for rsync
+ - options: rsync options
 
 ## trailer.py
 
