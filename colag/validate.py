@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, os, re
+import re
 from unittest.result import failfast
 
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, os, re
-import hashlib
+import sys
 import traceback
 from pprint import pprint
 from pathlib import Path

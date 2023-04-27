@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-import pathlib
-import sys,re,os,re
-import hashlib, random, string
+import hashlib
 
 import colag.util
 

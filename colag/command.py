@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import pathlib
-import sys,re,os,re, datetime
 import subprocess, shlex
 
 import colag.util

@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
 import pathlib
-import sys,re,os,re
+import re,os,re
 import datetime
 import requests
 import json
-import hashlib, random, string
-import tarfile, zipfile
+import random, string
 from pathlib import Path
 from pprint import pprint
 
