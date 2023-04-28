@@ -5,9 +5,9 @@ import subprocess, shlex
 # import requests
 import json
 import hashlib
-import getopt
 
 import colag.rsmatic
+import colag.util
 
 from datetime import datetime
 from pprint import pprint
@@ -150,6 +150,9 @@ def run_command_iter( cmd, **opt ):
     errors = list()
     prc = subprocess.Popen( cmd, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, universal_newlines=True, shell=False )
     for line in prc.stdout.readlines():
+        if debug:
+            print("DEBUG: '%s'" % ( line.lstrip().rstrip() ) )
+            
         buffer.append( line.rstrip().lstrip() )
                 
         while( len( buffer ) >= 10 ):
@@ -253,7 +256,7 @@ def rsync_file_get( opt ):
     cmd = colag.rsmatic.RsyncCommand( conf ).run()
     
     try:
-        for f in run_command_iter( cmd, debug=True ):
+        for f in run_command_iter( cmd, debug=debug ):
             yield f
 
     except Exception as e:
@@ -340,7 +343,8 @@ if __name__ == "__main__":
 
             target = Path( siteline['target'] )
             site = siteline['source']
-            
+            debug = colag.util.boolify( siteline.get("debug", False ) )
+
             logfile = "%s/%s.%s.log" % ( target, opt['mode'], time_now_string() )
             if 'logfile' in siteline:
                 logfile = siteline['logfile']
