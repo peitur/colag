@@ -40,19 +40,6 @@
     },
     {
         "debug": true,
-        "source":"rsync://ftp.sunet.se/mirror/turnkeylinux/",
-        "target":"/external/mirror/repos/turnkeylinux",
-        "logfile":"/external/mirror/repos/mirror.turnkeylinux.log",
-        "options":{
-            "bandwidth":"8192",
-            "delete-after":true,
-            "times":true, 
-            "ignore-errors":true,
-            "exclude":["snapshots","development"]
-        }
-    },
-    {
-        "debug": true,
         "source":"rsync://ftp.sunet.se/mirror/qubes-os.org/",
         "target":"/external/mirror/repos/qubesos",
         "logfile":"/external/mirror/repos/mirror.qubesos.log",
