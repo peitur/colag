@@ -150,8 +150,6 @@ def run_command_iter( cmd, **opt ):
     errors = list()
     prc = subprocess.Popen( cmd, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, universal_newlines=True, shell=False )
     for line in prc.stdout.readlines():
-        if debug:
-            print("DEBUG: '%s'" % ( line.lstrip().rstrip() ) )
             
         buffer.append( line.rstrip().lstrip() )
                 
@@ -364,6 +362,9 @@ if __name__ == "__main__":
 
                 print("Syncing %s to %s logging to %s" % (site, target, logfile ))
                 for f in rsync_file_get( siteline ):
+                    
+                    if debug: print("DEBUG: '%s'" % ( f.lstrip().rstrip() ) )
+
                     stats['num_items'] += 1
                     parts = re.split( r"\s+", f )
                     if len( parts ) == 5:
@@ -390,7 +391,9 @@ if __name__ == "__main__":
 
                 print("Listing %s logging to %s" % (site, logfile ))
                 for f in rsync_file_list( siteline ):
-
+                    
+                    if debug: print("DEBUG: '%s'" % ( f.lstrip().rstrip() ) )
+                    
                     if re.match("^rsync.*", f ):
                         continue
                     
