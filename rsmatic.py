@@ -335,6 +335,9 @@ if __name__ == "__main__":
     tot_stats = dict()
 
     for config in opt['config']:
+        
+        debug = False
+        
         print("Loading sites from file %s" % ( config ) )
 
         for siteline in load_file( config ):
