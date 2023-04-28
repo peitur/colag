@@ -5,7 +5,7 @@
         "target":"/external/mirror/repos/rfcs-pdf-only",
         "logfile":"/external/mirror/repos/rfcs-pdf-only/mirror.log",
         "options":{
-            "bandwidth":"4096",
+            "bandwidth":"8192",
             "delete-after":true,
             "times":true, 
             "ignore-errors":true,
@@ -18,7 +18,7 @@
         "target":"/external/mirror/repos/rfc-ed-all",
         "logfile":"/external/mirror/repos/rfc-ed-all/mirror.log",
         "options":{
-            "bandwidth":"4096",
+            "bandwidth":"8192",
             "delete-after":true,
             "times":true, 
             "ignore-errors":true,
@@ -31,7 +31,7 @@
         "target":"/external/mirror/repos/torproject",
         "logfile":"/external/mirror/repos/torproject/mirror.log",
         "options":{
-            "bandwidth":"4096",
+            "bandwidth":"8192",
             "delete-after":true,
             "times":true, 
             "ignore-errors":true,
@@ -44,7 +44,7 @@
         "target":"/external/mirror/repos/apache.org",
         "logfile":"/external/mirror/repos/apache.org/mirror.log",
         "options":{
-            "bandwidth":"4096",
+            "bandwidth":"8192",
             "delete-after":true,
             "times":true, 
             "ignore-errors":true,

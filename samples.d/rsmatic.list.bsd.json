@@ -5,7 +5,7 @@
         "target":"/external/mirror/repos/freebsd",
         "logfile":"/external/mirror/repos/freebsd/mirror.log",
         "options":{
-            "bandwidth":"4096",
+            "bandwidth":"8192",
             "delete-after":true,
             "times":true, 
             "ignore-errors":true,
@@ -14,11 +14,11 @@
     },
     {
         "debug": true,
-        "source":"rsync://ftp.uio.no/OpenBSD",
+        "source":"rsync://ftp.uio.no/OpenBSD/",
         "target":"/external/mirror/repos/openbsd",
         "logfile":"/external/mirror/repos/openbsd/mirror.log",
         "options":{
-            "bandwidth":"4096",
+            "bandwidth":"8192",
             "delete-after":true,
             "times":true,
             "exclude":["snapshots","development"]
@@ -26,11 +26,11 @@
     },
     {
         "debug": true,
-        "source":"rsync://ftp.sunet.se/mirror/netbsd.org/NetBSD",
+        "source":"rsync://ftp.sunet.se/mirror/netbsd.org/NetBSD/",
         "target":"/external/mirror/repos/netbsd",
         "logfile":"/external/mirror/repos/netbsd/mirror.log",
         "options":{
-            "bandwidth":"4096",
+            "bandwidth":"8192",
             "delete-after":true,
             "times":true,
             "exclude":["snapshots","development"]
