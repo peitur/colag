@@ -6,7 +6,7 @@
         "logfile":"/external/mirror/repos/mirror.raspbian.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -19,7 +19,7 @@
         "logfile":"/external/mirror/repos/mirror.xbmc.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -32,7 +32,7 @@
         "logfile":"/external/mirror/repos/mirror.osmc.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -45,7 +45,7 @@
         "logfile":"/external/mirror/repos/mirror.qubesos.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -58,7 +58,7 @@
         "logfile":"/external/mirror/repos/mirror.kali.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -71,7 +71,7 @@
         "logfile":"/external/mirror/repos/mirror.centos.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -84,7 +84,7 @@
         "logfile":"/external/mirror/repos/mirror.centos9.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -97,7 +97,7 @@
         "logfile":"/external/mirror/repos/mirror.epel7.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -110,7 +110,7 @@
         "logfile":"/external/mirror/repos/mirror.epel8.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -123,7 +123,7 @@
         "logfile":"/external/mirror/repos/mirror.epel9.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -136,7 +136,7 @@
         "logfile":"/external/mirror/repos/mirror.parrot.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -149,7 +149,7 @@
         "logfile":"/external/mirror/repos/mirror.pentoo.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -162,7 +162,7 @@
         "logfile":"/external/mirror/repos/mirror.tails.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -175,7 +175,7 @@
         "logfile":"/external/mirror/repos/mirror.alpine.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -188,7 +188,7 @@
         "logfile":"/external/mirror/repos/mirror.arch.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -201,7 +201,7 @@
         "logfile":"/external/mirror/repos/mirror.ubuntu.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -214,7 +214,7 @@
         "logfile":"/external/mirror/repos/mirror.ubuntu-releases.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -227,7 +227,7 @@
         "logfile":"/external/mirror/repos/mirror.rockylinux.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]

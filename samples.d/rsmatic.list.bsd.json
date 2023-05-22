@@ -6,7 +6,7 @@
         "logfile":"/external/mirror/repos/freebsd/mirror.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":["snapshots","development"]
@@ -19,7 +19,7 @@
         "logfile":"/external/mirror/repos/openbsd/mirror.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true,
             "exclude":["snapshots","development"]
         }
@@ -31,7 +31,7 @@
         "logfile":"/external/mirror/repos/netbsd/mirror.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true,
             "exclude":["snapshots","development"]
         }

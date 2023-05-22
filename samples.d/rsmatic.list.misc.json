@@ -6,7 +6,7 @@
         "logfile":"/external/mirror/repos/rfcs-pdf-only/mirror.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":[]
@@ -19,7 +19,7 @@
         "logfile":"/external/mirror/repos/rfc-ed-all/mirror.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":[]
@@ -32,7 +32,7 @@
         "logfile":"/external/mirror/repos/torproject/mirror.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":[]
@@ -45,7 +45,7 @@
         "logfile":"/external/mirror/repos/apache.org/mirror.log",
         "options":{
             "bandwidth":"8192",
-            "delete-after":true,
+            "delete-before":true,
             "times":true, 
             "ignore-errors":true,
             "exclude":[]
