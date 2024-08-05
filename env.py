@@ -17,7 +17,9 @@ if __name__ == "__main__":
 
     for f in infiles:
         if pathlib.Path( f ).suffix == ".json":
-            print( f )
+            c = json.load( pathlib.Path( f ).open() )
+            for k in c:
+                conf[ k ] = c[ k ]
     
     print( json.dumps( conf ) )
     
